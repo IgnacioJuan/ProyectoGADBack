@@ -12,4 +12,7 @@ public interface MetaPDOT_Service extends GenericService<MetaPDOT, Long> {
 
     public MetaPDOT obtenerMetaPdotId(Long id);
     List<MetaPdot_DTO> buscarMetasPdotsPorNombre(String nombre);
+
+    List<MetaPdot_DTO> listarMetasPdotsDTOPorIdObjPdot(Long idObjetivoP);
+
 }
