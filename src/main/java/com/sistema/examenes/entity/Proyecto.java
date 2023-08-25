@@ -64,9 +64,6 @@ public class Proyecto implements Serializable {
     @JoinColumn(name="id_competencia")
     private Competencia competencia;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
-    @JsonIgnore
-    private Set<Poa> lista_poas = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
     @JsonIgnore

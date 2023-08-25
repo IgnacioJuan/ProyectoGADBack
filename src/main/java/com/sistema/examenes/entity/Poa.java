@@ -61,5 +61,5 @@ public class Poa implements Serializable {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
-    private Set<AprobacionActividades> lista_aprobaciones_actividades = new HashSet<>();
+    private Set<AprobacionActividad> lista_aprobaciones_actividades = new HashSet<>();
 }

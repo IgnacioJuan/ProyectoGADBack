@@ -61,7 +61,7 @@ public class Actividades {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<AprobacionActividades> aprobacionActividades = new HashSet<>();
+    private Set<AprobacionActividad> aprobacionActividades = new HashSet<>();
 
 
 
