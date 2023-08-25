@@ -44,4 +44,22 @@ public class ObjetivoPND_ServiceImpl extends GenericServiceImpl<ObjetivoPND, Lon
         return objetivosEncontrados;
     }
 
+    @Override
+    public List<ObjetivoPnd_DTO> listarObjetivosPorIdEjeDTO(Long idEje) {
+        List<Object[]> resultados = repository.listarObjetivosPorIdEje(idEje);
+        List<ObjetivoPnd_DTO> objetivosEncontrados = new ArrayList<>();
+
+        for (Object[] resultado : resultados) {
+            ObjetivoPnd_DTO objetivoDTO = new ObjetivoPnd_DTO(
+                    (Long) resultado[0],
+                    (String) resultado[1],
+                    (String) resultado[2],
+                    (Long) resultado[3],
+                    (String) resultado[4]
+            );
+            objetivosEncontrados.add(objetivoDTO);
+        }
+        return objetivosEncontrados;
+    }
+
 }
