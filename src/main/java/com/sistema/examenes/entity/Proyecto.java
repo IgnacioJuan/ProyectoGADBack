@@ -31,6 +31,8 @@ public class Proyecto implements Serializable {
     private double porcentaje_alcance;
     @Column(name = "fecha_inicio")
     private Date fecha_inicio;
+    @Column(name = "estado", length = 100)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 

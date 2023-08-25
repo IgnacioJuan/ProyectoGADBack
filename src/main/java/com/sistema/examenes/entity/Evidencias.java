@@ -42,5 +42,7 @@ public class Evidencias {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evidencia")
     @JsonIgnore
-    private Set<AprobacionEvidencia> lista_aprobacionesEvidencia  = new HashSet<>();
+    private Set<AprobacionEvidencia> lista_aprobaciones_evidencias = new HashSet<>();
+
+
 }

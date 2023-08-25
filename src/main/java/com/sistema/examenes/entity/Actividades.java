@@ -22,16 +22,8 @@ public class Actividades {
     private String nombre;
     @Column(name = "observaciones", length = 1000)
     private String observaciones;
-    @Column(name = "presepuesto_referencial")
-    private double presepuesto_referencial;
-    @Column(name = "reforma_suplemento")
-    private double reforma_suplemento;
-    @Column(name = "reforma_traspaso_d")
-    private double reforma_traspaso_d;
-    @Column(name = "reforma_traspaso_i")
-    private double reforma_traspaso_i;
-    @Column(name = "presupuesto_externo")
-    private double presupuesto_externo;
+    @Column(name = "presupuesto_referencial")
+    private double presupuesto_referencial;
     @Column(name = "codificado")
     private double codificado;
     @Column(name = "ejecutado")
@@ -51,20 +43,26 @@ public class Actividades {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<Evidencias> lista_evidencias = new HashSet<>();
 
-    //relacion de muchos a uno con la tabla detalle_trimestre
     @JsonIgnore
-    @OneToMany(mappedBy = "actividad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<DetalleTrimestre> detalle_trimestres = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<ReformaTraspaso_I> reformasI = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "actividad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<AprobacionEvidencia> lista_aprobacionesActividad  = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<ReformaTraspaso_D> reformasD = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_poa")
-    private Poa poa;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<PresupuestoExterno> presupuestos = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_responsable")
-    private Usuario usuario;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<ReformaSuplemento> reformaSuplementos = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<AprobacionActividades> aprobacionActividades = new HashSet<>();
+
+
+
 }

@@ -78,13 +78,13 @@ public class Proyecto_Controller {
                 a.setObjetivo(p.getObjetivo());
                 a.setMeta(p.getMeta());
                 a.setPorcentaje_alcance(p.getPorcentaje_alcance());
+                a.setEstado(p.getEstado());
                 a.setOds(p.getOds());
                 a.setPnd(p.getPnd());
                 a.setModelopoa(p.getModelopoa());
                 a.setPrograma(p.getPrograma());
-                //a.setIndicadores(p.getIndicadores());
-                //a.setComponente(p.getComponente());
-                //a.setCompetencia(p.getCompetencia());
+                a.setIndicador(p.getIndicador());
+                a.setCompetencia(p.getCompetencia());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {

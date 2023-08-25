@@ -20,16 +20,14 @@ public class ModeloPOA implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_modelo_poa")
     private Long id_modelo_poa;
-
     @Column(name = "nombre", length = 100)
     private String nombre;
-
+    @Column(name = "descripcion", length = 2000)
+    private String descripcion;
     @Column(name = "fecha_inicial")
     private Date fecha_inicial;
-
     @Column(name = "fecha_final")
     private Date fecha_final;
-
     @Column(name = "visible")
     private boolean visible;
 

@@ -34,8 +34,6 @@ public class Poa implements Serializable {
     private String localizacion;
     @Column(name = "cobertura")
     private String cobertura;
-    @Column(name = "tipo_ejecucion")
-    private String tipo_ejecucion;
     @Column(name = "barrio")
     private String barrio;
     @Column(name = "comunidad")
@@ -50,27 +48,18 @@ public class Poa implements Serializable {
     private double transferencias_gobierno;
     @Column(name = "convenios")
     private double convenios;
+    @Column(name = "estado")
+    private String estado;
+    @Column(name = "linea_base")
+    private String linea_base;
     @Column(name = "visible")
     private boolean visible;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_administrador")
-    private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_proyecto")
-    private Proyecto proyecto;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
-    private Set<Actividades> lista_actividades = new HashSet<>();
+    private Set<AprobacionPoa> lista_aprobaciones_poa = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
     @JsonIgnore
-    private Set<AprobacionPoa> lista_aprobacionesPoa  = new HashSet<>();
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
-    @JsonIgnore
-    private Set<AprobacionEvidencia> lista_aprobacionesActividad  = new HashSet<>();
-
+    private Set<AprobacionActividades> lista_aprobaciones_actividades = new HashSet<>();
 }
