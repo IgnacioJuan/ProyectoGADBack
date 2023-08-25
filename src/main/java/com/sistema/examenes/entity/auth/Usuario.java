@@ -1,7 +1,7 @@
 package com.sistema.examenes.entity.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sistema.examenes.entity.Persona;
+import com.sistema.examenes.entity.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -29,6 +29,24 @@ public class Usuario implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<ModeloPOA> modelosPoas = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<AprobacionPoa> lista_aprobaciones_poas = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<AprobacionActividad> lista_aprobaciones_actividades = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<AprobacionEvidencia> lista_aprobaciones_evidencias = new HashSet<>();
+
+
 
     public Usuario() {
     }
