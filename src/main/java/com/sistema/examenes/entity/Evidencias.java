@@ -1,10 +1,13 @@
 package com.sistema.examenes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -37,4 +40,7 @@ public class Evidencias {
     @JoinColumn(name = "id_actividad")
     private Actividades actividad;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evidencia")
+    @JsonIgnore
+    private Set<AprobacionEvidencia> lista_aprobacionesEvidencia  = new HashSet<>();
 }

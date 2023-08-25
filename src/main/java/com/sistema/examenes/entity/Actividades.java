@@ -56,6 +56,10 @@ public class Actividades {
     @OneToMany(mappedBy = "actividad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<DetalleTrimestre> detalle_trimestres = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "actividad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<AprobacionEvidencia> lista_aprobacionesActividad  = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_poa")
     private Poa poa;

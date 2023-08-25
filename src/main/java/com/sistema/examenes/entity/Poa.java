@@ -64,4 +64,13 @@ public class Poa implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
     private Set<Actividades> lista_actividades = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
+    @JsonIgnore
+    private Set<AprobacionPoa> lista_aprobacionesPoa  = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
+    @JsonIgnore
+    private Set<AprobacionEvidencia> lista_aprobacionesActividad  = new HashSet<>();
+
 }
