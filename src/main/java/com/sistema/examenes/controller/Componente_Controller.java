@@ -35,6 +35,13 @@ public class Componente_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listarc")
+    public ResponseEntity<List<Componente_DTO>> listarComponentes() {
+        List<Componente_DTO> componentes = Service.listarc();
+        return ResponseEntity.ok(componentes);
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Componente> getById(@PathVariable("id") Long id) {
         try {
