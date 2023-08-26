@@ -10,4 +10,6 @@ public interface ObjetivoPND_Service extends GenericService<ObjetivoPND, Long> {
     public List<ObjetivoPND> listar();
     List<ObjetivoPnd_DTO> buscarObjetivosPNDSPorNombreDTO(String nombre);
 
+    List<ObjetivoPnd_DTO> listarObjetivosPorIdEjeDTO(Long idEje);
+
 }
