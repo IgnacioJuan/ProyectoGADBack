@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.Componente_DTO;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.services.Competencia_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class Competencia_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Competencia> crear(@RequestBody Competencia r) {
         try {
-            //r.setVisible(true);
+            r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -35,6 +36,13 @@ public class Competencia_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listado")
+    public ResponseEntity<List<Competencia_DTO>> listarCompetencias() {
+        List<Competencia_DTO> competencias = Service.listado();
+        return ResponseEntity.ok(competencias);
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Competencia> getById(@PathVariable("id") Long id) {
         try {
