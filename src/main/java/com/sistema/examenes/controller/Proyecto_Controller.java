@@ -98,4 +98,13 @@ public class Proyecto_Controller {
         List<ProyectoResumenDTO> proyectos = Service.listarProyectosConRelaciones();
         return ResponseEntity.ok(proyectos);
     }
+
+    @GetMapping("/listardelModelo/{id_modelo_poa}")
+    public ResponseEntity<List<Proyecto>> ListadelModelo(@PathVariable("id_modelo_poa") Long id_modelo_poa) {
+        try {
+            return new ResponseEntity<>(Service.listardelModelo(id_modelo_poa), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
