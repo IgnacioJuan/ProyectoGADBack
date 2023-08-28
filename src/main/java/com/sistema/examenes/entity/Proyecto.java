@@ -3,6 +3,7 @@ package com.sistema.examenes.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,8 +28,9 @@ public class Proyecto implements Serializable {
     private String objetivo;
     @Column(name = "meta", length = 2000)
     private String meta;
-    @Column(name = "porcentaje_alcance")
     private double porcentaje_alcance;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicio")
     private Date fecha_inicio;
     @Column(name = "estado", length = 100)
