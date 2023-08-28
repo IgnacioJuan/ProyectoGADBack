@@ -18,10 +18,10 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "from poa p " +
             "join aprobacion_poa ap " +
             "on ap.id_poa = p.id_poa " +
-            "where visible =true " +
+            "where p.visible =true " +
             "and ap.id_proyecto = :id_proyecto " +
             "and (ap.estado= :estado or :estado is null)" +
-            "ORDER BY nombre ASC", nativeQuery = true)
+            "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
 }
