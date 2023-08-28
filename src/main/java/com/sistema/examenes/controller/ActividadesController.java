@@ -1,5 +1,7 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.ActividadDTO;
+import com.sistema.examenes.dto.MetaPdot_DTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class ActividadesController {
     public ResponseEntity<Actividades> crear(@RequestBody Actividades a){
         try {
             a.setVisible(true);
+            a.setEstado("En proceso");
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -82,5 +85,10 @@ public class ActividadesController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarActividadesPoa/{poaId}")
+    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+        return actividadesService.listarActividadesPorIdPoa(poaId);
     }
 }

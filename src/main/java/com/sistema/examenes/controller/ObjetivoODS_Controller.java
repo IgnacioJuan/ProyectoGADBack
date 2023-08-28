@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/objetivosods")
+@RequestMapping("/api/objetivoods")
 public class ObjetivoODS_Controller {
     @Autowired
     ObjetivoODS_Service Service;
