@@ -111,4 +111,12 @@ public class Poa_Controller {
             }
         }
     }
+    @GetMapping("/listardelProyecto/{id_proyecto}/{estado}")
+    public ResponseEntity<List<Poa>> listadelProyecto(@PathVariable Long id_proyecto,@PathVariable String estado) {
+        try {
+            return new ResponseEntity<>(Service.listarPoadelProyectoconEstado(id_proyecto, estado), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
