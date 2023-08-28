@@ -25,7 +25,7 @@ public class Eje implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
-   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "eje")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "eje")
     @JsonIgnore
     private Set<ObjetivoPND> lista_objetivosPNDS = new HashSet<>();
 
