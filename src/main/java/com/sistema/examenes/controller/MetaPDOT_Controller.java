@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.MetaPdot_DTO;
+import com.sistema.examenes.dto.ObjetivoPdot_DTO;
 import com.sistema.examenes.entity.MetaPDOT;
 import com.sistema.examenes.services.MetaPDOT_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,5 +107,10 @@ public class MetaPDOT_Controller {
     public ResponseEntity<List<MetaPdot_DTO>> buscarMetasPdotsPorNombre(@RequestParam("nombre") String nombre) {
         List<MetaPdot_DTO> metasEncontradas = Service.buscarMetasPdotsPorNombre(nombre);
         return ResponseEntity.ok(metasEncontradas);
+    }
+
+    @GetMapping("/listaMetasPdots/{idObjetivoP}")
+    public List<MetaPdot_DTO> listarMetasPdotsDTOPorIdObjPdot(@PathVariable Long idObjetivoP) {
+        return Service.listarMetasPdotsDTOPorIdObjPdot(idObjetivoP);
     }
 }

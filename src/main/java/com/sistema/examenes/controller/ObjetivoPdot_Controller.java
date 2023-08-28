@@ -104,4 +104,9 @@ public class ObjetivoPdot_Controller {
         List<ObjetivoPdot_DTO> objetivosEncontrados = Service.buscarObjetivosPdotsPorNombre(nombre);
         return ResponseEntity.ok(objetivosEncontrados);
     }
+
+    @GetMapping("/listaObjetivosPdots/{idComponente}")
+    public List<ObjetivoPdot_DTO> listarObjetivosPdotsPorIdComponente(@PathVariable Long idComponente) {
+        return Service.listarObjetivosPdotsDTOPorIdComponente(idComponente);
+    }
 }
