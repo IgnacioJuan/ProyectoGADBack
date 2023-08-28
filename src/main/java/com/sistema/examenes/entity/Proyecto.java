@@ -41,11 +41,11 @@ public class Proyecto implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_pnd")
     private ObjetivoPND pnd;
-/*
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_ods")
     private ObjetivoODS ods;
-*/
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_modelo_poa")
     private ModeloPOA modelopoa;
