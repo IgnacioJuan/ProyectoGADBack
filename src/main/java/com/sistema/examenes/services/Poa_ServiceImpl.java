@@ -29,4 +29,9 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public Poa obtenerPoaId(Long id) {
         return repository.obtenerPoaId(id);
     }
+
+    @Override
+    public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado) {
+        return repository.listarPoadelProyectoconEstado(id_proyecto,estado);
+    }
 }

@@ -9,4 +9,7 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     public List<Poa> listar();
 
     public Poa obtenerPoaId(Long id);
+
+    public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
+
 }
