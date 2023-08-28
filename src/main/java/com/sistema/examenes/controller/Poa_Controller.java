@@ -1,5 +1,7 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.Poa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,13 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listarPoasAprobados")
+    public ResponseEntity<List<Poa_DTO>> listarPoasAprobados() {
+        List<Poa_DTO> poas = Service.listarPoasAprobados();
+        return ResponseEntity.ok(poas);
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Poa> getById(@PathVariable("id") Long id) {
         try {
