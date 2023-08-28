@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema.examenes.entity.auth.Usuario;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,8 +25,12 @@ public class ModeloPOA implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2000)
     private String descripcion;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicial")
     private Date fecha_inicial;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_final")
     private Date fecha_final;
     @Column(name = "visible")
