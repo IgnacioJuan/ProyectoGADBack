@@ -71,11 +71,7 @@ public class ActividadesController {
             } else {
                 a.setNombre(actividades.getNombre());
                 a.setObservaciones(actividades.getObservaciones());
-                a.setPresepuesto_referencial(actividades.getPresepuesto_referencial());
-                a.setReforma_suplemento(actividades.getReforma_suplemento());
-                a.setReforma_traspaso_d(actividades.getReforma_traspaso_d());
-                a.setReforma_traspaso_i(actividades.getReforma_traspaso_i());
-                a.setPresupuesto_externo(actividades.getPresupuesto_externo());
+                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setCodificado(actividades.getCodificado());
                 a.setEjecutado(actividades.getEjecutado());
                 a.setSaldo(actividades.getSaldo());
