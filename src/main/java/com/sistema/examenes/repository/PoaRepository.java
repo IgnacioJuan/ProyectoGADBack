@@ -13,4 +13,8 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
 
     @Query(value = "SELECT * FROM poa WHERE id_poa= :id AND visible = true", nativeQuery = true)
     Poa obtenerPoaId(@Param("id") Long id);
+
+    @Query(value = "SELECT id_poa, meta_alcanzar, meta_fisica, avance_real, fecha_inicio, fecha_fin, localizacion, cobertura, barrio, comunidad, nombre_funcionario, cargo, recursos_propios, transferencias_gobierno, convenios, linea_base FROM poa WHERE estado = 'aprobado' AND visible = true", nativeQuery = true)
+    List<Object[]> listarPoasAprobados();
+
 }
