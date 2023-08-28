@@ -20,7 +20,9 @@ public class Actividades {
     private Long id_actividad;
     @Column(name = "nombre", length = 200)
     private String nombre;
-    @Column(name = "observaciones", length = 1000)
+    @Column(name = "descripcion", length = 2000)
+    private String descripcion;
+    @Column(name = "observaciones", length = 2000)
     private String observaciones;
     @Column(name = "presupuesto_referencial")
     private double presupuesto_referencial;
@@ -30,6 +32,8 @@ public class Actividades {
     private double ejecutado;
     @Column(name = "saldo")
     private double saldo;
+    @Column(name = "estado", length = 100)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
@@ -61,8 +65,14 @@ public class Actividades {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<AprobacionActividad> aprobacionActividades = new HashSet<>();
+    private Set<Periodo> periodos = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_responsable")
+    private Usuario usuario;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_poa")
+    private Poa poa;
 
 }

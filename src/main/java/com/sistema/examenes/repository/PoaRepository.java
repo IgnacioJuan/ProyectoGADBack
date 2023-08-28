@@ -24,7 +24,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
     
-    @Query(value = "SELECT id_poa, meta_alcanzar, meta_fisica, avance_real, fecha_inicio, fecha_fin, localizacion, cobertura, barrio, comunidad, nombre_funcionario, cargo, recursos_propios, transferencias_gobierno, convenios, linea_base FROM poa WHERE estado = 'aprobado' AND visible = true", nativeQuery = true)
+    @Query(value = "SELECT id_poa, fecha_inicio, fecha_fin, localizacion, cobertura, barrio, comunidad, nombre_funcionario, cargo, recursos_propios, recursos_externos, linea_base FROM poa WHERE estado = 'aprobado' AND visible = true", nativeQuery = true)
     List<Object[]> listarPoasAprobados();
 
 }

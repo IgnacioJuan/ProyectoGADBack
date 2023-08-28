@@ -97,22 +97,23 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setMeta_alcanzar(p.getMeta_alcanzar());
-                a.setMeta_fisica(p.getMeta_fisica());
-                a.setAvance_real(p.getAvance_real());
-                a.setLocalizacion(p.getLocalizacion());
                 a.setFecha_inicio(p.getFecha_fin());
                 a.setFecha_fin(p.getFecha_fin());
+                a.setLocalizacion(p.getLocalizacion());
                 a.setCobertura(p.getCobertura());
                 a.setBarrio(p.getBarrio());
                 a.setComunidad(p.getComunidad());
+                a.setLinea_base(p.getLinea_base());
                 a.setNombre_funcionario(p.getNombre_funcionario());
                 a.setCargo(p.getCargo());
+                a.setMeta_alcanzar(p.getMeta_alcanzar());
+                a.setMeta_fisica(p.getMeta_fisica());
+                a.setAvance_real(p.getAvance_real());
                 a.setRecursos_propios(p.getRecursos_propios());
-                a.setTransferencias_gobierno(p.getTransferencias_gobierno());
-                a.setConvenios(p.getConvenios());
-                a.setLinea_base(p.getLinea_base());
+                a.setRecursos_externos(p.getRecursos_externos());
                 a.setEstado(p.getEstado());
+                a.setObservacion_presupuesto(a.getObservacion_presupuesto());
+                a.setObservacion_aprobacion(a.getObservacion_aprobacion());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {

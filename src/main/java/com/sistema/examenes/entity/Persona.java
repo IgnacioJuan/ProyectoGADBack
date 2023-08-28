@@ -36,6 +36,8 @@ public class Persona implements Serializable {
     private String direccion;
     @Column(name = "celular")
     private String celular;
+    @Column(name = "cargo")
+    private String cargo;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;

@@ -33,6 +33,10 @@ public class Proyecto implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicio")
     private Date fecha_inicio;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "fecha_fin")
+    private Date fecha_fin;
     @Column(name = "estado", length = 100)
     private String estado;
     @Column(name = "visible")
@@ -69,5 +73,5 @@ public class Proyecto implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
     @JsonIgnore
-    private Set<AprobacionPoa> lista_aprobacionesPoa  = new HashSet<>();
+    private Set<Poa> lista_Poa  = new HashSet<>();
 }

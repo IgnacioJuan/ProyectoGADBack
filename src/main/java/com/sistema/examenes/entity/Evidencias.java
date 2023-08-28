@@ -23,10 +23,12 @@ public class Evidencias {
     private String nombre;
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
-    @Column(name = "ruta", length = 1000)
-    private String ruta;
+    @Column(name = "enlace", length = 1000)
+    private String enlace;
     @Column(name = "fecha")
     private Date fecha;
+    @Column(name = "valor")
+    private double valor;
     @Column(name = "visible")
     private boolean visible;
 
@@ -39,10 +41,5 @@ public class Evidencias {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actividad")
     private Actividades actividad;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evidencia")
-    @JsonIgnore
-    private Set<AprobacionEvidencia> lista_aprobaciones_evidencias = new HashSet<>();
-
 
 }
