@@ -28,7 +28,9 @@ public class ObjetivoODS implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "ods")
+/*
     @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "ods")
     private Set<Proyecto> lista_proyectos = new HashSet<>();
+    */
 }
