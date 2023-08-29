@@ -42,18 +42,19 @@ public class Poa implements Serializable {
     private String nombre_funcionario;
     @Column(name = "cargo")
     private String cargo;
-    @Column(name = "recursos_propios")
-    private double recursos_propios;
-    @Column(name = "transferencias_gobierno")
-    private double transferencias_gobierno;
-    @Column(name = "convenios")
-    private double convenios;
     @Column(name = "estado")
     private String estado;
     @Column(name = "linea_base")
     private String linea_base;
+    @Column(name = "tipo_periodo")
+    private String tipo_periodo;
+
     @Column(name = "visible")
     private boolean visible;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_responsable")
+    private Usuario usuario;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")

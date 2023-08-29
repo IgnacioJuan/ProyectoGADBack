@@ -70,11 +70,14 @@ public class ActividadesController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 a.setNombre(actividades.getNombre());
-                a.setObservaciones(actividades.getObservaciones());
+                a.setDescripcion(actividades.getDescripcion());
                 a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setCodificado(actividades.getCodificado());
                 a.setEjecutado(actividades.getEjecutado());
                 a.setSaldo(actividades.getSaldo());
+                a.setRecursos_propios(actividades.getRecursos_propios());
+                a.setRecursos_externos(actividades.getRecursos_externos());
+                a.setUsuario(actividades.getUsuario());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {

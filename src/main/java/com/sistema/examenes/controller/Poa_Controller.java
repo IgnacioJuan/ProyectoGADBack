@@ -108,12 +108,9 @@ public class Poa_Controller {
                 a.setComunidad(p.getComunidad());
                 a.setNombre_funcionario(p.getNombre_funcionario());
                 a.setCargo(p.getCargo());
-                a.setRecursos_propios(p.getRecursos_propios());
-                a.setTransferencias_gobierno(p.getTransferencias_gobierno());
-                a.setConvenios(p.getConvenios());
                 a.setLinea_base(p.getLinea_base());
                 a.setEstado(p.getEstado());
-                a.setVisible(p.isVisible());
+                a.setUsuario(p.getUsuario());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
