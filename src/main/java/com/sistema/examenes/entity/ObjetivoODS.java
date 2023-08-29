@@ -28,7 +28,6 @@ public class ObjetivoODS implements Serializable {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "ods")
-    @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();
 
 }
