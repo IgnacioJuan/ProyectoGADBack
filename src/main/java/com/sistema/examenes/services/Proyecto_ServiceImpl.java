@@ -29,11 +29,6 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
     }
 
     @Override
-    public List<Proyecto> listardelModelo(Long id_modelo_poa) {
-        return repository.listarProyectosdelModelo(id_modelo_poa);
-    }
-
-    @Override
     public List<ProyectoResumenDTO> listarProyectosConRelaciones() {
         List<Object[]> resultados = repository.listarProyectosConRelaciones();
 

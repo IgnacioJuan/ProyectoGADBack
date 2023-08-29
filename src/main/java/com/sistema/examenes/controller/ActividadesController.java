@@ -75,7 +75,11 @@ public class ActividadesController {
                 a.setNombre(actividades.getNombre());
                 a.setDescripcion(actividades.getDescripcion());
                 a.setObservaciones(actividades.getObservaciones());
-                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
+                a.setPresepuesto_referencial(actividades.getPresepuesto_referencial());
+                a.setReforma_suplemento(actividades.getReforma_suplemento());
+                a.setReforma_traspaso_d(actividades.getReforma_traspaso_d());
+                a.setReforma_traspaso_i(actividades.getReforma_traspaso_i());
+                a.setPresupuesto_externo(actividades.getPresupuesto_externo());
                 a.setCodificado(actividades.getCodificado());
                 a.setEjecutado(actividades.getEjecutado());
                 a.setSaldo(actividades.getSaldo());

@@ -2,7 +2,6 @@ package com.sistema.examenes.services;
 
 
 import com.sistema.examenes.dto.MetaPdot_DTO;
-import com.sistema.examenes.dto.ObjetivoPdot_DTO;
 import com.sistema.examenes.entity.MetaPDOT;
 import com.sistema.examenes.repository.MetaPDOTRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,20 +48,5 @@ public class MetaPDOT_ServiceImpl extends GenericServiceImpl<MetaPDOT, Long> imp
             metasEncontradas.add(metaDTO);
         }
         return metasEncontradas;
-    }
-
-    @Override
-    public List<MetaPdot_DTO> listarMetasPdotsDTOPorIdObjPdot(Long idObjetivoP) {
-        List<Object[]> resultados = repository.listarMetasPdotsDTOPorIdObjPdot(idObjetivoP);
-        List<MetaPdot_DTO> metas = new ArrayList<>();
-        for (Object[] resultado : resultados) {
-            MetaPdot_DTO m = new MetaPdot_DTO();
-            m.setId_meta_pdot(((BigInteger) resultado[0]).longValue());
-            m.setNombre((String) resultado[1]);
-            m.setDescripcion((String) resultado[2]);
-            m.setPorcentaje_meta((Double) resultado[3]);
-            metas.add(m);
-        }
-        return metas;
     }
 }

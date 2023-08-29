@@ -80,16 +80,11 @@ public class ObjetivoPND_Controller {
             }
         }
     }
-    @GetMapping("/buscarobjetivopndsnombre/{nombre}")
+    @GetMapping("/buscarobjetivoPNDSnombre/{nombre}")
     public ResponseEntity<List<ObjetivoPnd_DTO>> buscarObjetivosPNDSPorNombreDTO(@PathVariable("nombre") String nombre) {
         List<ObjetivoPnd_DTO> objetivosEncontrados = Service.buscarObjetivosPNDSPorNombreDTO(nombre);
         return ResponseEntity.ok(objetivosEncontrados);
     }
 
-    @GetMapping("/listarporeje/{idEje}")
-    public ResponseEntity<List<ObjetivoPnd_DTO>> listarObjetivosPorIdEjeDTO(@PathVariable("idEje") Long idEje) {
-        List<ObjetivoPnd_DTO> objetivosEncontrados = Service.listarObjetivosPorIdEjeDTO(idEje);
-        return ResponseEntity.ok(objetivosEncontrados);
-    }
 
 }

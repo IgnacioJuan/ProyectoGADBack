@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class Programa_ServiceImpl extends GenericServiceImpl<Programa, Long> imp
 
         for (Object[] resultado : resultados) {
             Programa_DTO programaDTO = new Programa_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                    (Long) resultado[0],
                     (String) resultado[1],
                     (String) resultado[2]
             );

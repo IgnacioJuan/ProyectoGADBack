@@ -1,6 +1,5 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.dto.Componente_DTO;
 import com.sistema.examenes.entity.Componente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,10 +14,7 @@ public interface ComponenteRepository extends JpaRepository<Componente, Long> {
     @Query(value = "SELECT * FROM componente WHERE id_componente= :id AND visible = true", nativeQuery = true)
     Componente obtenerComponenteId(@Param("id") Long id);
 
-    @Query(value = "SELECT id_componente, nombre, descripcion FROM componente WHERE LOWER(nombre) LIKE LOWER(CONCAT('%', :nombre, '%')) AND visible = true", nativeQuery = true)
+    @Query(value = "SELECT id_componente, nombre, codigo, descripcion FROM componente WHERE LOWER(nombre) LIKE LOWER(CONCAT('%', :nombre, '%')) AND visible = true", nativeQuery = true)
     List<Object[]> buscarComponentesPorNombre(@Param("nombre") String nombre);
-
-    @Query(value = "SELECT id_componente, nombre, descripcion FROM componente WHERE visible = true ORDER BY nombre ASC", nativeQuery = true)
-    List<Object[]> listarc();
 
 }

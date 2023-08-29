@@ -2,8 +2,6 @@ package com.sistema.examenes.controller;
 
 
 import com.sistema.examenes.dto.Indicador_DTO;
-import com.sistema.examenes.dto.MetaPdot_DTO;
-import com.sistema.examenes.dto.ObjetivoPdot_DTO;
 import com.sistema.examenes.entity.Indicador;
 import com.sistema.examenes.services.Indicador_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,10 +106,5 @@ public class Indicador_Controller {
     public ResponseEntity<List<Indicador_DTO>> buscarComponentesPorNombre(@RequestParam("nombre") String nombre) {
         List<Indicador_DTO> indicadoresEncontrados = Service.buscarIndicadoresPorNombre(nombre);
         return ResponseEntity.ok(indicadoresEncontrados);
-    }
-
-    @GetMapping("/listaIndicadores/{idMetaPdot}")
-    public List<Indicador_DTO> listarIndicadoresPorIdMetaPdot(@PathVariable Long idMetaPdot) {
-        return Service.listarIndicadoresPorIdMetaPdot(idMetaPdot);
     }
 }

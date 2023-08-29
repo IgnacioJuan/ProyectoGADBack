@@ -72,7 +72,6 @@ public class ModeloPOA_Controller {
         } else {
             try {
                 a.setNombre(p.getNombre());
-                a.setDescripcion(p.getDescripcion());
                 a.setFecha_inicial(p.getFecha_inicial());
                 a.setFecha_final(p.getFecha_final());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
