@@ -25,7 +25,7 @@ public class ActividadesController {
     public ResponseEntity<Actividades> crear(@RequestBody Actividades a){
         try {
             a.setVisible(true);
-            a.setEstado("En proceso");
+            //a.setEstado("aprobado");
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -80,6 +80,7 @@ public class ActividadesController {
                 a.setEjecutado(actividades.getEjecutado());
                 a.setSaldo(actividades.getSaldo());
                 a.setEstado(actividades.getEstado());
+                a.setUsuario(actividades.getUsuario());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {

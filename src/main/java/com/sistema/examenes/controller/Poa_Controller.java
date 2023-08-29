@@ -112,8 +112,8 @@ public class Poa_Controller {
                 a.setRecursos_propios(p.getRecursos_propios());
                 a.setRecursos_externos(p.getRecursos_externos());
                 a.setEstado(p.getEstado());
-                a.setObservacion_presupuesto(a.getObservacion_presupuesto());
-                a.setObservacion_aprobacion(a.getObservacion_aprobacion());
+                a.setObservacion_presupuesto(p.getObservacion_presupuesto());
+                a.setObservacion_aprobacion(p.getObservacion_aprobacion());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {

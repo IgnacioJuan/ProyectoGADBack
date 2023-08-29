@@ -75,9 +75,9 @@ public class Periodo_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setPorcentaje(a.getPorcentaje());
-                a.setReferencia(a.getReferencia());
-                a.setValor_ejecutado(a.getValor_ejecutado());
+                a.setPorcentaje(p.getPorcentaje());
+                a.setReferencia(p.getReferencia());
+                a.setValor_ejecutado(p.getValor_ejecutado());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
