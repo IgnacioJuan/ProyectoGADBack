@@ -74,18 +74,12 @@ public class ActividadesController {
             } else {
                 a.setNombre(actividades.getNombre());
                 a.setDescripcion(actividades.getDescripcion());
-                a.setObservaciones(actividades.getObservaciones());
-              /*  a.setPresepuesto_referencial(actividades.getPresepuesto_referencial());
-                a.setReforma_suplemento(actividades.getReforma_suplemento());
-                a.setReforma_traspaso_d(actividades.getReforma_traspaso_d());
-                a.setReforma_traspaso_i(actividades.getReforma_traspaso_i());
-                a.setPresupuesto_externo(actividades.getPresupuesto_externo());
-                */
-
+                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setCodificado(actividades.getCodificado());
                 a.setEjecutado(actividades.getEjecutado());
                 a.setSaldo(actividades.getSaldo());
-                a.setEstado(actividades.getEstado());
+                a.setRecursos_propios(actividades.getRecursos_propios());
+                a.setRecursos_externos(actividades.getRecursos_externos());
                 a.setUsuario(actividades.getUsuario());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }

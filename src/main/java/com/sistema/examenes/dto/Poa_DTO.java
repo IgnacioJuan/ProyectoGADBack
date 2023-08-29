@@ -20,7 +20,6 @@ public class Poa_DTO {
     private String comunidad;
     private String nombre_funcionario;
     private String cargo;
-    private double recursos_propios;
-    private double recursos_externos;
     private String linea_base;
+    private String tipo_periodo;
 }
