@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
 
         for (Object[] resultado : resultados) {
             Indicador_DTO imdicadorDTO = new Indicador_DTO(
-                    (Long) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (String) resultado[3]

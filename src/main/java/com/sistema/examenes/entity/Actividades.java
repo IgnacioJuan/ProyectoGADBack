@@ -46,7 +46,7 @@ public class Actividades {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<Evidencias> lista_evidencias = new HashSet<>();
-
+/*
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<ReformaTraspaso_I> reformasI = new HashSet<>();
@@ -62,7 +62,7 @@ public class Actividades {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<ReformaSuplemento> reformaSuplementos = new HashSet<>();
-
+*/
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<Periodo> periodos = new HashSet<>();

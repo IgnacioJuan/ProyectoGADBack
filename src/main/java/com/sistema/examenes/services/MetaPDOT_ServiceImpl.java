@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MetaPDOT_ServiceImpl extends GenericServiceImpl<MetaPDOT, Long> imp
 
         for (Object[] resultado : resultados) {
             MetaPdot_DTO metaDTO = new MetaPdot_DTO(
-                    (Long) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (double) resultado[3]

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         List<ProyectoResumenDTO> proyectos = new ArrayList<>();
         for (Object[] resultado : resultados) {
             ProyectoResumenDTO proyectoDTO = new ProyectoResumenDTO();
-            proyectoDTO.setId_proyecto((Long) resultado[0]);
+            proyectoDTO.setId_proyecto(((BigInteger) resultado[0]).longValue());
             proyectoDTO.setCodigo((String) resultado[1]);
             proyectoDTO.setNombre((String) resultado[2]);
             proyectoDTO.setObjetivo((String) resultado[3]);
