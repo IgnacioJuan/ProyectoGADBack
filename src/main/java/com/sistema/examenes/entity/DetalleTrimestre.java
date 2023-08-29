@@ -31,6 +31,10 @@ public class DetalleTrimestre {
     @JoinColumn(name = "id_trimestre")
     private Trimestre trimestre;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_actividad")
+    private Actividades actividad;
+
     //relacion con la tabla reporte_trimestre
     @JsonIgnore
     @OneToMany(mappedBy = "detalle_trimestre", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

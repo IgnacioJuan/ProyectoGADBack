@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class Eje_ServiceImpl extends GenericServiceImpl<Eje, Long> implements Ej
 
         for (Object[] resultado : resultados) {
             Eje_DTO ejeDTO = new Eje_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                    (Long) resultado[0],
                     (String) resultado[1]
             );
             ejesEncontrados.add(ejeDTO);

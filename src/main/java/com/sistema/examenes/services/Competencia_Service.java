@@ -11,6 +11,4 @@ public interface Competencia_Service extends GenericService<Competencia, Long> {
     public Competencia obtenerCompetenciaId(Long id);
     List<Competencia_DTO> buscarCompetenciasPorNombreDTO(String nombre);
 
-    List<Competencia_DTO> listado();
-
 }

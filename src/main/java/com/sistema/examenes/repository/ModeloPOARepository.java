@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ModeloPOARepository extends JpaRepository<ModeloPOA, Long> {
-    @Query(value = "SELECT * from modelopoa where visible =true ORDER BY fecha_inicial desc", nativeQuery = true)
+    @Query(value = "SELECT * from modelopoa where visible =true ORDER BY nombre ASC", nativeQuery = true)
     List<ModeloPOA> listarModelosPOA();
 }

@@ -1,7 +1,6 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.Competencia_DTO;
-import com.sistema.examenes.dto.Componente_DTO;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
 
         for (Object[] resultado : resultados) {
             Competencia_DTO competenciaDTO = new Competencia_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                    (Long) resultado[0],
                     (String) resultado[1]
             );
             competenciasEncontradas.add(competenciaDTO);
@@ -48,17 +46,4 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
         return competenciasEncontradas;
     }
 
-    @Override
-    public List<Competencia_DTO> listado() {
-        List<Object[]> resultados = repository.listado();
-        List<Competencia_DTO> competencias = new ArrayList<>();
-
-        for (Object[] result : resultados) {
-            Competencia_DTO dto = new Competencia_DTO();
-            dto.setId_competencia(((BigInteger) result[0]).longValue());
-            dto.setNombre((String) result[1]);
-            competencias.add(dto);
-        }
-        return competencias;
-    }
 }

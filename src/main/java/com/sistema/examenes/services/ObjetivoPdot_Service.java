@@ -12,7 +12,4 @@ public interface ObjetivoPdot_Service extends GenericService<Objetivo_pdot, Long
     public Objetivo_pdot obtenerObjetivoPdotId(Long id);
 
     List<ObjetivoPdot_DTO> buscarObjetivosPdotsPorNombre(String nombre);
-
-    List<ObjetivoPdot_DTO> listarObjetivosPdotsDTOPorIdComponente(Long idComponente);
-
 }
