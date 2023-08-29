@@ -37,9 +37,9 @@ public class Poa_Controller {
         }
     }
 
-    @GetMapping("/listarPoasAprobados")
-    public ResponseEntity<List<Poa_DTO>> listarPoasAprobados() {
-        List<Poa_DTO> poas = Service.listarPoasAprobados();
+    @GetMapping("/listarPoasDeModelo")
+    public ResponseEntity<List<Poa_DTO>> listarPoasDeModelo() {
+        List<Poa_DTO> poas = Service.listarPoasDeModelo();
         return ResponseEntity.ok(poas);
     }
 

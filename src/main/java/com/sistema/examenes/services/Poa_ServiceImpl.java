@@ -40,8 +40,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado) {
         return repository.listarPoadelProyectoconEstado(id_proyecto,estado);
     }
-    public List<Poa_DTO> listarPoasAprobados() {
-        List<Object[]> resultados = repository.listarPoasAprobados();
+    public List<Poa_DTO> listarPoasDeModelo() {
+        List<Object[]> resultados = repository.listarPoasDeModelo();
         List<Poa_DTO> poas = new ArrayList<>();
 
         for (Object[] result : resultados) {
