@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,10 @@ public class ActividadesController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarActividadesPoa/{poaId}")
+    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+        return actividadesService.listarActividadesPorIdPoa(poaId);
     }
 }

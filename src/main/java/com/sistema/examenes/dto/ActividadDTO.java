@@ -15,4 +15,6 @@ public class ActividadDTO {
     private double codificado;
     private double ejecutado;
     private double saldo;
+    private double recursos_propios;
+    private double recursos_externos;
 }
