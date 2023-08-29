@@ -40,12 +40,26 @@ public class ObjetivoPdot_ServiceImpl extends GenericServiceImpl<Objetivo_pdot, 
 
         for (Object[] resultado : resultados) {
             ObjetivoPdot_DTO objetivoDTO = new ObjetivoPdot_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                    (Long) resultado[0],
                     (String) resultado[1],
                     (String) resultado[2]
             );
             objetivosEncontrados.add(objetivoDTO);
         }
         return objetivosEncontrados;
+    }
+
+    @Override
+    public List<ObjetivoPdot_DTO> listarObjetivosPdotsDTOPorIdComponente(Long idComponente) {
+        List<Object[]> resultados = repository.listarObjetivosPdotsDTOPorIdComponente(idComponente);
+        List<ObjetivoPdot_DTO> objs = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ObjetivoPdot_DTO obj = new ObjetivoPdot_DTO();
+            obj.setId_objetivo_pdot(((BigInteger) resultado[0]).longValue());
+            obj.setNombre((String) resultado[1]);
+            obj.setDescripcion((String) resultado[2]);
+            objs.add(obj);
+        }
+        return objs;
     }
 }

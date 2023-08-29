@@ -2,6 +2,7 @@ package com.sistema.examenes.services;
 
 
 import com.sistema.examenes.dto.Indicador_DTO;
+import com.sistema.examenes.dto.MetaPdot_DTO;
 import com.sistema.examenes.entity.Indicador;
 import com.sistema.examenes.repository.IndicadorRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -41,7 +42,7 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
 
         for (Object[] resultado : resultados) {
             Indicador_DTO imdicadorDTO = new Indicador_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                    (Long) resultado[0],
                     (String) resultado[1],
                     (String) resultado[2],
                     (String) resultado[3]
@@ -49,5 +50,20 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
             indicadoresEncontrados.add(imdicadorDTO);
         }
         return indicadoresEncontrados;
+    }
+
+    @Override
+    public List<Indicador_DTO> listarIndicadoresPorIdMetaPdot(Long idMetaPdot) {
+        List<Object[]> resultados = repository.listarIndicadoresPorIdMetaPdot(idMetaPdot);
+        List<Indicador_DTO> indicadores = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            Indicador_DTO ind = new Indicador_DTO();
+            ind.setId_indicador(((BigInteger) resultado[0]).longValue());
+            ind.setNombre((String) resultado[1]);
+            ind.setDescripcion((String) resultado[2]);
+            ind.setTipoEvaluacion((String) resultado[3]);
+            indicadores.add(ind);
+        }
+        return indicadores;
     }
 }

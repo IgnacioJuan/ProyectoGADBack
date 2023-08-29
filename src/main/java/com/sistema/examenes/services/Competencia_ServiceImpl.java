@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.Componente_DTO;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -47,4 +48,17 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
         return competenciasEncontradas;
     }
 
+    @Override
+    public List<Competencia_DTO> listado() {
+        List<Object[]> resultados = repository.listado();
+        List<Competencia_DTO> competencias = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            Competencia_DTO dto = new Competencia_DTO();
+            dto.setId_competencia(((BigInteger) result[0]).longValue());
+            dto.setNombre((String) result[1]);
+            competencias.add(dto);
+        }
+        return competencias;
+    }
 }

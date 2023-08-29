@@ -12,4 +12,6 @@ public interface Componente_Service extends GenericService<Componente, Long> {
     public Componente obtenerComponenteId(Long id);
 
     List<Componente_DTO> buscarComponentesPorNombre(String nombre);
+
+    public List<Componente_DTO> listarc();
 }

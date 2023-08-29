@@ -29,6 +29,22 @@ public class Componente_ServiceImpl extends GenericServiceImpl<Componente, Long>
     }
 
     @Override
+    public List<Componente_DTO> listarc() {
+        List<Object[]> resultados = repository.listarc();
+        List<Componente_DTO> componentesEncontrados = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            Componente_DTO dto = new Componente_DTO();
+            dto.setId_componente(((BigInteger) result[0]).longValue());
+            dto.setNombre((String) result[1]);
+            dto.setDescripcion((String) result[2]);
+            componentesEncontrados.add(dto);
+        }
+
+        return componentesEncontrados;
+    }
+
+    @Override
     public Componente obtenerComponenteId(Long id) {
         return repository.obtenerComponenteId(id);
     }
@@ -40,10 +56,9 @@ public class Componente_ServiceImpl extends GenericServiceImpl<Componente, Long>
 
         for (Object[] resultado : resultados) {
             Componente_DTO componenteDTO = new Componente_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                    (Long) resultado[0],
                     (String) resultado[1],
-                    (String) resultado[2],
-                    (String) resultado[3]
+                    (String) resultado[2]
             );
             componentesEncontrados.add(componenteDTO);
         }
