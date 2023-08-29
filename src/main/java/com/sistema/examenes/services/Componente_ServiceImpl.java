@@ -56,7 +56,7 @@ public class Componente_ServiceImpl extends GenericServiceImpl<Componente, Long>
 
         for (Object[] resultado : resultados) {
             Componente_DTO componenteDTO = new Componente_DTO(
-                    (Long) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2]
             );

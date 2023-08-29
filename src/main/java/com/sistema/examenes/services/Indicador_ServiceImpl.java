@@ -42,7 +42,7 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
 
         for (Object[] resultado : resultados) {
             Indicador_DTO imdicadorDTO = new Indicador_DTO(
-                    (Long) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (String) resultado[3]

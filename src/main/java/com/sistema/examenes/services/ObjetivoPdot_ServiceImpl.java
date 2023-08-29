@@ -40,7 +40,7 @@ public class ObjetivoPdot_ServiceImpl extends GenericServiceImpl<Objetivo_pdot, 
 
         for (Object[] resultado : resultados) {
             ObjetivoPdot_DTO objetivoDTO = new ObjetivoPdot_DTO(
-                    (Long) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2]
             );
