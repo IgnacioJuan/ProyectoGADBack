@@ -1,8 +1,10 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.ObjetivoOds_DTO;
-import com.sistema.examenes.entity.ObjetivoODS;
-import com.sistema.examenes.services.ObjetivoODS_Service;
+
+import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.entity.ReportePeriodo;
+import com.sistema.examenes.services.Periodo_Service;
+import com.sistema.examenes.services.ReportePeriodo_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/objetivoods")
-public class ObjetivoODS_Controller {
+@RequestMapping("/api/reporte_periodo")
+public class ReportePeriodo_Controller {
     @Autowired
-    ObjetivoODS_Service Service;
+    ReportePeriodo_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<ObjetivoODS> crear(@RequestBody ObjetivoODS r) {
+    public ResponseEntity<ReportePeriodo> crear(@RequestBody ReportePeriodo r) {
         try {
             r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -28,7 +30,7 @@ public class ObjetivoODS_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<ObjetivoODS>> obtenerLista() {
+    public ResponseEntity<List<ReportePeriodo>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +38,7 @@ public class ObjetivoODS_Controller {
         }
     }
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ObjetivoODS> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<ReportePeriodo> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -45,13 +47,13 @@ public class ObjetivoODS_Controller {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody ObjetivoODS objetivoods) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody ReportePeriodo eje) {
         return Service.delete(id);
     }
 
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
-        ObjetivoODS a = Service.findById(id);
+        ReportePeriodo a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -66,25 +68,20 @@ public class ObjetivoODS_Controller {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<ObjetivoODS> actualizar(@PathVariable Long id, @RequestBody ObjetivoODS p) {
-        ObjetivoODS a = Service.findById(id);
+    public ResponseEntity<ReportePeriodo> actualizar(@PathVariable Long id, @RequestBody ReportePeriodo p) {
+        ReportePeriodo a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setNombre(p.getNombre());
-                a.setDescripcion(p.getDescripcion());
+                a.setFecha(a.getFecha());
+                a.setValor_ejecutado(a.getValor_ejecutado());
+                a.setSaldo(a.getSaldo());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     }
-    @GetMapping("/buscarobjetivoODSnombre/{nombre}")
-    public ResponseEntity<List<ObjetivoOds_DTO>> buscarObjetivosODSPorNombreDTO(@PathVariable("nombre") String nombre) {
-        List<ObjetivoOds_DTO> objetivosEncontrados = Service.buscarObjetivosODSPorNombreDTO(nombre);
-        return ResponseEntity.ok(objetivosEncontrados);
-    }
-
 
 }

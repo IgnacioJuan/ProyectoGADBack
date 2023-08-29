@@ -1,8 +1,11 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.ObjetivoOds_DTO;
-import com.sistema.examenes.entity.ObjetivoODS;
-import com.sistema.examenes.services.ObjetivoODS_Service;
+
+import com.sistema.examenes.dto.Eje_DTO;
+import com.sistema.examenes.entity.Eje;
+import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.services.Eje_Service;
+import com.sistema.examenes.services.Periodo_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +15,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/objetivoods")
-public class ObjetivoODS_Controller {
+@RequestMapping("/api/periodo")
+public class Periodo_Controller {
     @Autowired
-    ObjetivoODS_Service Service;
+    Periodo_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<ObjetivoODS> crear(@RequestBody ObjetivoODS r) {
+    public ResponseEntity<Periodo> crear(@RequestBody Periodo r) {
         try {
             r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -28,7 +31,7 @@ public class ObjetivoODS_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<ObjetivoODS>> obtenerLista() {
+    public ResponseEntity<List<Periodo>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +39,7 @@ public class ObjetivoODS_Controller {
         }
     }
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ObjetivoODS> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Periodo> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -45,13 +48,13 @@ public class ObjetivoODS_Controller {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody ObjetivoODS objetivoods) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Periodo eje) {
         return Service.delete(id);
     }
 
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
-        ObjetivoODS a = Service.findById(id);
+        Periodo a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -66,25 +69,20 @@ public class ObjetivoODS_Controller {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<ObjetivoODS> actualizar(@PathVariable Long id, @RequestBody ObjetivoODS p) {
-        ObjetivoODS a = Service.findById(id);
+    public ResponseEntity<Periodo> actualizar(@PathVariable Long id, @RequestBody Periodo p) {
+        Periodo a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setNombre(p.getNombre());
-                a.setDescripcion(p.getDescripcion());
+                a.setPorcentaje(p.getPorcentaje());
+                a.setReferencia(p.getReferencia());
+                a.setValor_ejecutado(p.getValor_ejecutado());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     }
-    @GetMapping("/buscarobjetivoODSnombre/{nombre}")
-    public ResponseEntity<List<ObjetivoOds_DTO>> buscarObjetivosODSPorNombreDTO(@PathVariable("nombre") String nombre) {
-        List<ObjetivoOds_DTO> objetivosEncontrados = Service.buscarObjetivosODSPorNombreDTO(nombre);
-        return ResponseEntity.ok(objetivosEncontrados);
-    }
-
 
 }

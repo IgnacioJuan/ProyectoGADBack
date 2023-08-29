@@ -65,7 +65,7 @@ public class EvidenciasController {
             try {
                 evidencias.setNombre(ev.getNombre());
                 evidencias.setDescripcion(ev.getDescripcion());
-                evidencias.setRuta(ev.getRuta());
+                evidencias.setEnlace(ev.getEnlace());
                 return new ResponseEntity<>(evidenciasService.save(evidencias), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,5 +1,7 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.Poa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,13 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listarPoasModelo")
+    public ResponseEntity<List<Poa_DTO>> listarPoasUltimoModelo() {
+        List<Poa_DTO> poas = Service.listarPoasUltimoModelo();
+        return ResponseEntity.ok(poas);
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Poa> getById(@PathVariable("id") Long id) {
         try {
@@ -88,28 +97,36 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setUsuario(p.getUsuario());
-                a.setProyecto(p.getProyecto());
+                a.setFecha_inicio(p.getFecha_fin());
+                a.setFecha_fin(p.getFecha_fin());
+                a.setLocalizacion(p.getLocalizacion());
+                a.setCobertura(p.getCobertura());
+                a.setBarrio(p.getBarrio());
+                a.setComunidad(p.getComunidad());
+                a.setLinea_base(p.getLinea_base());
+                a.setNombre_funcionario(p.getNombre_funcionario());
+                a.setCargo(p.getCargo());
                 a.setMeta_alcanzar(p.getMeta_alcanzar());
                 a.setMeta_fisica(p.getMeta_fisica());
                 a.setAvance_real(p.getAvance_real());
-                a.setLocalizacion(p.getLocalizacion());
-                a.setFecha_inicio(p.getFecha_fin());
-                a.setFecha_fin(p.getFecha_fin());
-                a.setCobertura(p.getCobertura());
-                a.setTipo_ejecucion(p.getTipo_ejecucion());
-                a.setBarrio(p.getBarrio());
-                a.setComunidad(p.getComunidad());
-                a.setNombre_funcionario(p.getNombre_funcionario());
-                a.setCargo(p.getCargo());
                 a.setRecursos_propios(p.getRecursos_propios());
-                a.setTransferencias_gobierno(p.getTransferencias_gobierno());
-                a.setConvenios(p.getConvenios());
+                a.setRecursos_externos(p.getRecursos_externos());
+                a.setEstado(p.getEstado());
+                a.setObservacion_presupuesto(p.getObservacion_presupuesto());
+                a.setObservacion_aprobacion(p.getObservacion_aprobacion());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        }
+    }
+    @GetMapping("/listardelProyecto/{id_proyecto}/{estado}")
+    public ResponseEntity<List<Poa>> listadelProyecto(@PathVariable Long id_proyecto,@PathVariable String estado) {
+        try {
+            return new ResponseEntity<>(Service.listarPoadelProyectoconEstado(id_proyecto, estado), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

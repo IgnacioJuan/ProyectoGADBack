@@ -1,5 +1,7 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.ActividadDTO;
+import com.sistema.examenes.dto.MetaPdot_DTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class ActividadesController {
     public ResponseEntity<Actividades> crear(@RequestBody Actividades a){
         try {
             a.setVisible(true);
+            //a.setEstado("aprobado");
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,6 +73,7 @@ public class ActividadesController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 a.setNombre(actividades.getNombre());
+                a.setDescripcion(actividades.getDescripcion());
                 a.setObservaciones(actividades.getObservaciones());
                 a.setPresepuesto_referencial(actividades.getPresepuesto_referencial());
                 a.setReforma_suplemento(actividades.getReforma_suplemento());
@@ -79,10 +83,17 @@ public class ActividadesController {
                 a.setCodificado(actividades.getCodificado());
                 a.setEjecutado(actividades.getEjecutado());
                 a.setSaldo(actividades.getSaldo());
+                a.setEstado(actividades.getEstado());
+                a.setUsuario(actividades.getUsuario());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarActividadesPoa/{poaId}")
+    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+        return actividadesService.listarActividadesPorIdPoa(poaId);
     }
 }
