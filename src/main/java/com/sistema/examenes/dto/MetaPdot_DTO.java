@@ -13,6 +13,5 @@ public class MetaPdot_DTO {
     private Long id_meta_pdot;
     private String nombre;
     private String descripcion;
-    private double meta_final;
-    private String linea_base;
+    private double porcentaje_meta;
 }

@@ -18,6 +18,8 @@ public class Poa_DTO {
     private String cobertura;
     private String barrio;
     private String comunidad;
+    private String nombre_funcionario;
+    private String cargo;
     private String linea_base;
     private String tipo_periodo;
 }

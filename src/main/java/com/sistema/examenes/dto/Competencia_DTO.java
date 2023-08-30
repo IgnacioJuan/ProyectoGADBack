@@ -10,5 +10,4 @@ import lombok.*;
 public class Competencia_DTO {
     private Long id_competencia;
     private String nombre;
-    private String descripcion;
 }
