@@ -22,21 +22,20 @@ public class Actividades {
     private String nombre;
     @Column(name = "descripcion", length = 2000)
     private String descripcion;
-    @Column(name = "presupuesto_referencial")
-    private double presupuesto_referencial;
     @Column(name = "codificado")
     private double codificado;
-    @Column(name = "ejecutado")
-    private double ejecutado;
-    @Column(name = "saldo")
-    private double saldo;
+    @Column(name = "devengado")
+    private double devengado;
     @Column(name = "recursos_propios")
     private double recursos_propios;
-    @Column(name = "recursos_externos")
-    private double recursos_externos;
+    @Column(name = "presupuesto_referencial")
+    private double presupuesto_referencial;
+    @Column(name = "estado", length = 200)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
     //relacion de uno a muchos con la tabla reporte_actividad
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
@@ -45,7 +44,7 @@ public class Actividades {
     //relacion de uno a muchos con la tabla evidencia
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<Evidencias> lista_evidencias = new HashSet<>();
+    private Set<Archivo_s> lista_archivo_s = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")

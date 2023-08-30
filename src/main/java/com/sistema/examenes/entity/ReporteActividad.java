@@ -16,12 +16,12 @@ public class ReporteActividad {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_reporte_actividad")
     private Long id_reporte_actividad;
+    @Column(name = "codificado")
+    private double codificado;
+    @Column(name = "devengado")
+    private double devengado;
     @Column(name = "fecha")
     private Date fecha;
-    @Column(name = "ejecutado")
-    private double ejecutado;
-    @Column(name = "saldo")
-    private double saldo;
     @Column(name = "visible")
     private boolean visible;
 
@@ -31,6 +31,8 @@ public class ReporteActividad {
         fecha = new Date();
     }
 
+    //Relaciones
+    //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actividad")
     private Actividades actividad;

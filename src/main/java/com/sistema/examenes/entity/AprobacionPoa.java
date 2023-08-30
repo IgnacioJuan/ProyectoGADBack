@@ -19,23 +19,29 @@ public class AprobacionPoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_aprobacionpoa")
     private Long id_aprobacionpoa;
-    @Column(name = "estado", length = 200)
-    private String estado;
     @Column(name = "observacion", length = 2000)
     private String observacion;
+    @Column(name = "estado", length = 200)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_poa")
     private Poa poa;
 
+    //ManyToOne Proyecto
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_proyecto")
+    private Proyecto proyecto;
+
+    //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_usuario")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_proyecto")
-    private Proyecto proyecto;
+
 
 }

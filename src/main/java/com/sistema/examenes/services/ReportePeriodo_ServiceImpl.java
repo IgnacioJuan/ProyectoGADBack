@@ -1,9 +1,6 @@
 package com.sistema.examenes.services;
 
 
-import com.sistema.examenes.entity.Periodo;
-import com.sistema.examenes.entity.ReportePeriodo;
-import com.sistema.examenes.repository.PeriodoRepository;
 import com.sistema.examenes.repository.ReportePeriodoRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -38,9 +38,11 @@ public class Persona implements Serializable {
     private String celular;
     @Column(name = "cargo")
     private String cargo;
-    //Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
+
+    //Relaciones
+    //Una persona a muchos usuarios
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "persona")
     @JsonIgnore
     private Set<Usuario> listausuarios = new HashSet<>();

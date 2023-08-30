@@ -1,6 +1,5 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.entity.Evidencias;
 import com.sistema.examenes.services.generic.GenericService;
 
 import java.util.List;

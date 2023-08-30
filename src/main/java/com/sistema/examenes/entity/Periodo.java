@@ -20,18 +20,18 @@ public class Periodo implements Serializable {
     private Long id_periodo;
     @Column(name = "porcentaje")
     private double porcentaje;
-    @Column(name = "valor_ejecutado")
-    private double valor_ejecutado;
     @Column(name = "referencia")
     private double referencia;
-
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_actividad")
     private Actividades actividad;
 
+    //OneToMany ReportePeriodo
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "periodo")
     @JsonIgnore
     private Set<ReportePeriodo> lista_reportes = new HashSet<>();

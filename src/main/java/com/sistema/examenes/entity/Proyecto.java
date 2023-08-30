@@ -33,40 +33,47 @@ public class Proyecto implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicio")
     private Date fecha_inicio;
-    @Column(name = "estado", length = 100)
-    private String estado;
+    @Column(name = "fecha_fin")
+    private Date fecha_fin;
     @Column(name = "visible")
     private boolean visible;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_pnd")
-    private ObjetivoPND pnd;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_ods")
-    private ObjetivoODS ods;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_modelo_poa")
-    private ModeloPOA modelopoa;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_programa")
-    private Programa programa;
     @PrePersist
     public void prePersist(){
         fecha_inicio= new Date();
     }
 
+    //Relaciones
+    //ManyToOne ObjetivoODS
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_ods")
+    private ObjetivoODS ods;
+
+    //ManyToOne ObjetivoPND
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_pnd")
+    private ObjetivoPND pnd;
+
+    //ManyToOne Programa
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_programa")
+    private Programa programa;
+
+    //ManyToOne ModeloPOA
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_modelo_poa")
+    private ModeloPOA modelopoa;
+
+    //ManyToOne Indicador
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_indicador")
     private Indicador indicador;
 
+    //ManyToOne CompetenciaCOOTAD
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_competencia")
     private Competencia competencia;
 
-
+    //OneToMany AprobacionPOA
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
     @JsonIgnore
     private Set<AprobacionPoa> lista_aprobacionesPoa  = new HashSet<>();

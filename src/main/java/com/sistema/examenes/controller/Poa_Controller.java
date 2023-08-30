@@ -97,19 +97,17 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setMeta_alcanzar(p.getMeta_alcanzar());
-                a.setMeta_fisica(p.getMeta_fisica());
-                a.setAvance_real(p.getAvance_real());
+                a.setEstado(p.getEstado());
+                a.setTipo_periodo(p.getTipo_periodo());
                 a.setLocalizacion(p.getLocalizacion());
                 a.setFecha_inicio(p.getFecha_fin());
                 a.setFecha_fin(p.getFecha_fin());
                 a.setCobertura(p.getCobertura());
                 a.setBarrio(p.getBarrio());
                 a.setComunidad(p.getComunidad());
-                a.setNombre_funcionario(p.getNombre_funcionario());
-                a.setCargo(p.getCargo());
                 a.setLinea_base(p.getLinea_base());
-                a.setEstado(p.getEstado());
+                a.setMeta_planificada(p.getMeta_planificada());
+                a.setMeta_alcanzar(p.getMeta_alcanzar());
                 a.setUsuario(p.getUsuario());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
