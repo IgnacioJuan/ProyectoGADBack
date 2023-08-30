@@ -39,6 +39,15 @@ public class Usuario_Rol_Controller {
                     usuarioRolExistente.getUsuario().setPassword(bCryptPasswordEncoder.encode(nuevaContraseña));
                 }
                 usuarioRolExistente.setRol(usuarioRol.getRol());
+                usuarioRolExistente.getUsuario().setUsername(usuarioRol.getUsuario().getUsername());
+                usuarioRolExistente.getUsuario().getPersona().setCedula(usuarioRol.getUsuario().getPersona().getCedula());
+                usuarioRolExistente.getUsuario().getPersona().setPrimer_nombre(usuarioRol.getUsuario().getPersona().getPrimer_nombre());
+                usuarioRolExistente.getUsuario().getPersona().setSegundo_nombre(usuarioRol.getUsuario().getPersona().getSegundo_nombre());
+                usuarioRolExistente.getUsuario().getPersona().setPrimer_apellido(usuarioRol.getUsuario().getPersona().getPrimer_apellido());
+                usuarioRolExistente.getUsuario().getPersona().setSegundo_apellido(usuarioRol.getUsuario().getPersona().getSegundo_apellido());
+                usuarioRolExistente.getUsuario().getPersona().setDireccion(usuarioRol.getUsuario().getPersona().getDireccion());
+                usuarioRolExistente.getUsuario().getPersona().setCorreo(usuarioRol.getUsuario().getPersona().getCorreo());
+                usuarioRolExistente.getUsuario().getPersona().setCelular(usuarioRol.getUsuario().getPersona().getCelular());
                 UsuarioRol usuarioRolActualizado = usuarioService.save(usuarioRolExistente);
                 return new ResponseEntity<>(usuarioRolActualizado, HttpStatus.OK);
             }
