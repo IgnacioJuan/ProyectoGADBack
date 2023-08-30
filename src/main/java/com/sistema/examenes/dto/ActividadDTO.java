@@ -13,8 +13,6 @@ public class ActividadDTO {
     private String descripcion;
     private double presupuesto_referencial;
     private double codificado;
-    private double ejecutado;
-    private double saldo;
+    private double devengado;
     private double recursos_propios;
-    private double recursos_externos;
 }
