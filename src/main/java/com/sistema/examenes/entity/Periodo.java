@@ -31,8 +31,4 @@ public class Periodo implements Serializable {
     @JoinColumn(name="id_actividad")
     private Actividades actividad;
 
-    //OneToMany ReportePeriodo
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "periodo")
-    @JsonIgnore
-    private Set<ReportePeriodo> lista_reportes = new HashSet<>();
 }
