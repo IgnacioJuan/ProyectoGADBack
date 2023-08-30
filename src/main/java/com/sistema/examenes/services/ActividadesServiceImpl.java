@@ -40,6 +40,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             m.setRecursos_propios((Double) resultado[4]);
             m.setCodificado((Double) resultado[5]);
             m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            //m.setResponsable((String) resultado[8] );
             acts.add(m);
         }
         return acts;

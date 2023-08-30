@@ -1,7 +1,10 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.ActividadDTO;
+import com.sistema.examenes.dto.Competencia_DTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Componente;
+import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -89,4 +92,14 @@ public class ActividadesController {
     public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
         return actividadesService.listarActividadesPorIdPoa(poaId);
     }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Actividades> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(actividadesService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

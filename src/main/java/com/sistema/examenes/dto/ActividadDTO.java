@@ -15,4 +15,6 @@ public class ActividadDTO {
     private double codificado;
     private double devengado;
     private double recursos_propios;
+    private String estado;
+    private String responsable;
 }
