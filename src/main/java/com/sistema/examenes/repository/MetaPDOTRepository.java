@@ -14,10 +14,10 @@ public interface MetaPDOTRepository extends JpaRepository<MetaPDOT, Long> {
 
     @Query(value = "SELECT * FROM metapdot WHERE id_meta_pdot= :id AND visible = true", nativeQuery = true)
     MetaPDOT obtenerMetaPdotId(@Param("id") Long id);
-    @Query(value = "SELECT id_meta_pdot, nombre, descripcion, porcentaje_meta FROM metapdot WHERE LOWER(nombre) LIKE LOWER(CONCAT('%', :nombre, '%')) AND visible = true", nativeQuery = true)
+    @Query(value = "SELECT id_meta_pdot, nombre, descripcion, meta_final, linea_base FROM metapdot WHERE LOWER(nombre) LIKE LOWER(CONCAT('%', :nombre, '%')) AND visible = true", nativeQuery = true)
     List<Object[]> buscarMetasPdotsPorNombre(@Param("nombre") String nombre);
 
-    @Query(value = "SELECT m.id_meta_pdot, m.nombre, m.descripcion, m.porcentaje_meta FROM metapdot m INNER JOIN objetivopdot o ON m.id_objetivo_pdot = o.id_objetivo_pdot WHERE o.id_objetivo_pdot = :idObjetivoP AND m.visible = true ORDER BY m.nombre ASC", nativeQuery = true)
+    @Query(value = "SELECT m.id_meta_pdot, m.nombre, m.descripcion, m.meta_final, linea_base FROM metapdot m INNER JOIN objetivopdot o ON m.id_objetivo_pdot = o.id_objetivo_pdot WHERE o.id_objetivo_pdot = :idObjetivoP AND m.visible = true ORDER BY m.nombre ASC", nativeQuery = true)
     List<Object[]> listarMetasPdotsDTOPorIdObjPdot(@Param("idObjetivoP") Long idObjetivoP);
 
 }

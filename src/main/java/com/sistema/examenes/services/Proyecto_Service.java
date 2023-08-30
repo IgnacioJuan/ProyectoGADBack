@@ -10,6 +10,4 @@ public interface Proyecto_Service extends GenericService<Proyecto, Long> {
     public List<Proyecto> listar();
     public List<Proyecto> listardelModelo(Long id_modelo_poa);
 
-
-    public List<ProyectoResumenDTO> listarProyectosConRelaciones();
 }
