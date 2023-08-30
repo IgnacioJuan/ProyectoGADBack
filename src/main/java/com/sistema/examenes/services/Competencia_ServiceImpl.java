@@ -41,7 +41,8 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
         for (Object[] resultado : resultados) {
             Competencia_DTO competenciaDTO = new Competencia_DTO(
                     ((BigInteger) resultado[0]).longValue(),
-                    (String) resultado[1]
+                    (String) resultado[1],
+                    (String) resultado[2]
             );
             competenciasEncontradas.add(competenciaDTO);
         }
@@ -57,6 +58,7 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
             Competencia_DTO dto = new Competencia_DTO();
             dto.setId_competencia(((BigInteger) result[0]).longValue());
             dto.setNombre((String) result[1]);
+            dto.setDescripcion((String) result[2]);
             competencias.add(dto);
         }
         return competencias;

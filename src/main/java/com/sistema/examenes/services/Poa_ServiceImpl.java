@@ -53,13 +53,10 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dto.setCobertura((String) result[4]);
             dto.setBarrio((String) result[5]);
             dto.setComunidad((String) result[6]);
-            dto.setNombre_funcionario((String) result[7]);
-            dto.setCargo((String) result[8]);
-            dto.setLinea_base((String) result[9]);
-            dto.setTipo_periodo((String) result[10]);
+            dto.setLinea_base((String) result[7]);
+            dto.setTipo_periodo((String) result[8]);
             poas.add(dto);
         }
         return poas;
     }
 }
-
