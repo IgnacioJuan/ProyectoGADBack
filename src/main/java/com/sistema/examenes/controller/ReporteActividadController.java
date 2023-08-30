@@ -63,8 +63,9 @@ public class ReporteActividadController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
             try {
-                ra.setEjecutado(reporteActividad.getEjecutado());
-                ra.setSaldo(reporteActividad.getSaldo());
+                ra.setCodificado(reporteActividad.getCodificado());
+                ra.setDevengado(reporteActividad.getDevengado());
+                ra.setFecha(reporteActividad.getFecha());
 
                 return new ResponseEntity<>(reporteActividadService.save(ra), HttpStatus.OK);
             } catch (Exception e) {

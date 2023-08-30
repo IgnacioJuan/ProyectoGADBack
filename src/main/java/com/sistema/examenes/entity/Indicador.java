@@ -18,24 +18,22 @@ public class Indicador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_indicador")
     private Long id_indicador;
-
     @Column(name = "nombre", length = 200)
     private String nombre;
-
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
-
     @Column(name = "tipo_evaluacion")
     private String tipo_evaluacion;
-
     @Column(name = "visible")
     private boolean visible;
 
-   //Relacion a proyecto
+    //Relaciones
+    //OneToMany Proyecto
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "indicador")
     @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();
 
+    //ManyToOne MetaPDOT
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_meta_pdot")
     private MetaPDOT metapdot;

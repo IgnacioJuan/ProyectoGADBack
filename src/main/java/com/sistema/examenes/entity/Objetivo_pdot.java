@@ -25,11 +25,13 @@ public class Objetivo_pdot implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
-
+    //Relaciones
+    //ManyToOne Componente
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_componente")
     private Componente componente;
 
+    //OneToMany MetaPDOT
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "objetivopdot")
     @JsonIgnore
     private Set<MetaPDOT> lista_metaspdots = new HashSet<>();

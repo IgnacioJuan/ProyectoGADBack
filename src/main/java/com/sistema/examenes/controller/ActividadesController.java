@@ -72,12 +72,11 @@ public class ActividadesController {
             } else {
                 a.setNombre(actividades.getNombre());
                 a.setDescripcion(actividades.getDescripcion());
-                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setCodificado(actividades.getCodificado());
-                a.setEjecutado(actividades.getEjecutado());
-                a.setSaldo(actividades.getSaldo());
+                a.setDevengado(actividades.getDevengado());
                 a.setRecursos_propios(actividades.getRecursos_propios());
-                a.setRecursos_externos(actividades.getRecursos_externos());
+                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
+                a.setEstado(actividades.getEstado());
                 a.setUsuario(actividades.getUsuario());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }

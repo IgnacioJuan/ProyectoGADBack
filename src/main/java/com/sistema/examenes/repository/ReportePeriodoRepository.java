@@ -1,8 +1,6 @@
 package com.sistema.examenes.repository;
 
 
-import com.sistema.examenes.entity.Periodo;
-import com.sistema.examenes.entity.ReportePeriodo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

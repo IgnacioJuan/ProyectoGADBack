@@ -92,6 +92,7 @@ public class ObjetivoPdot_Controller {
             try {
                 a.setNombre(p.getNombre());
                 a.setDescripcion(p.getDescripcion());
+                a.setComponente(p.getComponente());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

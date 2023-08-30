@@ -1,6 +1,5 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.entity.Evidencias;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
