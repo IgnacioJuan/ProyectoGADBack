@@ -12,23 +12,23 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "eje")
-public class Eje implements Serializable {
+@Table(name = "periodo")
+public class Periodo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_eje")
-    private Long id_eje;
-
-    @Column(name = "nombre", length = 200)
-    private String nombre;
-
+    @Column(name = "id_periodo")
+    private Long id_periodo;
+    @Column(name = "porcentaje")
+    private double porcentaje;
+    @Column(name = "referencia")
+    private double referencia;
     @Column(name = "visible")
     private boolean visible;
 
     //Relaciones
-    //OneToMany ObjetivoPND
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "eje")
-    @JsonIgnore
-    private Set<ObjetivoPND> lista_objetivosPNDS = new HashSet<>();
+    //ManyToOne Actividades
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_actividad")
+    private Actividades actividad;
 
 }

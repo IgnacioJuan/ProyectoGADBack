@@ -98,6 +98,7 @@ public class Componente_Controller {
         } else {
             try {
                 a.setNombre(p.getNombre());
+                a.setDescripcion(p.getDescripcion());
                 a.setCodigo(p.getCodigo());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);

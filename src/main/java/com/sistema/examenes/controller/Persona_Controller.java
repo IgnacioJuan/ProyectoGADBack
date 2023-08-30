@@ -76,7 +76,10 @@ public class Persona_Controller {
                 persona.setCorreo(p.getCorreo());
                 persona.setCelular(p.getCelular());
                 persona.setPrimer_nombre(p.getPrimer_nombre());
+                persona.setSegundo_nombre(p.getSegundo_nombre());
                 persona.setPrimer_apellido(p.getPrimer_apellido());
+                persona.setSegundo_apellido(p.getSegundo_apellido());
+                persona.setCargo(p.getCargo());
                 return new ResponseEntity<>(Service.save(persona), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

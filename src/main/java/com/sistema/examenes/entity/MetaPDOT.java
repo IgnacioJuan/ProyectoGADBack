@@ -18,26 +18,24 @@ public class MetaPDOT implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_meta_pdot")
     private Long id_meta_pdot;
-
     @Column(name = "nombre", length = 200)
     private String nombre;
-
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
-
-    @Column(name = "porcentaje_meta")
-    private double porcentaje_meta;
-
+    @Column(name = "meta_final")
+    private double meta_final;
+    @Column(name = "linea_base")
+    private double linea_base;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //ManyToOne ObjetivoPDOT
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_objetivo_pdot")
+    private Objetivo_pdot objetivopdot;
 
-
-   @ManyToOne(fetch = FetchType.EAGER)
-   @JoinColumn(name="id_objetivo_pdot")
-   private Objetivo_pdot objetivopdot;
-
-
+    //OneToMany Indicador
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "metapdot")
     @JsonIgnore
     private Set<Indicador> lista_indicadores = new HashSet<>();

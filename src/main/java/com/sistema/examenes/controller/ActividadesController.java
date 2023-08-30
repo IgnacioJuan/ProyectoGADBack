@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,15 +71,22 @@ public class ActividadesController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 a.setNombre(actividades.getNombre());
-                a.setObservaciones(actividades.getObservaciones());
-                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
+                a.setDescripcion(actividades.getDescripcion());
                 a.setCodificado(actividades.getCodificado());
-                a.setEjecutado(actividades.getEjecutado());
-                a.setSaldo(actividades.getSaldo());
+                a.setDevengado(actividades.getDevengado());
+                a.setRecursos_propios(actividades.getRecursos_propios());
+                a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
+                a.setEstado(actividades.getEstado());
+                a.setUsuario(actividades.getUsuario());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarActividadesPoa/{poaId}")
+    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+        return actividadesService.listarActividadesPorIdPoa(poaId);
     }
 }

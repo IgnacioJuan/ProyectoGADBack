@@ -23,6 +23,8 @@ public class ReformaTraspaso_D implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_actividad")
     private Actividades actividad;

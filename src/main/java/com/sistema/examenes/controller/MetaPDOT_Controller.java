@@ -75,8 +75,9 @@ public class MetaPDOT_Controller {
             try {
                 a.setNombre(p.getNombre());
                 a.setDescripcion(p.getDescripcion());
-                a.setPorcentaje_meta(p.getPorcentaje_meta());
-                //a.setObjetivopdot(p.getObjetivopdot());
+                a.setMeta_final(p.getMeta_final());
+                a.setLinea_base(p.getLinea_base());
+                a.setObjetivopdot(p.getObjetivopdot());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
