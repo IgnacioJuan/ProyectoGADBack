@@ -25,12 +25,13 @@ public class ObjetivoPND implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
-    //Relacion con eje
+    //Relaciones
+    //ManyToOne con eje
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_eje")
     private Eje eje;
 
-    //Relacion a proyecto
+    //OneToMany Proyecto
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pnd")
     @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();

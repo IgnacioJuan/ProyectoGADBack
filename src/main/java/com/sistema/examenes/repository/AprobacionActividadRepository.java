@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AprobacionActividadRepository extends JpaRepository<AprobacionActividad, Long>{
 
-    @Query(value = "SELECT * from aprobacion_actividad where visible = true ORDER BY nombre ASC", nativeQuery = true)
+    @Query(value = "SELECT * from aprobacion_actividad where visible = true", nativeQuery = true)
     List<AprobacionActividad> listarAprobacionActividad();
 }

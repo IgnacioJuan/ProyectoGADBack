@@ -25,8 +25,8 @@ public class Programa implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
-
-    //Relacion a proyecto
+    //Relaciones
+    //OneToMany Proyecto
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "programa")
     @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();

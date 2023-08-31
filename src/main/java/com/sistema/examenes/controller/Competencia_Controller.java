@@ -99,6 +99,7 @@ public class Competencia_Controller {
         } else {
             try {
                 a.setNombre(p.getNombre());
+                a.setDescripcion(p.getDescripcion());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {

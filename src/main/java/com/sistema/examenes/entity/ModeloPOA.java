@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema.examenes.entity.auth.Usuario;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,18 +25,26 @@ public class ModeloPOA implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 2000)
     private String descripcion;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicial")
     private Date fecha_inicial;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_final")
     private Date fecha_final;
+    @Column(name = "estado", length = 50)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
-   @ManyToOne(fetch = FetchType.EAGER)
+    //Relaciones
+    //ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_super_admin")
     private Usuario usuario;
 
-
+    //OneToMany Proyecto
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "modelopoa")
     @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();

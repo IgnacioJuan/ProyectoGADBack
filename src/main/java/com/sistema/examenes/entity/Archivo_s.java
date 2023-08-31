@@ -19,36 +19,36 @@ public class Archivo_s implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_archivo")
     private Long id_archivo;
-    @Column(name = "enlace")
-    private String enlace;
     @Column(name = "nombre", length = 10000)
     private String nombre;
     @Column(name = "descripcion", length = 10000)
     private String descripcion;
-    //Columna para el eliminado logico no borrar
+    @Column(name = "enlace")
+    private String enlace;
+    @Column(name = "fecha")
+    private Date fecha = new Date();
+    @Column(name = "valor")
+    private double valor;
+    @Column(name = "estado", length = 50)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
-    /*@ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actividad")
-    private Actividad actividad;
-*/
+    private Actividades actividad;
+
     public Archivo_s() {
     }
 
-    public Archivo_s(String enlace, String nombre, String descripcion, boolean visible) {
-        this.enlace = enlace;
+    public Archivo_s( String nombre, String descripcion, String enlace,double valor,  boolean visible, Actividades actividad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.visible = visible;
-    }
-/*
-    public Archivo_s(String enlace, String nombre, String descripcion, boolean visible, Actividad actividad) {
         this.enlace = enlace;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.valor = valor;
         this.visible = visible;
         this.actividad = actividad;
-    }*/
+    }
+
 }
 

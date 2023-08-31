@@ -20,9 +20,13 @@ public class Competencia implements Serializable {
     private Long id_competencia;
     @Column(name = "nombre", length = 200)
     private String nombre;
+    @Column(name = "descripcion", length = 1000)
+    private String descripcion;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //OneToMany Proyecto
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "competencia")
     @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();

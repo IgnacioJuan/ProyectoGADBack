@@ -20,19 +20,22 @@ public class Actividades {
     private Long id_actividad;
     @Column(name = "nombre", length = 200)
     private String nombre;
-    @Column(name = "observaciones", length = 1000)
-    private String observaciones;
-    @Column(name = "presupuesto_referencial")
-    private double presupuesto_referencial;
+    @Column(name = "descripcion", length = 2000)
+    private String descripcion;
     @Column(name = "codificado")
     private double codificado;
-    @Column(name = "ejecutado")
-    private double ejecutado;
-    @Column(name = "saldo")
-    private double saldo;
+    @Column(name = "devengado")
+    private double devengado;
+    @Column(name = "recursos_propios")
+    private double recursos_propios;
+    @Column(name = "presupuesto_referencial")
+    private double presupuesto_referencial;
+    @Column(name = "estado", length = 200)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
     //relacion de uno a muchos con la tabla reporte_actividad
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
@@ -41,7 +44,7 @@ public class Actividades {
     //relacion de uno a muchos con la tabla evidencia
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<Evidencias> lista_evidencias = new HashSet<>();
+    private Set<Archivo_s> lista_archivo_s = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
@@ -63,6 +66,12 @@ public class Actividades {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<AprobacionActividad> aprobacionActividades = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_responsable")
+    private Usuario usuario;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<Periodo> periodos = new HashSet<>();
 
 }

@@ -74,6 +74,7 @@ public class ObjetivoPND_Controller {
             try {
                 a.setNombre(p.getNombre());
                 a.setDescripcion(p.getDescripcion());
+                a.setEje(p.getEje());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

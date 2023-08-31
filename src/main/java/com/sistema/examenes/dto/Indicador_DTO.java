@@ -13,5 +13,5 @@ public class Indicador_DTO {
     private Long id_indicador;
     private String nombre;
     private String descripcion;
-    private String tipoEvaluacion;
+    private String tipo_evaluacion;
 }

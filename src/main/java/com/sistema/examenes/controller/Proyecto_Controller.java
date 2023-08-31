@@ -78,25 +78,20 @@ public class Proyecto_Controller {
                 a.setObjetivo(p.getObjetivo());
                 a.setMeta(p.getMeta());
                 a.setPorcentaje_alcance(p.getPorcentaje_alcance());
-                a.setEstado(p.getEstado());
                 a.setOds(p.getOds());
                 a.setPnd(p.getPnd());
                 a.setModelopoa(p.getModelopoa());
                 a.setPrograma(p.getPrograma());
                 a.setIndicador(p.getIndicador());
                 a.setCompetencia(p.getCompetencia());
+                a.setFecha_inicio(p.getFecha_inicio());
+                a.setFecha_fin(p.getFecha_fin());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-    }
-
-    @GetMapping("/listarProyectosConRelaciones")
-    public ResponseEntity<List<ProyectoResumenDTO>> obtenerProyectosConRelaciones() {
-        List<ProyectoResumenDTO> proyectos = Service.listarProyectosConRelaciones();
-        return ResponseEntity.ok(proyectos);
     }
 
     @GetMapping("/listardelModelo/{id_modelo_poa}")
