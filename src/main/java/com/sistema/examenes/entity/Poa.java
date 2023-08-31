@@ -37,7 +37,7 @@ public class Poa implements Serializable {
     @Column(name = "cobertura")
     private String cobertura;
     @Column(name = "linea_base")
-    private String linea_base;
+    private double linea_base;
     @Column(name = "meta_planificada")
     private double meta_planificada;
     @Column(name = "meta_alcanzar")
