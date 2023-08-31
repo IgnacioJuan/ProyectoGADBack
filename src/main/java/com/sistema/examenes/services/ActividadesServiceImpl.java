@@ -46,4 +46,9 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         }
         return acts;
     }
+
+    @Override
+    public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
+        return actividadesRepository.listarActividadeSPORresponsable(id_resp);
+    }
 }

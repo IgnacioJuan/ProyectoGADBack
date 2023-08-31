@@ -102,4 +102,9 @@ public class ActividadesController {
         }
     }
 
+    //no borrar  john es del gad
+    @GetMapping("/actiresponsable/{id_resp}")
+    public List<Actividades> listarActividadesPorResponsable(@PathVariable Long id_resp) {
+        return actividadesService.listarActividadeSPORresponsable(id_resp);
+    }
 }
