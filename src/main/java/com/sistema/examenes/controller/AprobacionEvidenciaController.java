@@ -1,5 +1,7 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.AprobacionEvidenciaDTO;
+import com.sistema.examenes.dto.ObjetivoPdot_DTO;
 import com.sistema.examenes.entity.AprobacionActividad;
 import com.sistema.examenes.entity.AprobacionEvidencia;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,4 +83,11 @@ public class AprobacionEvidenciaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listaAprobacionEvidencia/{archivoId}")
+    public List<AprobacionEvidenciaDTO> listarAprobacionEvidenciaPorIdEvidencia(@PathVariable Long archivoId) {
+        return AprobacionEvidenciaService.listarAprobacionEvidenciaPorIdArchivo(archivoId);
+    }
+
+
 }
