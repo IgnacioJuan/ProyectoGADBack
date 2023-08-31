@@ -11,4 +11,6 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     public List<Actividades> listarActividades();
 
     List<ActividadDTO> listarActividadesPorIdPoa(Long poaId);
+    List<Actividades> listarActividadeSPORresponsable(Long id_resp);
+
 }

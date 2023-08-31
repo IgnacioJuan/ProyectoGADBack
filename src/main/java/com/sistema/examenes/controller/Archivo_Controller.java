@@ -1,9 +1,11 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.mensajes.Archivosmensajes;
 import com.sistema.examenes.projection.ArchivoProjection;
+import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.Archivo_Service;
 import com.sistema.examenes.services.Archivoservices;
 import lombok.AllArgsConstructor;
@@ -33,13 +35,17 @@ public class Archivo_Controller {
     @Autowired
     HttpServletRequest request;
 
-    /*@PostMapping("/upload")
+    @Autowired
+    ActividadesService actiservis;
+
+    @PostMapping("/upload")
     public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
                                                    @RequestParam("descripcion") String describcion,
+                                                   @RequestParam("valor") Double valor,
                                                    @RequestParam("id_evidencia") Long id_actividad) {
         String meNsaje = "";
         try {
-            //Actividad actividad = actiservis.findById(id_actividad);
+           Actividades actividad = actiservis.findById(id_actividad);
             if (actividad == null) {
                 meNsaje = "No se encontró la evidencia con id " + id_actividad;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
@@ -52,14 +58,14 @@ public class Archivo_Controller {
             String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
             String url = ServletUriComponentsBuilder.fromHttpUrl(host)
                     .path("/archivo/").path(fileNames.get(0)).toUriString();
-            //archivoservis.save(new Archivo_s(url.toString(), fileNames.toString().join(",",fileNames), describcion, true, actividad));
+archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),describcion,url.toString(),valor, true, actividad));
             meNsaje = "Se subieron correctamente " + fileNames;
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje + "url:" + url));
         } catch (Exception e) {
             meNsaje = "Fallo al subir";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
-    }*/
+    }
 
     @GetMapping("/listarv")
     public ResponseEntity<List<Archivo_s>> obtenerListav() {
