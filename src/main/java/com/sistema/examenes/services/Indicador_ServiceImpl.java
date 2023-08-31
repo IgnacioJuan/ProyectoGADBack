@@ -61,7 +61,7 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
             ind.setId_indicador(((BigInteger) resultado[0]).longValue());
             ind.setNombre((String) resultado[1]);
             ind.setDescripcion((String) resultado[2]);
-            ind.setTipoEvaluacion((String) resultado[3]);
+            ind.setTipo_evaluacion((String) resultado[3]);
             indicadores.add(ind);
         }
         return indicadores;
