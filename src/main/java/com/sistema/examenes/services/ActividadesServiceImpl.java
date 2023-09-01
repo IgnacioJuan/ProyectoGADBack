@@ -2,6 +2,7 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         }
         return acts;
     }
+
+    //listar actividades con archivos rechazados
+    @Override
+    public List<Actividades> listarActiEviRechazados() {return actividadesRepository.listarActEviRechazados();}
 }

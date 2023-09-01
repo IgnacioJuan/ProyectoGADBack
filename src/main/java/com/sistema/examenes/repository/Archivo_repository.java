@@ -12,7 +12,7 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     List<Archivo_s> listararchivo();
 
     //query archivos rechazados
-    @Query(value = "SELECT * from archivo where visible =false",nativeQuery = true)
+    @Query(value = "SELECT * FROM archivo WHERE id_actividad =:id_actividad",nativeQuery = true)
     List<Archivo_s> listararchivorechazados();
     @Query(value = "select * from archivo ar join actividad ac on ar.id_actividad=ac.id_actividad\n" +
     "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true",nativeQuery = true)

@@ -11,6 +11,16 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long>{
 
     @Query(value = "SELECT * from actividades where visible = true ORDER BY nombre ASC", nativeQuery = true)
     List<Actividades> listarActividades();
+
+
+    //query - actividades que tenga archivos rechazados
+    @Query(value = "SELECT DISTINCT a.*\n" +
+            "FROM actividades a\n" +
+            "INNER JOIN archivo ar ON a.id_actividad = ar.id_actividad\n" +
+            "WHERE LOWER(ar.estado) = 'rechazado';\n", nativeQuery = true)
+    List<Actividades> listarActEviRechazados();
+
+
     @Query(value = "SELECT a.id_actividad, a.nombre, a.descripcion, a.presupuesto_referencial, a.recursos_propios, a.codificado, a.devengado " +
             "FROM actividades a " +
             "JOIN aprobacion_actividad aa ON a.id_actividad = aa.id_actividad " +

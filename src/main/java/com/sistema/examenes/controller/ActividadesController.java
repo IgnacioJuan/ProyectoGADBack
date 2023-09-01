@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,17 @@ public class ActividadesController {
     public ResponseEntity<List<Actividades>> listar(){
         try {
             return new ResponseEntity<>(actividadesService.listarActividades(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    //listar actividades que tengan archivos rechazados
+    @GetMapping("/listarActEviRechazados")
+    public ResponseEntity<List<Actividades>> obtenerListarechazado() {
+        try {
+            return new ResponseEntity<>(actividadesService.listarActiEviRechazados(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

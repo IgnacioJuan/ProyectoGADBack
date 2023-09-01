@@ -70,11 +70,12 @@ public class Archivo_Controller {
         }
     }
 
+
     //listar archivos rechazados
-    @GetMapping("/listarrechazados")
-    public ResponseEntity<List<Archivo_s>> obtenerListarechazado() {
+    @GetMapping("/listarrechazados/{idActi}")
+    public ResponseEntity<List<Archivo_s>> listarActiEviRechazados(@PathVariable("idActi") Long idActividad) {
         try {
-            return new ResponseEntity<>(archivoservis.listararchirechazados(), HttpStatus.OK);
+            return new ResponseEntity<>(archivoservis.listararchivoActividad(idActividad), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
