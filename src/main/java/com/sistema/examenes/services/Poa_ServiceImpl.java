@@ -1,11 +1,11 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.Competencia_DTO;
 import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.entity.AprobacionPoa;
+import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporUsuarioProjection;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -73,13 +72,38 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         for (PoaNoAprobadoProjection projection : poaNoAprobados) {
             PoaNoAprobadoDTO dto = new PoaNoAprobadoDTO();
             dto.setId_poa(projection.getId_poa());
-            dto.setMeta_alcanzar(projection.getMeta_alcanzar());
             dto.setFecha_inicio(projection.getFecha_inicio());
+            dto.setFecha_fin(projection.getFecha_fin());
+            dto.setLocalizacion(projection.getLocalizacion());
+            dto.setBarrio(projection.getBarrio());
+            dto.setComunidad(projection.getComunidad());
             dto.setEstado(projection.getEstado());
             dto.setObservacion(projection.getObservacion());
+            dto.setNombre(projection.getNombre());
             dtos.add(dto);
         }
 
         return dtos;
     }
-}
+    
+    
+    @Override
+    public List<PoaporUsuarioDTO> listarPoaporUsuarios() {
+        List<PoaporUsuarioProjection> poaporUsuario = repository.findPoaporUsuario();
+        List<PoaporUsuarioDTO> datos = new ArrayList<>();
+
+        for (PoaporUsuarioProjection projection : poaporUsuario) {
+            PoaporUsuarioDTO dato = new PoaporUsuarioDTO();
+            dato.setId(projection.getId());
+            dato.setLocalizacion(projection.getLocalizacion());
+            dato.setBarrio(projection.getBarrio());
+            dato.setEstado(projection.getEstado());
+            dato.setNombre(projection.getNombre());
+            dato.setUsername(projection.getUsername());
+            datos.add(dato);   
+        }
+        System.out.println(datos.toString());
+        return datos;
+    }
+    
+} 

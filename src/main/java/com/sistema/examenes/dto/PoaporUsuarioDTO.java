@@ -20,29 +20,25 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PoaNoAprobadoDTO {
+public class PoaporUsuarioDTO {
 
-    private Long id_poa;
-    private Date fecha_inicio;
-    private Date fecha_fin;
+    private Long id;
+    private String username;
     private String localizacion;
     private String barrio;
-    private String comunidad;
     private String estado;
-    private String observacion;
     private String nombre;
 
-    public PoaNoAprobadoDTO(Long id_poa, Date fecha_inicio, Date fecha_fin, String localizacion, String barrio, String comunidad, String estado, String observacion, String nombre) {
-        this.id_poa = id_poa;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
+    public PoaporUsuarioDTO(Long id, String username, String localizacion, String barrio, String estado, String nombre) {
+        this.id = id;
+        this.username = username;
         this.localizacion = localizacion;
         this.barrio = barrio;
-        this.comunidad = comunidad;
         this.estado = estado;
-        this.observacion = observacion;
         this.nombre = nombre;
     }
+
+   
 
     
 

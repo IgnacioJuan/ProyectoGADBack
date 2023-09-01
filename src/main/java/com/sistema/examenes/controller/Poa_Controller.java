@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.services.Poa_Service;
@@ -133,6 +134,12 @@ public class Poa_Controller {
         List<PoaNoAprobadoDTO> poaNoAprobados = Service.listarPoaNoAprobados();
         return new ResponseEntity<>(poaNoAprobados, HttpStatus.OK);
     }
+    
+    @GetMapping("/listarporusuario")
+    public ResponseEntity<List<PoaporUsuarioDTO>> getporUsuario() {
+        List<PoaporUsuarioDTO> poaporUsuario = Service.listarPoaporUsuarios();
+        return new ResponseEntity<>(poaporUsuario, HttpStatus.OK);
+    }
          
    
-}
+} 

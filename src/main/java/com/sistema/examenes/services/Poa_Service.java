@@ -2,6 +2,7 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.generic.GenericService;
 
@@ -17,4 +18,7 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     public List<Poa_DTO> listarPoasDeModelo();
 
     public List<PoaNoAprobadoDTO> listarPoaNoAprobados();
+    
+    public List<PoaporUsuarioDTO> listarPoaporUsuarios();
+
 }
