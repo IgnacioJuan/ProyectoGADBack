@@ -14,5 +14,5 @@ public class MetaPdot_DTO {
     private String nombre;
     private String descripcion;
     private double meta_final;
-    private String linea_base;
+    private double linea_base;
 }

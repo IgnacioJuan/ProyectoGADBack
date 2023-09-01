@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.ReformaTraspaso_I;
 import com.sistema.examenes.services.ReformaTraspaso_IService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,14 @@ public class ReformaTraspaso_I_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<ReformaTraspaso_I> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(reformaTraspaso_IService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody ReformaTraspaso_I ReformaTraspaso_I) {

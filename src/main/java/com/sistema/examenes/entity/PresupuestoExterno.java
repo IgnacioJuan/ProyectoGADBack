@@ -18,6 +18,8 @@ public class PresupuestoExterno implements Serializable {
     private Long id_presupuesto_externo;
     @Column(name = "valor")
     private double valor;
+    @Column(name = "fecha")
+    private Date fecha;
     @Column(name = "nombre_institucion",length = 1000)
     private String nombre_institucion;
     @Column(name = "observacion",length = 2000)

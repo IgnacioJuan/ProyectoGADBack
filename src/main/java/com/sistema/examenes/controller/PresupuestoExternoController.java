@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.PresupuestoExterno;
 import com.sistema.examenes.services.PresupuestoExternoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,14 @@ public class PresupuestoExternoController {
         }
     }
 
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<PresupuestoExterno> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(presupuestoExternoService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody PresupuestoExterno PresupuestoExterno) {
@@ -72,6 +81,7 @@ public class PresupuestoExternoController {
                 a.setValor(p.getValor());
                 a.setNombre_institucion(p.getNombre_institucion());
                 a.setObservacion(p.getObservacion());
+                a.setFecha(p.getFecha());
                 a.setActividad(p.getActividad());
 
                 return new ResponseEntity<>(presupuestoExternoService.save(a), HttpStatus.CREATED);

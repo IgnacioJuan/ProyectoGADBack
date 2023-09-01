@@ -175,6 +175,30 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
     }
 
 
+
+
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Archivo_s> actualizar(@PathVariable Long id, @RequestBody Archivo_s p) {
+
+        try {
+            Archivo_s a = archivoservis.findById(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setEstado(p.getEstado());
+                return new ResponseEntity<>(archivoservis.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
+
 }
 
 
