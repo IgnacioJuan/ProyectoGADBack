@@ -1,9 +1,11 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.dto.ProyectoResumenDTO;
+import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporUsuarioProjection;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,10 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
     @Override
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado) {
-        return repository.listarPoadelProyectoconEstado(id_proyecto,estado);
+        return repository.listarPoadelProyectoconEstado(id_proyecto, estado);
     }
+
+    @Override
     public List<Poa_DTO> listarPoasDeModelo() {
         List<Object[]> resultados = repository.listarPoasDeModelo();
         List<Poa_DTO> poas = new ArrayList<>();
@@ -59,4 +63,47 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         }
         return poas;
     }
-}
+
+    @Override
+    public List<PoaNoAprobadoDTO> listarPoaNoAprobados() {
+        List<PoaNoAprobadoProjection> poaNoAprobados = repository.findNoAprobados();
+        List<PoaNoAprobadoDTO> dtos = new ArrayList<>();
+
+        for (PoaNoAprobadoProjection projection : poaNoAprobados) {
+            PoaNoAprobadoDTO dto = new PoaNoAprobadoDTO();
+            dto.setId_poa(projection.getId_poa());
+            dto.setFecha_inicio(projection.getFecha_inicio());
+            dto.setFecha_fin(projection.getFecha_fin());
+            dto.setLocalizacion(projection.getLocalizacion());
+            dto.setBarrio(projection.getBarrio());
+            dto.setComunidad(projection.getComunidad());
+            dto.setEstado(projection.getEstado());
+            dto.setObservacion(projection.getObservacion());
+            dto.setNombre(projection.getNombre());
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+    
+    
+    @Override
+    public List<PoaporUsuarioDTO> listarPoaporUsuarios() {
+        List<PoaporUsuarioProjection> poaporUsuario = repository.findPoaporUsuario();
+        List<PoaporUsuarioDTO> datos = new ArrayList<>();
+
+        for (PoaporUsuarioProjection projection : poaporUsuario) {
+            PoaporUsuarioDTO dato = new PoaporUsuarioDTO();
+            dato.setId(projection.getId());
+            dato.setLocalizacion(projection.getLocalizacion());
+            dato.setBarrio(projection.getBarrio());
+            dato.setEstado(projection.getEstado());
+            dato.setNombre(projection.getNombre());
+            dato.setUsername(projection.getUsername());
+            datos.add(dato);   
+        }
+        System.out.println(datos.toString());
+        return datos;
+    }
+    
+} 
