@@ -32,18 +32,6 @@ public class PoaNoAprobadoDTO {
     private String observacion;
     private String nombre;
 
-    public PoaNoAprobadoDTO(Long id_poa, Date fecha_inicio, Date fecha_fin, String localizacion, String barrio, String comunidad, String estado, String observacion, String nombre) {
-        this.id_poa = id_poa;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
-        this.localizacion = localizacion;
-        this.barrio = barrio;
-        this.comunidad = comunidad;
-        this.estado = estado;
-        this.observacion = observacion;
-        this.nombre = nombre;
-    }
-
     
 
     

@@ -29,14 +29,7 @@ public class PoaporUsuarioDTO {
     private String estado;
     private String nombre;
 
-    public PoaporUsuarioDTO(Long id, String username, String localizacion, String barrio, String estado, String nombre) {
-        this.id = id;
-        this.username = username;
-        this.localizacion = localizacion;
-        this.barrio = barrio;
-        this.estado = estado;
-        this.nombre = nombre;
-    }
+
 
    
 
