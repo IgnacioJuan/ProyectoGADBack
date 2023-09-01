@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface PresupuestoExternoRepository extends JpaRepository<PresupuestoExterno, Long> {
 
-    @Query(value = "SELECT * from presupuesto_externo where visible = true ORDER BY nombre ASC", nativeQuery = true)
+    @Query(value = "SELECT * from presupuesto_externo where visible = true ORDER BY fecha DESC", nativeQuery = true)
     List<PresupuestoExterno> listarPresupuestoExterno();
 }

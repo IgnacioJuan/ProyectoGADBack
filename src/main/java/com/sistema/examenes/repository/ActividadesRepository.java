@@ -30,4 +30,10 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long>{
             "ORDER BY a.nombre ASC", nativeQuery = true)
     List<Object[]> listarActividadesPorIdPoa(@Param("poaId") Long poaId);*/
 
+    @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
+            "FROM actividades a " +
+            "JOIN usuarios u ON a.id_responsable = u.id " +
+            "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
+    List<Object[]> listarUsuariosAsignadosAActividades();
+
 }

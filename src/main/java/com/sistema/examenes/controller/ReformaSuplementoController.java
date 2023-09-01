@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.ReformaSuplemento;
 import com.sistema.examenes.services.ReformaSuplementoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,15 @@ public class ReformaSuplementoController {
         }
     }
 
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<ReformaSuplemento> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(ReformaSuplementoSevice.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody ReformaSuplemento ReformaSuplemento) {

@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.UsuarioActividadesDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
@@ -100,6 +101,11 @@ public class ActividadesController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarUsuariosAsignadosAActividades")
+    public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
+        return actividadesService.listarUsuariosAsignadosAActividades();
     }
 
 }
