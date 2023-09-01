@@ -75,6 +75,25 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //listar archivos rechazados
+    @GetMapping("/listarrechazados")
+    public ResponseEntity<List<Archivo_s>> obtenerListarechazado() {
+        try {
+            return new ResponseEntity<>(archivoservis.listararchirechazados(), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //listar archivos rechazados
+    @GetMapping("/listarrechazados/{idActi}")
+    public ResponseEntity<List<Archivo_s>> listarActiEviRechazados(@PathVariable("idActi") Long idActividad) {
+        try {
+            return new ResponseEntity<>(archivoservis.listararchivoActividad(idActividad), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/listararchi")
     public ResponseEntity<List<ArchivoProjection>> listaarchi() {
         try {
@@ -146,6 +165,34 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
 
         }
     }
+    @PutMapping("/editar/{archivoId}")
+    public ResponseEntity<Archivosmensajes> editUpload(@PathVariable Long archivoId,
+                                                       @RequestParam("descripcion") String descripcion,
+                                                       @RequestParam("valor") Double valor,
+                                                       @RequestParam("id_evidencia") Long id_actividad) {
+        String meNsaje = "";
+        try {
+            Actividades actividad = actiservis.findById(id_actividad);
+            if (actividad == null) {
+                meNsaje = "No se encontró la evidencia con id " + id_actividad;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
+            }
+            Archivo_s archivo = archivoservis.findById(archivoId);
+            if (archivo == null) {
+                meNsaje = "No se encontró el archivo con id " + archivoId;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
+            }
+            archivo.setDescripcion(descripcion);
+            archivo.setValor(valor);
+            archivoservis.save(archivo);
+            meNsaje = "Se actualizó correctamente";
+            return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje));
+        } catch (Exception e) {
+            meNsaje = "Fallo al actualizar";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
+        }
+    }
+
 
 
 
