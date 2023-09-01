@@ -20,14 +20,15 @@ public class Componente implements Serializable {
     private Long id_componente;
     @Column(name = "nombre", length = 200)
     private String nombre;
-    @Column(name = "codigo", length = 100)
-    private String codigo;
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
-
+    @Column(name = "codigo", length = 100)
+    private String codigo;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //OneToMany ObjetivoPDOT
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "componente")
     @JsonIgnore
     private Set<Objetivo_pdot> lista_objetivos_pdots = new HashSet<>();

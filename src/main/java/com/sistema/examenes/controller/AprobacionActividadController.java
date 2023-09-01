@@ -69,12 +69,11 @@ public class AprobacionActividadController {
             if (a == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                a.setEstado(p.getEstado());
                 a.setObservacion(p.getObservacion());
-                a.setUsuario(p.getUsuario());
-                a.setActividad(p.getActividad());
+                a.setEstado(p.getEstado());
                 a.setPoa(p.getPoa());
-
+                a.setActividad(p.getActividad());
+                a.setUsuario(p.getUsuario());
                 return new ResponseEntity<>(AprobacionActividadService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {

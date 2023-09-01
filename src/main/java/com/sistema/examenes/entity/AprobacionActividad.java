@@ -16,24 +16,29 @@ public class AprobacionActividad {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_aprobacionact")
     private Long id_aprobacionact;
-    @Column(name = "estado", length = 50)
-    private String estado;
     @Column(name = "observacion", length = 150)
     private String observacion;
+    @Column(name = "estado", length = 50)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
+    //Relaciones
+    //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @JoinColumn(name = "id_poa")
+    private Poa poa;
 
+    //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actividad")
     private Actividades actividad;
 
+    //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_poa")
-    private Poa poa;
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
 
 
 }

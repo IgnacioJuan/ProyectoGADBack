@@ -45,7 +45,8 @@ public class MetaPDOT_ServiceImpl extends GenericServiceImpl<MetaPDOT, Long> imp
                     (Long) resultado[0],
                     (String) resultado[1],
                     (String) resultado[2],
-                    (double) resultado[3]
+                    (double) resultado[3],
+                    (double) resultado[4]
             );
             metasEncontradas.add(metaDTO);
         }
@@ -61,7 +62,8 @@ public class MetaPDOT_ServiceImpl extends GenericServiceImpl<MetaPDOT, Long> imp
             m.setId_meta_pdot(((BigInteger) resultado[0]).longValue());
             m.setNombre((String) resultado[1]);
             m.setDescripcion((String) resultado[2]);
-            m.setPorcentaje_meta((Double) resultado[3]);
+            m.setMeta_final((Double) resultado[3]);
+            m.setLinea_base((Double) resultado[4]);
             metas.add(m);
         }
         return metas;

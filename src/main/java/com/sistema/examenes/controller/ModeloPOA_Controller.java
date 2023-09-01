@@ -75,6 +75,7 @@ public class ModeloPOA_Controller {
                 a.setDescripcion(p.getDescripcion());
                 a.setFecha_inicial(p.getFecha_inicial());
                 a.setFecha_final(p.getFecha_final());
+                a.setEstado(p.getEstado());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

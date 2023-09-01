@@ -44,9 +44,15 @@ public class Usuario implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
-    private Set<AprobacionEvidencia> lista_aprobaciones_evidencias = new HashSet<>();
+    private Set<Poa> lista_poas = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Actividades> lista_actividades = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<AprobacionEvidencia> lista_aprobacion_evidencias = new HashSet<>();
 
     public Usuario() {
     }

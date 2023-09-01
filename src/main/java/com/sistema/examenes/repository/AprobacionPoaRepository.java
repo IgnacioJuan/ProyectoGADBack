@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Long>{
 
-    @Query(value = "SELECT * from aprobacion_poa where visible = true ORDER BY nombre ASC", nativeQuery = true)
+    @Query(value = "SELECT * from aprobacion_poa where visible = true", nativeQuery = true)
     List<AprobacionPoa> listarAprobacionPoa();
 }

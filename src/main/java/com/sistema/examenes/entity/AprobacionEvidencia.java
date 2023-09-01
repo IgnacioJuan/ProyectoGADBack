@@ -5,30 +5,33 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "aprobacion_evidencia")
-public class AprobacionEvidencia implements Serializable {
+public class AprobacionEvidencia {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_aprobacionevi")
-    private Long id_aprobacionevi;
-    @Column(name = "estado", length = 200)
-    private String estado;
-    @Column(name = "observacion", length = 2000)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "id_aprobacionevid")
+    private Long id_aprobacionevid;
+    @Column(name = "observacion", length = 150)
     private String observacion;
+    @Column(name = "estado", length = 50)
+    private String estado;
     @Column(name = "visible")
     private boolean visible;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_usuario")
-    private Usuario usuario;
+    //Relaciones
 
+    //ManyToOne Archivos
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_evidencia")
-    private Evidencias evidencia;
+    @JoinColumn(name = "id_evidencia")
+    private Archivo_s evidencia;
+
+    //ManyToOne Usuario
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
 }

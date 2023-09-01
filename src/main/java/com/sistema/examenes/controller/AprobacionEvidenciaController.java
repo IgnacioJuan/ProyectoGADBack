@@ -1,11 +1,14 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.AprobacionEvidenciaDTO;
+import com.sistema.examenes.dto.ObjetivoPdot_DTO;
+import com.sistema.examenes.entity.AprobacionActividad;
 import com.sistema.examenes.entity.AprobacionEvidencia;
-import com.sistema.examenes.services.AprobacionEvidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.sistema.examenes.services.AprobacionEvidenciaService;
 
 import java.util.List;
 
@@ -13,9 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/aprobacionevidencia")
 public class AprobacionEvidenciaController {
-
     @Autowired
-    private AprobacionEvidenciaService AprobacionEvidenciaService;
+    AprobacionEvidenciaService AprobacionEvidenciaService;
+
 
     //post crear
 
@@ -42,7 +45,7 @@ public class AprobacionEvidenciaController {
 
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody AprobacionEvidencia AprobacionEvidencia) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody AprobacionEvidencia AprobacionActividad) {
         return ResponseEntity.status(HttpStatus.OK).body(AprobacionEvidenciaService.delete(id));
     }
 
@@ -69,15 +72,22 @@ public class AprobacionEvidenciaController {
             if (a == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                a.setEstado(p.getEstado());
                 a.setObservacion(p.getObservacion());
+                a.setEstado(p.getEstado());
                 a.setUsuario(p.getUsuario());
                 a.setEvidencia(p.getEvidencia());
-
+                a.setEstado(p.getEstado());
                 return new ResponseEntity<>(AprobacionEvidenciaService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listaAprobacionEvidencia/{archivoId}")
+    public List<AprobacionEvidenciaDTO> listarAprobacionEvidenciaPorIdEvidencia(@PathVariable Long archivoId) {
+        return AprobacionEvidenciaService.listarAprobacionEvidenciaPorIdArchivo(archivoId);
+    }
+
+
 }

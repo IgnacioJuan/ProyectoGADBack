@@ -14,5 +14,5 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
-    public List<Poa_DTO> listarPoasAprobados();
+    public List<Poa_DTO> listarPoasDeModelo();
 }
