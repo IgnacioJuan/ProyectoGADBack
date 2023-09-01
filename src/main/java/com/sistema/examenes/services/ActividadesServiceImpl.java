@@ -5,6 +5,7 @@ import com.sistema.examenes.dto.UsuarioActividadesDTO;
 import com.sistema.examenes.dto.DetalleActividadDTO;
 import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -137,4 +138,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         // Devolver la lista de DTOs.
         return detaact;
     }
+    //listar actividades con archivos rechazados
+    @Override
+    public List<Actividades> listarActiEviRechazados() {return actividadesRepository.listarActEviRechazados();}
 }

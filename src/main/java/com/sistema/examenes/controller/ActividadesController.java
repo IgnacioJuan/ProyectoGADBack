@@ -8,6 +8,7 @@ import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
+import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,18 @@ public class ActividadesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    //listar actividades que tengan archivos rechazados
+    @GetMapping("/listarActEviRechazados")
+    public ResponseEntity<List<Actividades>> obtenerListarechazado() {
+        try {
+            return new ResponseEntity<>(actividadesService.listarActiEviRechazados(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividades actividades) {
