@@ -1,8 +1,7 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.Competencia_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.dto.ProyectoResumenDTO;
+import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -58,5 +57,9 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             poas.add(dto);
         }
         return poas;
+    }
+
+    public List<AprobPoa_DTO> listarPoasparaAprobacion() {
+        return null;
     }
 }
