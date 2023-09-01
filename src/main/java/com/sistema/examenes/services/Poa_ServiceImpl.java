@@ -3,6 +3,8 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
+import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;
@@ -106,4 +108,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return datos;
     }
     
-} 
+
+    public List<AprobPoa_DTO> listarPoasparaAprobacion() {
+        return null;
+    }
+}
