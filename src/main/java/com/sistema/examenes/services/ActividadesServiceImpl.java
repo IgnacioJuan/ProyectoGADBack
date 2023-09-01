@@ -49,6 +49,9 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     }
 
     @Override
+    public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
+        return actividadesRepository.listarActividadeSPORresponsable(id_resp);
+    }
     public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
         List<Object[]> resultados = actividadesRepository.listarUsuariosAsignadosAActividades();
         List<UsuarioActividadesDTO> acts = new ArrayList<>();

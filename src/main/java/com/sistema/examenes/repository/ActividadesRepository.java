@@ -1,6 +1,7 @@
 package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Actividades;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,6 +30,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long>{
             "WHERE a.visible = true AND p.id_poa = :poaId " +
             "ORDER BY a.nombre ASC", nativeQuery = true)
     List<Object[]> listarActividadesPorIdPoa(@Param("poaId") Long poaId);*/
+    @Query(value = "select * from actividades where id_responsable = :id_resp and visible =true;", nativeQuery = true)
+    List<Actividades> listarActividadeSPORresponsable(Long id_resp);
 
     @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
             "FROM actividades a " +
