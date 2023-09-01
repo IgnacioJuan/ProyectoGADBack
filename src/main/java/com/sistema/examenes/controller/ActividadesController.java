@@ -3,6 +3,8 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.dto.Competencia_DTO;
 import com.sistema.examenes.dto.UsuarioActividadesDTO;
+import com.sistema.examenes.dto.DetalleActividadDTO;
+import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
@@ -22,10 +24,10 @@ public class ActividadesController {
     @Autowired
     private ActividadesService actividadesService;
 
-    //post crear
+    // post crear
 
     @PostMapping("/crear")
-    public ResponseEntity<Actividades> crear(@RequestBody Actividades a){
+    public ResponseEntity<Actividades> crear(@RequestBody Actividades a) {
         try {
             a.setVisible(true);
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
@@ -34,17 +36,16 @@ public class ActividadesController {
         }
     }
 
-    //get listar
+    // get listar
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Actividades>> listar(){
+    public ResponseEntity<List<Actividades>> listar() {
         try {
             return new ResponseEntity<>(actividadesService.listarActividades(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividades actividades) {
@@ -103,7 +104,7 @@ public class ActividadesController {
         }
     }
 
-    //no borrar  john es del gad
+    // no borrar john es del gad
     @GetMapping("/actiresponsable/{id_resp}")
     public List<Actividades> listarActividadesPorResponsable(@PathVariable Long id_resp) {
         return actividadesService.listarActividadeSPORresponsable(id_resp);
@@ -113,6 +114,25 @@ public class ActividadesController {
     @GetMapping("/listarUsuariosAsignadosAActividades")
     public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
         return actividadesService.listarUsuariosAsignadosAActividades();
+    }
+    @GetMapping("/usuactividades")
+    public ResponseEntity<List<UsuarioActividadDTO>> obtenerUsuariosConActividades() {
+
+        try {
+            return new ResponseEntity<>(actividadesService.obtenerUsuariosConActividades(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/detactividades/{idUsuario}")
+    public ResponseEntity<List<DetalleActividadDTO>> obtenerDetalleActividades(@PathVariable Long idUsuario) {
+        try {
+            return new ResponseEntity<>(actividadesService.obtenerDetalleActividades(idUsuario), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
