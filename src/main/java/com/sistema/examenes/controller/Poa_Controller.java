@@ -1,8 +1,9 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.services.Poa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/poa")
 public class Poa_Controller {
+
     @Autowired
     Poa_Service Service;
 
@@ -69,6 +71,7 @@ public class Poa_Controller {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Poa Poa) {
         return Service.delete(id);
@@ -109,18 +112,27 @@ public class Poa_Controller {
                 a.setMeta_planificada(p.getMeta_planificada());
                 a.setMeta_alcanzar(p.getMeta_alcanzar());
                 a.setUsuario(p.getUsuario());
-                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     }
+
     @GetMapping("/listardelProyecto/{id_proyecto}/{estado}")
-    public ResponseEntity<List<Poa>> listadelProyecto(@PathVariable Long id_proyecto,@PathVariable String estado) {
+    public ResponseEntity<List<Poa>> listadelProyecto(@PathVariable Long id_proyecto, @PathVariable String estado) {
         try {
             return new ResponseEntity<>(Service.listarPoadelProyectoconEstado(id_proyecto, estado), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/noaprobados")
+    public ResponseEntity<List<PoaNoAprobadoDTO>> getNoAprobados() {
+        List<PoaNoAprobadoDTO> poaNoAprobados = Service.listarPoaNoAprobados();
+        return new ResponseEntity<>(poaNoAprobados, HttpStatus.OK);
+    }
+         
+   
 }

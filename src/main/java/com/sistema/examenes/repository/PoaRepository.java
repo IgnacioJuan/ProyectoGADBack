@@ -1,6 +1,8 @@
 package com.sistema.examenes.repository;
 
+import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,4 +33,16 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "WHERE p.estado = 'aprobado' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true)", nativeQuery = true)
     List<Object[]> listarPoasDeModelo();
 
+    @Query(value= "select p.id_poa, p.fecha_inicio, p.meta_alcanzar, ap.estado, ap.observacion from poa p inner"
+            + " join aprobacion_poa ap on p.id_poa= ap.id_poa where ap.estado!='aprobado'", nativeQuery = true)
+    List<PoaNoAprobadoProjection> findNoAprobados(); 
+    
+    
+//    @Query("SELECT new PoaNoAprobadoDTO(p.id_poa, p.fecha_inicio, p.meta_alcanzar, ap.estado, ap.observacion)  from poa p inner"
+//            + " join p.lista_aprobaciones_poa  ap on   p.lista_aprobaciones_poa= ap.id_aprobacionpoa where ap.estado!='aprobado'")
+//	List<PoaNoAprobadoDTO> findNoAprobados();
+    
+    
+  
+    
 }
