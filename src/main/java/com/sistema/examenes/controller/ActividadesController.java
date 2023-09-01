@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.UsuarioActividadesDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
@@ -107,4 +108,11 @@ public class ActividadesController {
     public List<Actividades> listarActividadesPorResponsable(@PathVariable Long id_resp) {
         return actividadesService.listarActividadeSPORresponsable(id_resp);
     }
+
+    //ni mio miriam
+    @GetMapping("/listarUsuariosAsignadosAActividades")
+    public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
+        return actividadesService.listarUsuariosAsignadosAActividades();
+    }
+
 }

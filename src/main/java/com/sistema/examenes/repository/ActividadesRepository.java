@@ -33,4 +33,10 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long>{
     @Query(value = "select * from actividades where id_responsable = :id_resp and visible =true;", nativeQuery = true)
     List<Actividades> listarActividadeSPORresponsable(Long id_resp);
 
+    @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
+            "FROM actividades a " +
+            "JOIN usuarios u ON a.id_responsable = u.id " +
+            "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
+    List<Object[]> listarUsuariosAsignadosAActividades();
+
 }

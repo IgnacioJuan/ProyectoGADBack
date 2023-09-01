@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ReformaSuplementoRepository extends JpaRepository<ReformaSuplemento, Long>{
 
-    @Query(value = "SELECT * from reforma_suplemento where visible = true ORDER BY nombre ASC", nativeQuery = true)
+    @Query(value = "SELECT * from reforma_suplemento where visible = true ORDER BY fecha DESC", nativeQuery = true)
     List<ReformaSuplemento> listarReformaSuplemento();
 }
