@@ -24,6 +24,10 @@ public class Archivo_ServiceImpl extends GenericServiceImpl<Archivo_s, Long> imp
         return repository.listararchivo();
     }
 
+    //listar archivos rechazados
+    @Override
+    public List<Archivo_s> listararchirechazados() {return repository.listararchivorechazados();}
+
     @Override
     public List<Archivo_s> listararchivouser(String username) {
         return repository.listararchivouser(username);

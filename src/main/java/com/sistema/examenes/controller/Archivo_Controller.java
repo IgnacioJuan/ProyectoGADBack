@@ -75,6 +75,16 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //listar archivos rechazados
+    @GetMapping("/listarrechazados")
+    public ResponseEntity<List<Archivo_s>> obtenerListarechazado() {
+        try {
+            return new ResponseEntity<>(archivoservis.listararchirechazados(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/listararchi")
     public ResponseEntity<List<ArchivoProjection>> listaarchi() {
         try {
