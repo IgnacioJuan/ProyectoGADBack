@@ -72,9 +72,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             // (número de actividades)
             // se recupera como un BigInteger, por lo que necesita ser convertido a un int.
             UsuarioActividadDTO usuarioActividadDTO = new UsuarioActividadDTO(
-                    (String) resultado[0], // Nombre del responsable
-                    (String) resultado[1], // Cargo del responsable
-                    ((BigInteger) resultado[2]).intValue() // Número de actividades (convertido de BigInteger a int)
+                    ((BigInteger) resultado[0]).longValue(), // id del usuario 
+                    (String) resultado[1], // Nombre del responsable
+                    (String) resultado[2], // Cargo del responsable
+                    ((BigInteger) resultado[3]).intValue() // Número de actividades (convertido de BigInteger a int)
             );
 
             // Agregar el DTO a la lista de resultados.
