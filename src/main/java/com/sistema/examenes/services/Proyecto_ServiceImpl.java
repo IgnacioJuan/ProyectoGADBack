@@ -32,4 +32,9 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
     public List<Proyecto> listardelModelo(Long id_modelo_poa) {
         return repository.listarProyectosdelModelo(id_modelo_poa);
     }
+    
+     @Override
+    public List<Proyecto> findByIds(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
 }
