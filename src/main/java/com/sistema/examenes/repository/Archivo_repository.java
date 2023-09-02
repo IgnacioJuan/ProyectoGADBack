@@ -4,6 +4,7 @@ import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.projection.ArchivoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     //query archivos rechazados
     @Query(value = "SELECT * FROM archivo WHERE id_actividad =:id_actividad",nativeQuery = true)
     List<Archivo_s> listararchivorechazados();
+
+    //query para extraer el enlace del archivo
+    @Query(value = "SELECT enlace FROM archivo WHERE id_archivo = :id_archivo LIMIT 1", nativeQuery = true)
+    Archivo_s obtenerEnlacePorId(@Param("id_archivo") Long id_archivo);
     @Query(value = "select * from archivo ar join actividad ac on ar.id_actividad=ac.id_actividad\n" +
     "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true",nativeQuery = true)
     public List<Archivo_s> listararchivouser(String username);

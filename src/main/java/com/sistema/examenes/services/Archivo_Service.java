@@ -18,4 +18,8 @@ public interface Archivo_Service extends GenericService<Archivo_s, Long> {
     //listar archivos rechazados
     public List<Archivo_s> listararchirechazados(Long idActividad) ;
 
+    //listar archivos enlace
+    public Archivo_s obtenerEnlacePorId(Long idArchivo);
+
+
 }
