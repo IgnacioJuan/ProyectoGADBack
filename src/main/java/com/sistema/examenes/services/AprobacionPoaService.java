@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
+import com.sistema.examenes.dto.AprobacionPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.services.generic.GenericService;
 
@@ -15,4 +16,6 @@ public interface AprobacionPoaService extends GenericService<AprobacionPoa, Long
     AprobPoa_DTO obtenerAprobacionPoaPorId(BigInteger idPoa);
 
     AprobacionPoa obtenerAprobacionPorIdPoa(Long idPoa);
+
+    List<AprobacionPoa_DTO> listarAprobacionPoaPorIdPoa(Long idPoa);
 }

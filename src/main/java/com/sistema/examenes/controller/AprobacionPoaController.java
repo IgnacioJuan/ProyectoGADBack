@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
+import com.sistema.examenes.dto.AprobacionPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.services.AprobacionPoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,4 +125,16 @@ public class AprobacionPoaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/listaAprobacionPoaPorId/{idPoa}")
+    public List<AprobacionPoa_DTO> listarAprobacionPoaPorIdPoa(@PathVariable Long idPoa) {
+        return AprobacionPoaService.listarAprobacionPoaPorIdPoa(idPoa);
+    }
+
+
+
+
+
+
 }

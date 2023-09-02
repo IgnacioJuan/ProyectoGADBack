@@ -1,10 +1,7 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.PoaNoAprobadoDTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.dto.PoaporUsuarioDTO;
-import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;
@@ -112,4 +109,32 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<AprobPoa_DTO> listarPoasparaAprobacion() {
         return null;
     }
+
+    public List<PoasAdmin_DTO> listarPoasPorAdminEstado(Long idResponsable, String estado) {
+        List<Object[]> resultados = repository.listarPoasPorAdminEstado(idResponsable, estado);
+        List<PoasAdmin_DTO> poas = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            PoasAdmin_DTO dto = new PoasAdmin_DTO();
+            dto.setId_poa(((BigInteger) result[0]).longValue());
+            dto.setBarrio((String) result[1]);
+            dto.setCobertura((String) result[2]);
+            dto.setComunidad((String) result[3]);
+            dto.setFecha_inicio((Date) result[4]);
+            dto.setFecha_fin((Date) result[5]);
+            dto.setEstado((String) result[6]);
+            dto.setLinea_base((Double) result[7]);
+            dto.setLocalizacion((String) result[8]);
+            dto.setTipo_periodo((String) result[9]);
+            dto.setMeta_alcanzar((Double) result[10]);
+            dto.setMeta_planificada((Double) result[11]);
+
+            poas.add(dto);
+        }
+        return poas;
+    }
+
+
+
+
 }
