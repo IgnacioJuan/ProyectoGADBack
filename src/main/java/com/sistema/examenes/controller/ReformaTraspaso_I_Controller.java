@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.RTIncrementoActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.ReformaTraspaso_I;
 import com.sistema.examenes.services.ReformaTraspaso_IService;
@@ -85,5 +86,10 @@ public class ReformaTraspaso_I_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarRTIActividades")
+    public List<RTIncrementoActividadDTO> listarRTIActividades() {
+        return reformaTraspaso_IService.listarRTIActividades();
     }
 }

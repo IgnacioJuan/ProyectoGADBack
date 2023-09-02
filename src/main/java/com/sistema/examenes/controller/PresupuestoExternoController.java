@@ -1,5 +1,7 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.PresupuestoEActividadDTO;
+import com.sistema.examenes.dto.UsuarioActividadesDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.PresupuestoExterno;
 import com.sistema.examenes.services.PresupuestoExternoService;
@@ -89,5 +91,10 @@ public class PresupuestoExternoController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarPEActividades")
+    public List<PresupuestoEActividadDTO> listarPEActividades() {
+        return presupuestoExternoService.listarPEActividades();
     }
 }
