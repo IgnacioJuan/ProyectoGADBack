@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.RTDecrementoActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.ReformaTraspaso_D;
 import com.sistema.examenes.services.ReformaTraspaso_DService;
@@ -86,5 +87,9 @@ public class ReformaTraspaso_D_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/listarRTDActividades")
+    public List<RTDecrementoActividadDTO> listarRTDActividades() {
+        return reformaTraspaso_DService.listarRTDActividades();
     }
 }
