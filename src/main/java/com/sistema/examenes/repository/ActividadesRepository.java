@@ -3,9 +3,11 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.entity.Actividades;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ActividadesRepository extends JpaRepository<Actividades, Long>{
@@ -38,5 +40,10 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long>{
             "JOIN usuarios u ON a.id_responsable = u.id " +
             "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
     List<Object[]> listarUsuariosAsignadosAActividades();
+
+    /*@Modifying
+    @Transactional
+    @Query(value = "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad", nativeQuery = true)
+    void actualizarCodificado(@Param("idActividad") Long idActividad, @Param("valor") double valor);*/
 
 }

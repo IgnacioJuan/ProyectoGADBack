@@ -28,6 +28,7 @@ public class ActividadesController {
     public ResponseEntity<Actividades> crear(@RequestBody Actividades a){
         try {
             a.setVisible(true);
+            a.setCodificado(0);
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
