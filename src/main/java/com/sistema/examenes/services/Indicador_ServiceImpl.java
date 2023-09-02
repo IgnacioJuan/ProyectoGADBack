@@ -4,6 +4,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.Indicador_DTO;
 import com.sistema.examenes.dto.MetaPdot_DTO;
 import com.sistema.examenes.entity.Indicador;
+import com.sistema.examenes.projection.IndicadorComponenteProjection;
 import com.sistema.examenes.repository.IndicadorRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,10 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
             indicadores.add(ind);
         }
         return indicadores;
+    }
+
+    @Override
+    public List<IndicadorComponenteProjection> listarIndicadoresconComponente() {
+        return repository.ListarIndicadoresConComponente();
     }
 }
