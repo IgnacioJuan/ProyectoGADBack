@@ -5,6 +5,7 @@ import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.AprobPoa_DTO;
+import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;

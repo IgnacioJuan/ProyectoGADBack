@@ -1,5 +1,4 @@
 package com.sistema.examenes.dto;
-
 import lombok.*;
 
 @Getter

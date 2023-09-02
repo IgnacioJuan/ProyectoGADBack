@@ -35,16 +35,10 @@ public class Actividades {
     @Column(name = "visible")
     private boolean visible;
 
-    //Relaciones
-    //relacion de uno a muchos con la tabla reporte_actividad
+    //Relaciones con tablas de presupuestoExterno, ReformaSuplemento, ReformaTraspasoIncremento, ReformaTraspasoDecremento
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<ReporteActividad> lista_reporte_actividades = new HashSet<>();
-
-    //relacion de uno a muchos con la tabla evidencia
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<Archivo_s> lista_archivo_s = new HashSet<>();
+    private Set<PresupuestoExterno> presupuestos = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
@@ -56,11 +50,18 @@ public class Actividades {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<PresupuestoExterno> presupuestos = new HashSet<>();
+    private Set<ReformaSuplemento> reformaSuplementos = new HashSet<>();
 
+    //relacion de uno a muchos con la tabla reporte_actividad
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
-    private Set<ReformaSuplemento> reformaSuplementos = new HashSet<>();
+    private Set<ReporteActividad> lista_reporte_actividades = new HashSet<>();
+
+    //relacion de uno a muchos con la tabla evidencia
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
+    private Set<Archivo_s> lista_archivo_s = new HashSet<>();
+
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")

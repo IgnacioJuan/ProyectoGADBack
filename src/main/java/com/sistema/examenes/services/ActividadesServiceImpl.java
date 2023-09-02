@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long> implements ActividadesService {
@@ -28,6 +30,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return actividadesRepository;
     }
 
+    @Override
+    public Optional<Actividades> findActividadById(Long id) {
+        return actividadesRepository.findById(id);
+    }
     @Override
     public List<Actividades> listarActividades() {
         return actividadesRepository.listarActividades();
@@ -73,6 +79,16 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return acts;
     }
 
+    // Método para actualizar el campo "codificado"
+    /*@Transactional
+    public void actualizarCodificado(Long idActividad, double valor) {
+        Actividades actividad = actividadesRepository.findById(idActividad).orElse(null);
+        if (actividad != null) {
+            double nuevoCodificado = actividad.getCodificado() + valor;
+            actividad.setCodificado(nuevoCodificado);
+            actividadesRepository.save(actividad);
+        }
+    }*/
 
 
     // lista para conseguir los usuarios que tengana actividades
