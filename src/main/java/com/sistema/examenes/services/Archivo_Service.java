@@ -15,4 +15,8 @@ public interface Archivo_Service extends GenericService<Archivo_s, Long> {
 
     public List<ArchivoProjection> listararchi() ;
 
+    //listar archivos rechazados
+    public List<Archivo_s> listararchirechazados() ;
+    public List<Archivo_s> listararchirechazados(Long idActividad) ;
+
 }
