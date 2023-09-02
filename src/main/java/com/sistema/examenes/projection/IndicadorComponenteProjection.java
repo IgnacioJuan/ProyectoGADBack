@@ -1,6 +1,6 @@
 package com.sistema.examenes.projection;
 
-public interface IndicadorComponente {
+public interface IndicadorComponenteProjection {
 
     Long getId_componente();
     String getCodigo();

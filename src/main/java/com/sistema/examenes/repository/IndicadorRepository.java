@@ -2,6 +2,7 @@ package com.sistema.examenes.repository;
 
 
 import com.sistema.examenes.entity.Indicador;
+import com.sistema.examenes.projection.IndicadorComponenteProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,5 +30,5 @@ public interface IndicadorRepository extends JpaRepository<Indicador, Long> {
             "a.visible = true " +
             "ORDER BY d.codigo ASC"
             , nativeQuery = true)
-    List<Object[]> ListarIndicadoresConComponente(@Param("idMetaPdot") Long idMetaPdot);
+    List<IndicadorComponenteProjection> ListarIndicadoresConComponente();
 }
