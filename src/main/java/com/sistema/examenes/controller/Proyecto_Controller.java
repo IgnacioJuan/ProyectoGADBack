@@ -1,6 +1,8 @@
 package com.sistema.examenes.controller;
 
 
+import com.sistema.examenes.dto.ProjectByIdDto;
+import com.sistema.examenes.dto.ProjectsActivesDto;
 import com.sistema.examenes.dto.ProyectoResumenDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.services.Proyecto_Service;
@@ -101,5 +103,17 @@ public class Proyecto_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listsActiveProjects")
+    public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects() {
+        List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects();
+        return ResponseEntity.ok(projectsActivesDtoList);
+    }
+
+    @GetMapping("/getProject")
+    public ResponseEntity<List<ProjectByIdDto>> getProjectById(@RequestParam Long id_proyecto) {
+        List<ProjectByIdDto> projectById = Service.ProjectById(id_proyecto);
+        return ResponseEntity.ok(projectById);
     }
 }
