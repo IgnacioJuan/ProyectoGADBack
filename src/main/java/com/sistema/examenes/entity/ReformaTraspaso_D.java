@@ -15,7 +15,7 @@ public class ReformaTraspaso_D implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reftras_d")
-    private Long id_reftras_i;
+    private Long id_reftras_d;
     @Column(name = "valor")
     private double valor;
     @Column(name = "fecha")
