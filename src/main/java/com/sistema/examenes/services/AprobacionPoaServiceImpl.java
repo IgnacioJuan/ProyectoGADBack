@@ -38,7 +38,7 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
 
         for (Object[] resultado : resultados) {
             AprobPoa_DTO aprobPoaDTO = new AprobPoa_DTO(
-                    (BigInteger) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (Date) resultado[3],
@@ -63,13 +63,13 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
 
 
     @Override
-    public AprobPoa_DTO obtenerAprobacionPoaPorId(BigInteger idPoa) {
+    public AprobPoa_DTO obtenerAprobacionPoaPorId(Long idPoa) {
         List<Object[]> resultados = AprobacionPoaRepository.obtenerAprobacionPoaPorId(idPoa);
         AprobPoa_DTO aprobaciones=new AprobPoa_DTO();
 
         for (Object[] resultado : resultados) {
             AprobPoa_DTO aprobPoaDTO = new AprobPoa_DTO(
-                    (BigInteger) resultado[0],
+                   ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (Date) resultado[3],
