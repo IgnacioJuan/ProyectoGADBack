@@ -79,5 +79,10 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         return projectById;
     }
 
+    @Override
+    public Long secuenciaproyecto(String codigo) {
+        return repository.SecuenciadelCodigo(codigo);
+    }
+
 
 }

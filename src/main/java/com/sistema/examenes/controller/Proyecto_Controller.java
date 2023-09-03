@@ -20,10 +20,19 @@ public class Proyecto_Controller {
     @Autowired
     Proyecto_Service Service;
 
-    @PostMapping("/crear")
-    public ResponseEntity<Proyecto> crear(@RequestBody Proyecto r) {
+    @PostMapping("/crear/{codigo}")
+    public ResponseEntity<Proyecto> crear(@RequestBody Proyecto r, @PathVariable("codigo") String codigo) {
         try {
+            String secuencia = "";
             r.setVisible(true);
+            if (Service.secuenciaproyecto(codigo) == null){
+                secuencia = "001";
+            }else {
+                Long secuenciaNumerica = Service.secuenciaproyecto(codigo);
+                secuencia = String.format("%03d", secuenciaNumerica);
+            }
+            r.setCodigo(r.getCodigo() + secuencia);
+
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
