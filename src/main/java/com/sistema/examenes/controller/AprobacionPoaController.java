@@ -119,6 +119,7 @@ public class AprobacionPoaController {
             } else {
                 a.setEstado(p.getEstado());
                 a.setObservacion(p.getObservacion());
+
                 return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
