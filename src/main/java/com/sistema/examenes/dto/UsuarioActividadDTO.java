@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class UsuarioActividadDTO {
+    private Long id_usuario;
     private String nombre_responsable;
     private String cargo_responsable;
     private int numero_de_actividades;

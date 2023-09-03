@@ -109,7 +109,6 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return datos;
     }
     
-
     public List<AprobPoa_DTO> listarPoasparaAprobacion() {
         return null;
     }
