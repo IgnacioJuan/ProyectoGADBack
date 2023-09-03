@@ -2,6 +2,7 @@ package com.sistema.examenes.repository;
 
 
 import com.sistema.examenes.entity.Indicador;
+import com.sistema.examenes.projection.IndicadorComponenteProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,15 @@ public interface IndicadorRepository extends JpaRepository<Indicador, Long> {
 
     @Query(value = "SELECT i.id_indicador, i.nombre, i.descripcion, i.tipo_evaluacion FROM indicador i INNER JOIN metapdot m ON i.id_meta_pdot = m.id_meta_pdot WHERE m.id_meta_pdot = :idMetaPdot AND i.visible = true ORDER BY i.nombre ASC", nativeQuery = true)
     List<Object[]> listarIndicadoresPorIdMetaPdot(@Param("idMetaPdot") Long idMetaPdot);
+
+    @Query(value = "select d.codigo, d.id_componente, a.* " +
+            "FROM indicador a " +
+            "join metapdot b ON b.id_meta_pdot = a.id_meta_pdot " +
+            "join objetivopdot c ON c.id_objetivo_pdot = b.id_objetivo_pdot " +
+            "join componente d ON d.id_componente = c.id_componente " +
+            "WHERE " +
+            "a.visible = true " +
+            "ORDER BY d.codigo ASC"
+            , nativeQuery = true)
+    List<IndicadorComponenteProjection> ListarIndicadoresConComponente();
 }

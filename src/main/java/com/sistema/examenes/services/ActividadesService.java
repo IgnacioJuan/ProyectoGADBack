@@ -9,6 +9,7 @@ import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.services.generic.GenericService;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ActividadesService extends GenericService<Actividades, Long> {
 
@@ -16,8 +17,6 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     List<ActividadDTO> listarActividadesPorIdPoa(Long poaId);
 
     List<Actividades> listarActividadeSPORresponsable(Long id_resp);
-
-
     List<UsuarioActividadesDTO>listarUsuariosAsignadosAActividades();
     List<DetalleActividadDTO> obtenerDetalleActividades(Long idUsuario);
 
@@ -26,4 +25,8 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
 
     //listar actividades que tengan archivos rechazados
     public List<Actividades> listarActiEviRechazados();
+
+    //void actualizarCodificado(Long idActividad, double valor);
+    Optional<Actividades> findActividadById(Long id);
+
 }
