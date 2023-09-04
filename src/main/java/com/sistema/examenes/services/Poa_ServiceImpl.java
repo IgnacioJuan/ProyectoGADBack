@@ -1,7 +1,15 @@
 package com.sistema.examenes.services;
 
+import com.sistema.examenes.dto.*;
+import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.dto.PoaporUsuarioDTO;
+import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.entity.Proyecto;
+import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporUsuarioProjection;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +44,18 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
     @Override
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado) {
-        return repository.listarPoadelProyectoconEstado(id_proyecto,estado);
+        return repository.listarPoadelProyectoconEstado(id_proyecto, estado);
     }
+    
+     
+    @Override
+    public List<Poa> findByIds(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
+    
+    
+
+    @Override
     public List<Poa_DTO> listarPoasDeModelo() {
         List<Object[]> resultados = repository.listarPoasDeModelo();
         List<Poa_DTO> poas = new ArrayList<>();
@@ -57,4 +75,78 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         }
         return poas;
     }
+
+    @Override
+    public List<PoaNoAprobadoDTO> listarPoaNoAprobados() {
+        List<PoaNoAprobadoProjection> poaNoAprobados = repository.findNoAprobados();
+        List<PoaNoAprobadoDTO> dtos = new ArrayList<>();
+
+        for (PoaNoAprobadoProjection projection : poaNoAprobados) {
+            PoaNoAprobadoDTO dto = new PoaNoAprobadoDTO();
+            dto.setId_poa(projection.getId_poa());
+            dto.setFecha_inicio(projection.getFecha_inicio());
+            dto.setFecha_fin(projection.getFecha_fin());
+            dto.setLocalizacion(projection.getLocalizacion());
+            dto.setBarrio(projection.getBarrio());
+            dto.setComunidad(projection.getComunidad());
+            dto.setEstado(projection.getEstado());
+            dto.setObservacion(projection.getObservacion());
+            dto.setNombre(projection.getNombre());
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+    
+    
+    @Override
+    public List<PoaporUsuarioDTO> listarPoaporUsuarios() {
+        List<PoaporUsuarioProjection> poaporUsuario = repository.findPoaporUsuario();
+        List<PoaporUsuarioDTO> datos = new ArrayList<>();
+
+        for (PoaporUsuarioProjection projection : poaporUsuario) {
+            PoaporUsuarioDTO dato = new PoaporUsuarioDTO();
+            dato.setId(projection.getId());
+            dato.setLocalizacion(projection.getLocalizacion());
+            dato.setBarrio(projection.getBarrio());
+            dato.setEstado(projection.getEstado());
+            dato.setNombre(projection.getNombre());
+            dato.setUsername(projection.getUsername());
+            datos.add(dato);   
+        }
+        System.out.println(datos.toString());
+        return datos;
+    }
+    
+    public List<AprobPoa_DTO> listarPoasparaAprobacion() {
+        return null;
+    }
+
+    public List<PoasAdmin_DTO> listarPoasPorAdminEstado(Long idResponsable, String estado) {
+        List<Object[]> resultados = repository.listarPoasPorAdminEstado(idResponsable, estado);
+        List<PoasAdmin_DTO> poas = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            PoasAdmin_DTO dto = new PoasAdmin_DTO();
+            dto.setId_poa(((BigInteger) result[0]).longValue());
+            dto.setBarrio((String) result[1]);
+            dto.setCobertura((String) result[2]);
+            dto.setComunidad((String) result[3]);
+            dto.setFecha_inicio((Date) result[4]);
+            dto.setFecha_fin((Date) result[5]);
+            dto.setEstado((String) result[6]);
+            dto.setLinea_base((Double) result[7]);
+            dto.setLocalizacion((String) result[8]);
+            dto.setTipo_periodo((String) result[9]);
+            dto.setMeta_alcanzar((Double) result[10]);
+            dto.setMeta_planificada((Double) result[11]);
+
+            poas.add(dto);
+        }
+        return poas;
+    }
+
+
+
+
 }

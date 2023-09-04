@@ -1,6 +1,8 @@
 package com.sistema.examenes.controller;
 
 
+import com.sistema.examenes.dto.ProjectByIdDto;
+import com.sistema.examenes.dto.ProjectsActivesDto;
 import com.sistema.examenes.dto.ProyectoResumenDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.services.Proyecto_Service;
@@ -18,10 +20,19 @@ public class Proyecto_Controller {
     @Autowired
     Proyecto_Service Service;
 
-    @PostMapping("/crear")
-    public ResponseEntity<Proyecto> crear(@RequestBody Proyecto r) {
+    @PostMapping("/crear/{codigo}")
+    public ResponseEntity<Proyecto> crear(@RequestBody Proyecto r, @PathVariable("codigo") String codigo) {
         try {
+            String secuencia = "";
             r.setVisible(true);
+            if (Service.secuenciaproyecto(codigo) == null){
+                secuencia = "001";
+            }else {
+                Long secuenciaNumerica = Service.secuenciaproyecto(codigo);
+                secuencia = String.format("%03d", secuenciaNumerica);
+            }
+            r.setCodigo(r.getCodigo() + secuencia);
+
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -43,6 +54,21 @@ public class Proyecto_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    @GetMapping("/buscar/{ids}")
+public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> ids) {
+    try {
+        List<Proyecto> proyectos = Service.findByIds(ids);
+        return new ResponseEntity<>(proyectos, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+ @GetMapping("/buscarPorIds")
+    public ResponseEntity<List<Proyecto>> buscarProyectosPorIds(@RequestParam List<Long> ids) {
+        List<Proyecto> proyectos = Service.findByIds(ids);
+        return ResponseEntity.ok(proyectos);
     }
 
     @DeleteMapping("/eliminar/{id}")
@@ -101,5 +127,17 @@ public class Proyecto_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listsActiveProjects")
+    public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects() {
+        List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects();
+        return ResponseEntity.ok(projectsActivesDtoList);
+    }
+
+    @GetMapping("/getProject")
+    public ResponseEntity<List<ProjectByIdDto>> getProjectById(@RequestParam Long id_proyecto) {
+        List<ProjectByIdDto> projectById = Service.ProjectById(id_proyecto);
+        return ResponseEntity.ok(projectById);
     }
 }

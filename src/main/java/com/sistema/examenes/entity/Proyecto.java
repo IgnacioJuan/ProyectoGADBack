@@ -37,6 +37,9 @@ public class Proyecto implements Serializable {
     private Date fecha_fin;
     @Column(name = "visible")
     private boolean visible;
+
+    @Column(name="area")
+    private String area;
     @PrePersist
     public void prePersist(){
         fecha_inicio= new Date();

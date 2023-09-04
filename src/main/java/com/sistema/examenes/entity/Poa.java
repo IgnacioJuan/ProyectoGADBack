@@ -45,6 +45,19 @@ public class Poa implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
+    //fecha_inicio automatica
+    @PrePersist
+    public void prePersist() {
+        fecha_inicio = new Date();
+    }
+    //fecha_fin automatica con un ano de diferencia
+    @PreUpdate
+    public void preUpdate() {
+        fecha_fin = new Date();
+        fecha_fin.setYear(fecha_inicio.getYear()+1);
+    }
+
+
     //Relaciones
     //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
