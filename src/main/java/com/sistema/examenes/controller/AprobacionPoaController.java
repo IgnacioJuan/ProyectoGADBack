@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.services.AprobacionPoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -20,7 +23,7 @@ public class AprobacionPoaController {
     //post crear
 
     @PostMapping("/crear")
-    public ResponseEntity<AprobacionPoa> crear(@RequestBody AprobacionPoa a){
+    public ResponseEntity<AprobacionPoa> crear(@RequestBody AprobacionPoa a) {
         try {
             a.setVisible(true);
             return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
@@ -32,7 +35,7 @@ public class AprobacionPoaController {
     //get listar
 
     @GetMapping("/listar")
-    public ResponseEntity<List<AprobacionPoa>> listar(){
+    public ResponseEntity<List<AprobacionPoa>> listar() {
         try {
             return new ResponseEntity<>(AprobacionPoaService.listarAprobacionPoa(), HttpStatus.OK);
         } catch (Exception e) {
@@ -78,6 +81,49 @@ public class AprobacionPoaController {
                 return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarAprobaciones")
+    public ResponseEntity<List<AprobPoa_DTO>> obtenerAprobacionesPoa() {
+        try {
+            return new ResponseEntity<>(AprobacionPoaService.obtenerAprobacionesPoa(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/obtenerAprobacionPorId/{idPoa}")
+    public ResponseEntity<AprobPoa_DTO> obtenerAprobacionPoaPorId(@PathVariable BigInteger idPoa) {
+        try {
+            AprobPoa_DTO aprobPoaDTO = AprobacionPoaService.obtenerAprobacionPoaPorId(idPoa);
+            if (aprobPoaDTO != null) {
+                return new ResponseEntity<>(aprobPoaDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/actualizarestadoaprob/{id}")
+    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id, @RequestBody AprobacionPoa p) {
+
+        try {
+            AprobacionPoa a = AprobacionPoaService.obtenerAprobacionPorIdPoa(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setEstado(p.getEstado());
+                a.setObservacion(p.getObservacion());
+
+                return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

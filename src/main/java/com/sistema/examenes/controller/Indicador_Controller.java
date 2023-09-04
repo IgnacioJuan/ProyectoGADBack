@@ -5,6 +5,7 @@ import com.sistema.examenes.dto.Indicador_DTO;
 import com.sistema.examenes.dto.MetaPdot_DTO;
 import com.sistema.examenes.dto.ObjetivoPdot_DTO;
 import com.sistema.examenes.entity.Indicador;
+import com.sistema.examenes.projection.IndicadorComponenteProjection;
 import com.sistema.examenes.services.Indicador_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -113,5 +114,10 @@ public class Indicador_Controller {
     @GetMapping("/listaIndicadores/{idMetaPdot}")
     public List<Indicador_DTO> listarIndicadoresPorIdMetaPdot(@PathVariable Long idMetaPdot) {
         return Service.listarIndicadoresPorIdMetaPdot(idMetaPdot);
+    }
+
+    @GetMapping("/listaIndicadoresconComponente")
+    public List<IndicadorComponenteProjection> listarIndicadoresconComponente() {
+        return Service.listarIndicadoresconComponente();
     }
 }
