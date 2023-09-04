@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
+import com.sistema.examenes.dto.AprobacionPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -38,7 +39,7 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
 
         for (Object[] resultado : resultados) {
             AprobPoa_DTO aprobPoaDTO = new AprobPoa_DTO(
-                    (BigInteger) resultado[0],
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (Date) resultado[3],
@@ -63,13 +64,13 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
 
 
     @Override
-    public AprobPoa_DTO obtenerAprobacionPoaPorId(BigInteger idPoa) {
+    public AprobPoa_DTO obtenerAprobacionPoaPorId(Long idPoa) {
         List<Object[]> resultados = AprobacionPoaRepository.obtenerAprobacionPoaPorId(idPoa);
         AprobPoa_DTO aprobaciones=new AprobPoa_DTO();
 
         for (Object[] resultado : resultados) {
             AprobPoa_DTO aprobPoaDTO = new AprobPoa_DTO(
-                    (BigInteger) resultado[0],
+                   ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (Date) resultado[3],
@@ -96,4 +97,21 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
     public AprobacionPoa obtenerAprobacionPorIdPoa(Long id_poa) {
         return AprobacionPoaRepository.findByPoaId(id_poa);
     }
+
+
+    public List<AprobacionPoa_DTO> listarAprobacionPoaPorIdPoa(Long idPoa) {
+        List<Object[]> resultados = AprobacionPoaRepository.listarAprobacionPoaPorIdPoa(idPoa);
+        List<AprobacionPoa_DTO> aprobPoa = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            AprobacionPoa_DTO obj = new AprobacionPoa_DTO();
+            obj.setId_aprobacionpoa(((BigInteger) resultado[0]).longValue());
+            obj.setEstado((String) resultado[1]);
+            obj.setObservacion((String) resultado[2]);
+            aprobPoa .add(obj);
+        }
+        return aprobPoa ;
+    }
+
+
+
 }

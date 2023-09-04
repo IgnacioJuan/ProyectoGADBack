@@ -94,6 +94,21 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //listar archivo enlace
+    @GetMapping("/listararchivoenlace/{idArchi}")
+    public ResponseEntity<Archivo_s> listarArchiEnlace(@PathVariable("idArchi") Long idArchivo) {
+        try {
+            Archivo_s archivo = archivoservis.obtenerEnlacePorId(idArchivo);
+            if (archivo != null) {
+                return new ResponseEntity<>(archivo, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/listararchi")
     public ResponseEntity<List<ArchivoProjection>> listaarchi() {
         try {
