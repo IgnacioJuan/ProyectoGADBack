@@ -66,7 +66,7 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         for(Object[] result:results){
             ProjectByIdDto project = new ProjectByIdDto(
                     ((BigInteger) result[0]).longValue(),
-                    (String) result[1],
+                    ((BigInteger) result[1]).longValue(),
                     (String) result[2],
                     (String) result[3],
                     (String) result[4],
@@ -79,7 +79,8 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
                     (String) result[11],
                     (String) result[12],
                     (String) result[13],
-                    (String) result[14]
+                    (String) result[14],
+                    (String) result[15]
             );
             projectById.add(project);
         }

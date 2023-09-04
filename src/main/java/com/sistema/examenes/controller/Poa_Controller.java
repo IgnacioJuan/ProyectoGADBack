@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
+import com.sistema.examenes.dto.SolicitudPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
@@ -21,6 +22,7 @@ public class Poa_Controller {
 
     @Autowired
     Poa_Service Service;
+
 
     @PostMapping("/crear")
     public ResponseEntity<Poa> crear(@RequestBody Poa r) {
@@ -148,6 +150,25 @@ public class Poa_Controller {
         List<PoaporUsuarioDTO> poaporUsuario = Service.listarPoaporUsuarios();
         return new ResponseEntity<>(poaporUsuario, HttpStatus.OK);
     }
-         
+
+    @PostMapping("/solicitud")
+    public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {
+        Poa poa = new Poa();
+        try {
+            poa.setMeta_planificada(r.getMeta_planificada());
+            poa.setCobertura(r.getCobertura());
+            poa.setBarrio(r.getBarrio());
+            poa.setComunidad(r.getComunidad());
+            poa.setLocalizacion(r.getLocalizacion());
+            poa.setTipo_periodo(r.getTipo_periodo());
+            poa.setLinea_base(0);
+            poa.setMeta_alcanzar(0);
+            poa.setEstado("PENDIENTE");
+            poa.setVisible(true);
+            return new ResponseEntity<>(Service.save(poa), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
    
 } 

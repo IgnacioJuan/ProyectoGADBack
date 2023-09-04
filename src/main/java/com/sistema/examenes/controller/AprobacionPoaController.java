@@ -4,6 +4,8 @@ import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.entity.Proyecto;
+import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
 import com.sistema.examenes.services.Poa_ServiceImpl;
@@ -136,6 +138,30 @@ public class AprobacionPoaController {
                 poa_Service.save(poa);
                 return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/solicitarAprobacion")
+    public ResponseEntity<AprobacionPoa> solicitarAprobacion(@RequestParam("idPoa") Long idPoa, @RequestParam("idUsuario") Long idUsuario, @RequestParam("idProyecto") Long idProyecto) {
+        AprobacionPoa aprobacionPoa = new AprobacionPoa();
+        Proyecto proyecto = new Proyecto();
+        Poa poa = new Poa();
+        Usuario usuario = new Usuario();
+
+        proyecto.setId_proyecto(idProyecto);
+        poa.setId_poa(idPoa);
+        usuario.setId(idUsuario);
+        aprobacionPoa.setEstado("PENDIENTE");
+        aprobacionPoa.setObservacion("");
+        aprobacionPoa.setProyecto(proyecto);
+        aprobacionPoa.setPoa(poa);
+        aprobacionPoa.setUsuario(usuario);
+        aprobacionPoa.setVisible(true);
+        try {
+            return new ResponseEntity<>(AprobacionPoaService.save(aprobacionPoa), HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
