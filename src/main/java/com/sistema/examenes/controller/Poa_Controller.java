@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -33,7 +34,11 @@ public class Poa_Controller {
 
     @GetMapping("/listar")
     public ResponseEntity<List<Poa>> obtenerLista() {
-        try {
+
+            try {
+
+                System.out.println("johnn poa " +Service.listar());
+
             return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,6 +145,23 @@ public class Poa_Controller {
         List<PoaporUsuarioDTO> poaporUsuario = Service.listarPoaporUsuarios();
         return new ResponseEntity<>(poaporUsuario, HttpStatus.OK);
     }
-         
-   
+
+    @PostConstruct
+    public void init() {
+        listarPoasjohn();
+    }
+
+    @GetMapping("/listarpoajohn")
+    public ResponseEntity<List<Poa>> listarPoasjohn() {
+
+        try {
+
+            System.out.println("johnn poa " +Service.listarPoasjohn());
+
+            return new ResponseEntity<>(Service.listarPoasjohn(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 } 

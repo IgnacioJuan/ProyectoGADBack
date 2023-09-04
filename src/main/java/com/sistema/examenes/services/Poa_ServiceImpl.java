@@ -112,4 +112,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<AprobPoa_DTO> listarPoasparaAprobacion() {
         return null;
     }
+    @Override
+    public List<Poa> listarPoasjohn() {
+        return repository.listarPoasjohn();
+    }
 }

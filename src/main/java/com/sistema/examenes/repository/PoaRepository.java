@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PoaRepository extends JpaRepository<Poa, Long> {
-    @Query(value = "SELECT * from poa where visible =true ORDER BY fecha_inicio desc", nativeQuery = true)
+    @Query(value = "SELECT * from poa where visible = true  ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoas();
 
     @Query(value = "SELECT * FROM poa WHERE id_poa= :id AND visible = true", nativeQuery = true)
@@ -47,5 +47,6 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             + "= ap.id_poa INNER JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto "
             + "GROUP BY u.id, p.id_poa, p.localizacion, p.fecha_inicio, pr.nombre, ap.estado", nativeQuery = true)
     List<PoaporUsuarioProjection> findPoaporUsuario(); 
-        
+ @Query(value = "SELECT * from poa where visible = true ",nativeQuery = true)
+ List<Poa> listarPoasjohn();
 }
