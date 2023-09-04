@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.dto.SolicitudPoa;
+import com.sistema.examenes.dto.PoasAdmin_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
@@ -171,4 +172,15 @@ public class Poa_Controller {
         }
     }
    
+    @GetMapping("/listarPoasAdminEstado/{idResponsable}/{estado}")
+    public ResponseEntity<List<PoasAdmin_DTO>> listarPoasPorAdminEstado(@PathVariable Long idResponsable, @PathVariable String estado) {
+        try {
+            return new ResponseEntity<>(Service.listarPoasPorAdminEstado(idResponsable, estado), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 } 

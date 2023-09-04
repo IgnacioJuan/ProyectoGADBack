@@ -80,4 +80,12 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
 
         @Query("SELECT a FROM AprobacionPoa a WHERE a.poa.id = :idPoa")
         AprobacionPoa findByPoaId(@Param("idPoa") Long idPoa);
+    @Query("SELECT a FROM AprobacionPoa a WHERE a.poa.id = :idPoa")
+    AprobacionPoa findByPoaId(@Param("idPoa") Long idPoa);
+
+    @Query(value = "SELECT id_aprobacionpoa, estado, observacion\n" +
+            "FROM  aprobacion_poa\n" +
+            "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
+    List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
+
 }
