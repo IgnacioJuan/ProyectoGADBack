@@ -149,14 +149,14 @@ public class ActividadesController {
         }
     }
 
-    @GetMapping("/detactividadesaprobpoa/{id_poa}")
+    /*@GetMapping("/detactividadesaprobpoa/{id_poa}")
     public ResponseEntity<List<ActividadDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
         try {
             return new ResponseEntity<>(actividadesService.obtenerDetalleActividadesAprob(id_poa), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
+    }*/
     //mtodo post
     @PostMapping("/solicitud")
     public ResponseEntity<Actividades> crearActividad(@RequestParam String nombre, @RequestParam String descripcion,
