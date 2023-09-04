@@ -19,4 +19,5 @@ public interface Indicador_Service extends GenericService<Indicador, Long> {
 
     List<IndicadorComponenteProjection> listarIndicadoresconComponente();
 
+     List<Indicador> listarIndicadoresPorProyectos(List<Long> idsProyectos);
 }

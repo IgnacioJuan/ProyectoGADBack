@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.services.Poa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,12 @@ public class Poa_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+     @GetMapping("/buscarPorIds")
+    public ResponseEntity<List<Poa>> buscarProyectosPorIds(@RequestParam List<Long> ids) {
+        List<Poa> proyectos = Service.findByIds(ids);
+        return ResponseEntity.ok(proyectos);
     }
 
     @GetMapping("/findByIdAndVisibleTrue/{id}")

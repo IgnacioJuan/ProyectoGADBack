@@ -55,6 +55,21 @@ public class Proyecto_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/buscar/{ids}")
+public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> ids) {
+    try {
+        List<Proyecto> proyectos = Service.findByIds(ids);
+        return new ResponseEntity<>(proyectos, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+ @GetMapping("/buscarPorIds")
+    public ResponseEntity<List<Proyecto>> buscarProyectosPorIds(@RequestParam List<Long> ids) {
+        List<Proyecto> proyectos = Service.findByIds(ids);
+        return ResponseEntity.ok(proyectos);
+    }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Proyecto Proyecto) {
