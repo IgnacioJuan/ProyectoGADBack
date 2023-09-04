@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import org.springframework.data.repository.query.Param;
 
 public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     @Query(value = "SELECT * from archivo where visible =true", nativeQuery = true)
@@ -38,4 +39,7 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
             "WHERE mo.id_modelo = (SELECT MAX(id_modelo) FROM modelo) GROUP BY idper, resp, correo, archiv, activid, ini, finish, enlac;",nativeQuery = true)
     List<ArchivoProjection> listararchi();*/
 
+     @Query(value = "SELECT * FROM archivo WHERE visible = true AND estado = :estado ORDER BY fecha DESC", nativeQuery = true)
+       public List<Archivo_s> listarArchivoPorEstadoOrdenadoPorFechaDesc(@Param("estado") String estado);
+    
 }
