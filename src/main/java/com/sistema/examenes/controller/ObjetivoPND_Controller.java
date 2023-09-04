@@ -93,4 +93,12 @@ public class ObjetivoPND_Controller {
         return ResponseEntity.ok(objetivosEncontrados);
     }
 
+    @GetMapping("/por-eje")
+    public ResponseEntity<List<ObjetivoPND>> listarObjetivosPorIdEje(@RequestParam("idEje") Long idEje) {
+        try {
+            return new ResponseEntity<>(Service.listarObjetivosPorIdEjex(idEje), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

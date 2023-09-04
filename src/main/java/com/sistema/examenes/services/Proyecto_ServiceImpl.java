@@ -34,6 +34,13 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         return repository.listarProyectosdelModelo(id_modelo_poa);
     }
 
+    
+     @Override
+    public List<Proyecto> findByIds(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
+
+
     @Override
     public List<ProjectsActivesDto> listActiveProjects() {
         List<Object[]> results = repository.listActiveProjects();
@@ -59,7 +66,7 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         for(Object[] result:results){
             ProjectByIdDto project = new ProjectByIdDto(
                     ((BigInteger) result[0]).longValue(),
-                    (String) result[1],
+                    ((BigInteger) result[1]).longValue(),
                     (String) result[2],
                     (String) result[3],
                     (String) result[4],
@@ -72,7 +79,8 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
                     (String) result[11],
                     (String) result[12],
                     (String) result[13],
-                    (String) result[14]
+                    (String) result[14],
+                    (String) result[15]
             );
             projectById.add(project);
         }

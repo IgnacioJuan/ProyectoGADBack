@@ -36,7 +36,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
 
     @Query(value= "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.barrio, p.comunidad,"
             + " ap.estado, ap.observacion, pr.nombre FROM poa p INNER JOIN aprobacion_poa ap ON"
-            + " p.id_poa = ap.id_poa INNER JOIN proyecto pr ON pr.id_proyecto = pr.id_proyecto WHERE ap.estado != 'aprobado'", nativeQuery = true)
+            + " p.id_poa = ap.id_poa INNER JOIN proyecto pr ON pr.id_proyecto = pr.id_proyecto WHERE ap.estado != 'Aprobado'", nativeQuery = true)
     List<PoaNoAprobadoProjection> findNoAprobados(); 
     
     
@@ -49,4 +49,15 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<PoaporUsuarioProjection> findPoaporUsuario(); 
  @Query(value = "SELECT * from poa where visible = true ",nativeQuery = true)
  List<Poa> listarPoasjohn();
+    List<PoaporUsuarioProjection> findPoaporUsuario();
+
+
+
+    @Query(value = "SELECT id_poa, barrio, cobertura, comunidad, fecha_inicio, fecha_fin, estado," +
+            "       linea_base, localizacion, tipo_periodo, meta_alcanzar, meta_planificada " +
+            "FROM poa " +
+            "WHERE estado = :estado AND visible = true AND id_responsable = :idResponsable", nativeQuery = true)
+    List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
+
+
 }
