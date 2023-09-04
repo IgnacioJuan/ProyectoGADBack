@@ -114,4 +114,10 @@ public class Indicador_Controller {
     public List<Indicador_DTO> listarIndicadoresPorIdMetaPdot(@PathVariable Long idMetaPdot) {
         return Service.listarIndicadoresPorIdMetaPdot(idMetaPdot);
     }
+    
+     @GetMapping("/porproyectos")
+    public List<Indicador> listarIndicadoresPorProyectos(@RequestParam List<Long> idsProyectos) {
+        return Service.listarIndicadoresPorProyectos(idsProyectos);
+    }
+   
 }

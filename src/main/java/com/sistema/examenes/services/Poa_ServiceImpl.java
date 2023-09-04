@@ -6,6 +6,7 @@ import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;
 import com.sistema.examenes.repository.PoaRepository;
@@ -44,6 +45,14 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado) {
         return repository.listarPoadelProyectoconEstado(id_proyecto, estado);
     }
+    
+     
+    @Override
+    public List<Poa> findByIds(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
+    
+    
 
     @Override
     public List<Poa_DTO> listarPoasDeModelo() {

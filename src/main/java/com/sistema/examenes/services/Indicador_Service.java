@@ -15,4 +15,5 @@ public interface Indicador_Service extends GenericService<Indicador, Long> {
     List<Indicador_DTO> buscarIndicadoresPorNombre(String nombre);
 
     List<Indicador_DTO> listarIndicadoresPorIdMetaPdot(Long idMetaPdot);
+     List<Indicador> listarIndicadoresPorProyectos(List<Long> idsProyectos);
 }

@@ -5,6 +5,7 @@ import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.services.generic.GenericService;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     public List<PoaporUsuarioDTO> listarPoaporUsuarios();
 
     public List<AprobPoa_DTO> listarPoasparaAprobacion();
+    
+    public  List<Poa> findByIds(List<Long> ids);
 }
