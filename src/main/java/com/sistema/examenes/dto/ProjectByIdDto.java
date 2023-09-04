@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 public class ProjectByIdDto {
     private Long id_proyecto;
+    private Long id_super_admin;
     private String area;
     private String cargo;
     private String nombre;

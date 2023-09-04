@@ -155,6 +155,37 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         // Devolver la lista de DTOs.
         return detaact;
     }
+
+    //Servicio que implementara las actividades del --POA--
+     @Override
+    public List<ActividadDTO> obtenerDetalleActividadesAprob(Long id_poa) {
+        // Realizar la consulta al repositorio para obtener el detalle de las
+        // actividades del usuario.
+        List<Object[]> resultados = actividadesRepository.obtenerDetalleActividadesAprob(id_poa);
+        // Crear una lista para almacenar los DTOs transformados.
+        List<ActividadDTO> detaact = new ArrayList<>();
+        // Iterar sobre cada registro recuperado.
+        for (Object[] resultado : resultados) {
+            // Convertir cada registro en un DTO.
+            ActividadDTO detalleActividadDTO = new ActividadDTO(
+                    // variables que tiene el DTO
+                    ((BigInteger) resultado[0]).longValue(), // ID de la actividad
+                    (String) resultado[1], // Codificado
+                    (String) resultado[2], // Descripción
+                    (double) resultado[3], // Devengado
+                    (double) resultado[4], // Estado
+                    (double) resultado[5], // Nombre de la actividad
+                    (double) resultado[6], // Presupuesto referencial
+                    (String) resultado[7], // Recursos propios
+                    (String) resultado[8] // Responsable
+            );
+               // Agregar el DTO a la lista de resultados.
+            detaact.add(detalleActividadDTO);
+        }
+        // Devolver la lista de DTOs.
+        return detaact;
+    }
+    
     //listar actividades con archivos rechazados
     @Override
     public List<Actividades> listarActiEviRechazados() {return actividadesRepository.listarActEviRechazados();}
