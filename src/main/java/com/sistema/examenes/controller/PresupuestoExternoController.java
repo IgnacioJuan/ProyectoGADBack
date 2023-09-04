@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -86,6 +87,28 @@ public class PresupuestoExternoController {
 
                 return new ResponseEntity<>(presupuestoExternoService.save(a), HttpStatus.CREATED);
             }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("Solicitud")
+    public ResponseEntity<PresupuestoExterno> crearSolicitud(@RequestParam("valor") double valor,
+                                                             @RequestParam("id_actividad") Long id_actividad,
+                                                             @RequestParam("nombre_institucion") String nombre_institucion,
+                                                             @RequestParam("observacion") String observacion){
+        PresupuestoExterno a = new PresupuestoExterno();
+        Actividades actividad = new Actividades();
+        actividad.setId_actividad(id_actividad);
+        a.setValor(valor);
+        a.setNombre_institucion(nombre_institucion);
+        a.setObservacion(observacion);
+        a.setActividad(actividad);
+        a.setVisible(true);
+        a.setFecha(new Date());
+        try {
+            a.setVisible(true);
+            return new ResponseEntity<>(presupuestoExternoService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
