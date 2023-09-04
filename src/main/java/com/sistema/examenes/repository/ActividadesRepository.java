@@ -44,6 +44,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         List<Actividades> listarActividadeSPORresponsable(Long id_resp);
 
         @Query(value = "SELECT " +
+                        "    u.id,"
+                        +
                         "    p.primer_nombre || ' ' || p.segundo_nombre || ' ' || p.primer_apellido || ' ' || p.segundo_apellido AS nombre_responsable,"
                         +
                         "    p.cargo AS cargo_responsable," +
@@ -57,7 +59,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "WHERE " +
                         "    a.visible = true AND u.visible = true AND p.visible = true " +
                         "GROUP BY " +
-                        "    p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.cargo " +
+                        "    u.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.cargo " +
                         "HAVING " +
                         "    COUNT(a.id_actividad) > 0 " +
                         "ORDER BY " +
