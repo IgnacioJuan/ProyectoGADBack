@@ -149,4 +149,14 @@ public class ActividadesController {
         }
     }
 
+    @GetMapping("/detactividadesaprobpoa/{id_poa}")
+    public ResponseEntity<List<ActividadDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
+        try {
+            return new ResponseEntity<>(actividadesService.obtenerDetalleActividadesAprob(id_poa), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

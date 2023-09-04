@@ -1,8 +1,13 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
+import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
+import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.AprobacionPoaService;
+import com.sistema.examenes.services.Poa_Service;
+import com.sistema.examenes.services.Poa_ServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +25,9 @@ public class AprobacionPoaController {
     @Autowired
     private AprobacionPoaService AprobacionPoaService;
 
+    @Autowired
+    private Poa_Service poa_Service;
+    
     //post crear
 
     @PostMapping("/crear")
@@ -96,7 +104,7 @@ public class AprobacionPoaController {
     }
 
     @GetMapping("/obtenerAprobacionPorId/{idPoa}")
-    public ResponseEntity<AprobPoa_DTO> obtenerAprobacionPoaPorId(@PathVariable BigInteger idPoa) {
+    public ResponseEntity<AprobPoa_DTO> obtenerAprobacionPoaPorId(@PathVariable Long idPoa) {
         try {
             AprobPoa_DTO aprobPoaDTO = AprobacionPoaService.obtenerAprobacionPoaPorId(idPoa);
             if (aprobPoaDTO != null) {
@@ -109,10 +117,13 @@ public class AprobacionPoaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PutMapping("/actualizarestadoaprob/{id}")
-    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id, @RequestBody AprobacionPoa p) {
+    @PutMapping("/actualizarestadoaprob/{id_poa}/{id}")
+    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id_poa, @PathVariable Long id, @RequestBody AprobacionPoa p) {
 
         try {
+            //Obtengo mi poa de la base
+            Poa poa = poa_Service.obtenerPoaId(id_poa); 
+
             AprobacionPoa a = AprobacionPoaService.obtenerAprobacionPorIdPoa(id);
             if (a == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -120,6 +131,9 @@ public class AprobacionPoaController {
                 a.setEstado(p.getEstado());
                 a.setObservacion(p.getObservacion());
 
+                //Seteo el nuevo estado del poa con el estado de la aprobacion
+                poa.setEstado(p.getEstado());
+                poa_Service.save(poa);
                 return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {

@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class AprobPoa_DTO {
-    private BigInteger id_poa;
+    private Long id_poa;
     private String responsable;
     private String nombre_proyecto;
     private Date fecha_inicio;
