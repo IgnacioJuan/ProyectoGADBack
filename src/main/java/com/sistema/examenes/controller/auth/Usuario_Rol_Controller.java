@@ -48,6 +48,7 @@ public class Usuario_Rol_Controller {
                 usuarioRolExistente.getUsuario().getPersona().setDireccion(usuarioRol.getUsuario().getPersona().getDireccion());
                 usuarioRolExistente.getUsuario().getPersona().setCorreo(usuarioRol.getUsuario().getPersona().getCorreo());
                 usuarioRolExistente.getUsuario().getPersona().setCelular(usuarioRol.getUsuario().getPersona().getCelular());
+                usuarioRolExistente.getUsuario().getPersona().setCargo(usuarioRol.getUsuario().getPersona().getCargo());
                 UsuarioRol usuarioRolActualizado = usuarioService.save(usuarioRolExistente);
                 return new ResponseEntity<>(usuarioRolActualizado, HttpStatus.OK);
             }
