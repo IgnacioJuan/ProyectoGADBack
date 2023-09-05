@@ -2,8 +2,10 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
+import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
 import com.sistema.examenes.services.Poa_ServiceImpl;
@@ -28,6 +30,9 @@ public class AprobacionPoaController {
     @Autowired
     private Poa_Service poa_Service;
     
+    @Autowired
+    private ActividadesService actividadesService;
+
     //post crear
 
     @PostMapping("/crear")
@@ -117,14 +122,17 @@ public class AprobacionPoaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PutMapping("/actualizarestadoaprob/{id_poa}/{id}")
-    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id_poa, @PathVariable Long id, @RequestBody AprobacionPoa p) {
+    @PutMapping("/actualizarestadoaprob/{id_poa}")
+    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id_poa, @RequestBody AprobacionPoa p) {
 
         try {
             //Obtengo mi poa de la base
             Poa poa = poa_Service.obtenerPoaId(id_poa); 
+            
 
-            AprobacionPoa a = AprobacionPoaService.obtenerAprobacionPorIdPoa(id);
+            //Obtengo actividades de la base
+            AprobacionPoa a = AprobacionPoaService.obtenerAprobacionPorIdPoa(id_poa);
+            
             if (a == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
@@ -134,6 +142,7 @@ public class AprobacionPoaController {
                 //Seteo el nuevo estado del poa con el estado de la aprobacion
                 poa.setEstado(p.getEstado());
                 poa_Service.save(poa);
+                actividadesService.actualizarEstadoPorIdPoa(id_poa,p.getEstado());
                 return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
