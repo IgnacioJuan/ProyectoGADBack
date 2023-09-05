@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ModeloPOA_Service extends GenericService<ModeloPOA, Long> {
     public List<ModeloPOA> listar();
+
+    public int inhabilitarModelos(Long id_modelo);
 }
