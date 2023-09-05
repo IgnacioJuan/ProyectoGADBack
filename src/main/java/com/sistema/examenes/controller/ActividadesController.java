@@ -32,7 +32,7 @@ public class ActividadesController {
         try {
             a.setVisible(true);
             a.setCodificado(0);
-            a.setEstado("En espera");
+            a.setEstado("PENDIENTE");
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -11,15 +11,10 @@ import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
-import com.sistema.examenes.services.Poa_ServiceImpl;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -42,6 +37,7 @@ public class AprobacionPoaController {
     public ResponseEntity<AprobacionPoa> crear(@RequestBody AprobacionPoa a) {
         try {
             a.setVisible(true);
+            a.setEstado("PENDIENTE");
             return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

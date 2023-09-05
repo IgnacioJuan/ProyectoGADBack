@@ -28,7 +28,7 @@ public class Poa_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Poa> crear(@RequestBody Poa r) {
         try {
-            r.setEstado("En espera");
+            r.setEstado("PENDIENTE");
             r.setVisible(true);        
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
