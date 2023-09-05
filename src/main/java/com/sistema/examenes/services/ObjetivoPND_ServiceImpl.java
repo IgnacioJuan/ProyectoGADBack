@@ -63,4 +63,9 @@ public class ObjetivoPND_ServiceImpl extends GenericServiceImpl<ObjetivoPND, Lon
         return objetivosEncontrados;
     }
 
+    @Override
+    public List<ObjetivoPND> listarObjetivosPorIdEjex(Long idEje) {
+        return repository.listarObjetivosPorIdEjex(idEje);
+    }
+
 }

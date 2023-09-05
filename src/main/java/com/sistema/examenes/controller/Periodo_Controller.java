@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 
 import com.sistema.examenes.dto.Eje_DTO;
+import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.services.Eje_Service;
@@ -82,6 +83,24 @@ public class Periodo_Controller {
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        }
+    }
+
+    @PostMapping("/solicitud")
+    public ResponseEntity<Periodo> solicitud(@RequestParam("value") double value,
+                                             @RequestParam("id_actividad") Long id_actividad,
+                                             @RequestParam("referencia") int referencia) {
+        Periodo p = new Periodo();
+        Actividades a = new Actividades();
+        a.setId_actividad(id_actividad);
+        p.setActividad(a);
+        p.setPorcentaje(value);
+        p.setReferencia(referencia);
+        p.setVisible(true);
+        try {
+            return new ResponseEntity<>(Service.save(p), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

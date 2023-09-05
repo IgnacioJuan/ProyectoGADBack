@@ -120,4 +120,10 @@ public class Indicador_Controller {
     public List<IndicadorComponenteProjection> listarIndicadoresconComponente() {
         return Service.listarIndicadoresconComponente();
     }
+    
+     @GetMapping("/porproyectos")
+    public List<Indicador> listarIndicadoresPorProyectos(@RequestParam List<Long> idsProyectos) {
+        return Service.listarIndicadoresPorProyectos(idsProyectos);
+    }
+   
 }

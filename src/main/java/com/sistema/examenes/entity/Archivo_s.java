@@ -30,7 +30,7 @@ public class Archivo_s implements Serializable {
     @Column(name = "valor")
     private double valor;
     @Column(name = "estado", length = 50)
-    private String estado;
+    private String estado="PENDIENTE";
     @Column(name = "visible")
     private boolean visible;
 

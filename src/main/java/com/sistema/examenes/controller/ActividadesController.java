@@ -150,6 +150,7 @@ public class ActividadesController {
         }
     }
 
+    /*@GetMapping("/detactividadesaprobpoa/{id_poa}")
     //Modulo de aprobacion POA
     @GetMapping("/detactividadesaprobpoa/{id_poa}")
     public ResponseEntity<List<ActividadDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
@@ -157,6 +158,26 @@ public class ActividadesController {
             return new ResponseEntity<>(actividadesService.obtenerDetalleActividadesAprob(id_poa), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }*/
+    //mtodo post
+    @PostMapping("/solicitud")
+    public ResponseEntity<Actividades> crearActividad(@RequestParam String nombre, @RequestParam String descripcion,
+                                                       @RequestParam Double recursos_propios, @RequestParam Double presupuesto_referencial) {
+        Actividades a = new Actividades();
+        a.setNombre(nombre);
+        a.setDescripcion(descripcion);
+        a.setRecursos_propios(recursos_propios);
+        a.setPresupuesto_referencial(presupuesto_referencial);
+        a.setEstado("PENDIENTE");
+        a.setVisible(true);
+        a.setCodificado(0);
+        a.setDevengado(0);
+        a.setUsuario(null);
+        try {
+            a.setVisible(true);
+            return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
