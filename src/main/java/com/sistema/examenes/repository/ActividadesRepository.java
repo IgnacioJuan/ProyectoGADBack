@@ -110,7 +110,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "WHERE " +
                         "    a.visible = true AND u.visible = true " +
                         "    AND p.id_poa = :id_Poa " +
-                        "    AND a.estado = 'En espera' " +
+                        "    AND a.estado = 'PENDIENTE' " +
                         "ORDER BY " +
                         "    a.id_actividad", nativeQuery = true)
         List<Object[]> obtenerDetalleActividadesAprob(@Param("id_Poa") Long id_Poa);
