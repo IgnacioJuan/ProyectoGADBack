@@ -86,56 +86,64 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.id_actividad", nativeQuery = true)
         List<Object[]> obtenerDetalleActividades(@Param("idUsuario") Long idUsuario);
 
-        //Para llenar las actividades del poa
-        @Query(value = 
-        "SELECT " +
-        "    a.id_actividad," +
-        "    a.nombre AS nombre_actividad," +
-        "    a.descripcion," +
-        "    a.presupuesto_referencial," +
-        "    a.codificado," +
-        "    a.devengado," +
-        "    a.recursos_propios," +
-        "    a.estado," +
-        "    per.primer_nombre || ' ' || per.primer_apellido AS responsable " +
-        "FROM " +
-        "    usuarios u " +
-        "JOIN " +
-        "    actividades a ON u.id = a.id_responsable " +
-        "JOIN " +
-        "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
-        "JOIN " +
-        "    poa p ON apac.id_poa = p.id_poa " +
-        "JOIN " +
-        "    persona per ON u.persona_id_persona = per.id_persona " +
-        "WHERE " +
-        "    a.visible = true AND u.visible = true " +
-        "    AND p.id_poa = :id_Poa " +
-        "    AND a.estado = 'Aprobado' " +
-        "ORDER BY " +
-        "    a.id_actividad", 
-        nativeQuery = true)
-    List<Object[]> obtenerDetalleActividadesAprob(@Param("id_Poa") Long id_Poa);
-    
+        // Para llenar las actividades del poa
+        @Query(value = "SELECT " +
+                        "    a.id_actividad," +
+                        "    a.nombre AS nombre_actividad," +
+                        "    a.descripcion," +
+                        "    a.presupuesto_referencial," +
+                        "    a.codificado," +
+                        "    a.devengado," +
+                        "    a.recursos_propios," +
+                        "    a.estado," +
+                        "    per.primer_nombre || ' ' || per.primer_apellido AS responsable " +
+                        "FROM " +
+                        "    usuarios u " +
+                        "JOIN " +
+                        "    actividades a ON u.id = a.id_responsable " +
+                        "JOIN " +
+                        "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
+                        "JOIN " +
+                        "    poa p ON apac.id_poa = p.id_poa " +
+                        "JOIN " +
+                        "    persona per ON u.persona_id_persona = per.id_persona " +
+                        "WHERE " +
+                        "    a.visible = true AND u.visible = true " +
+                        "    AND p.id_poa = :id_Poa " +
+                        "    AND a.estado = 'PENDIENTE' " +
+                        "ORDER BY " +
+                        "    a.id_actividad", nativeQuery = true)
+        List<Object[]> obtenerDetalleActividadesAprob(@Param("id_Poa") Long id_Poa);
 
+        //Actualizar el estado de las actividades relacionadas por id_poa
+        @Modifying
+        @Transactional
+        @Query(value = "UPDATE actividades SET estado = :estado WHERE id_actividad IN (SELECT aa.id_actividad FROM aprobacion_actividad aa WHERE aa.id_poa = :poaId)", nativeQuery = true)
+        void actualizarEstadoPorIdPoa(@Param("poaId") Long poaId, @Param("estado") String estado);
 
-    //query - actividades que tenga archivos rechazados
-    @Query(value = "SELECT DISTINCT a.*\n" +
-            "FROM actividades a\n" +
-            "INNER JOIN archivo ar ON a.id_actividad = ar.id_actividad\n" +
-            "WHERE LOWER(ar.estado) = 'rechazado';\n", nativeQuery = true)
-    List<Actividades> listarActEviRechazados();
+        // query - actividades que tenga archivos rechazados
+        @Query(value = "SELECT DISTINCT a.*\n" +
+                        "FROM actividades a\n" +
+                        "INNER JOIN archivo ar ON a.id_actividad = ar.id_actividad\n" +
+                        "WHERE LOWER(ar.estado) = 'rechazado';\n", nativeQuery = true)
+        List<Actividades> listarActEviRechazados();
 
+        @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
+                        "FROM actividades a " +
+                        "JOIN usuarios u ON a.id_responsable = u.id " +
+                        "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
+        List<Object[]> listarUsuariosAsignadosAActividades();
 
-    @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
-            "FROM actividades a " +
-            "JOIN usuarios u ON a.id_responsable = u.id " +
-            "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
-    List<Object[]> listarUsuariosAsignadosAActividades();
-
-    /*@Modifying
-    @Transactional
-    @Query(value = "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad", nativeQuery = true)
-    void actualizarCodificado(@Param("idActividad") Long idActividad, @Param("valor") double valor);*/
+        /*
+         * @Modifying
+         * 
+         * @Transactional
+         * 
+         * @Query(value =
+         * "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad"
+         * , nativeQuery = true)
+         * void actualizarCodificado(@Param("idActividad") Long
+         * idActividad, @Param("valor") double valor);
+         */
 
 }

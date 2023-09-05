@@ -32,6 +32,7 @@ public class ActividadesController {
         try {
             a.setVisible(true);
             a.setCodificado(0);
+            a.setEstado("PENDIENTE");
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -150,6 +151,8 @@ public class ActividadesController {
     }
 
     /*@GetMapping("/detactividadesaprobpoa/{id_poa}")
+    //Modulo de aprobacion POA
+    @GetMapping("/detactividadesaprobpoa/{id_poa}")
     public ResponseEntity<List<ActividadDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
         try {
             return new ResponseEntity<>(actividadesService.obtenerDetalleActividadesAprob(id_poa), HttpStatus.OK);
