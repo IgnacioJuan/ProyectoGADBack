@@ -40,12 +40,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<PoaNoAprobadoProjection> findNoAprobados(); 
     
     
-    @Query(value= "SELECT u.id , u.username, p.localizacion,"
-            + " p.barrio, pr.nombre, ap.estado "
-            + " FROM usuarios u INNER JOIN poa p ON "
-            + "u.id = p.id_responsable INNER JOIN aprobacion_poa ap ON p.id_poa "
-            + "= ap.id_poa INNER JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto "
-            + "GROUP BY u.id, p.id_poa, p.localizacion, p.fecha_inicio, pr.nombre, ap.estado", nativeQuery = true)
+    @Query(value= "SELECT u.id , u.username, p.localizacion, p.barrio, pr.nombre, ap.estado FROM usuarios u INNER JOIN poa p ON u.id = p.id_responsable INNER JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa INNER JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto GROUP BY u.id, p.id_poa, p.localizacion, p.fecha_inicio, pr.nombre, ap.estado", nativeQuery = true)
     List<PoaporUsuarioProjection> findPoaporUsuario(); 
         
 }
