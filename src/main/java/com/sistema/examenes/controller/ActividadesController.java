@@ -129,6 +129,8 @@ public class ActividadesController {
     public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
         return actividadesService.listarUsuariosAsignadosAActividades();
     }
+
+    // endpoints para ver el numero de actividades y las actividades del usuario
     @GetMapping("/usuactividades")
     public ResponseEntity<List<UsuarioActividadDTO>> obtenerUsuariosConActividades() {
 

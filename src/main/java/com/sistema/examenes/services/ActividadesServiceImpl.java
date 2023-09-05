@@ -34,6 +34,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public Optional<Actividades> findActividadById(Long id) {
         return actividadesRepository.findById(id);
     }
+
     @Override
     public List<Actividades> listarActividades() {
         return actividadesRepository.listarActividades();
@@ -63,6 +64,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
+
     public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
         List<Object[]> resultados = actividadesRepository.listarUsuariosAsignadosAActividades();
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
@@ -80,16 +82,18 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     }
 
     // Método para actualizar el campo "codificado"
-    /*@Transactional
-    public void actualizarCodificado(Long idActividad, double valor) {
-        Actividades actividad = actividadesRepository.findById(idActividad).orElse(null);
-        if (actividad != null) {
-            double nuevoCodificado = actividad.getCodificado() + valor;
-            actividad.setCodificado(nuevoCodificado);
-            actividadesRepository.save(actividad);
-        }
-    }*/
-
+    /*
+     * @Transactional
+     * public void actualizarCodificado(Long idActividad, double valor) {
+     * Actividades actividad =
+     * actividadesRepository.findById(idActividad).orElse(null);
+     * if (actividad != null) {
+     * double nuevoCodificado = actividad.getCodificado() + valor;
+     * actividad.setCodificado(nuevoCodificado);
+     * actividadesRepository.save(actividad);
+     * }
+     * }
+     */
 
     // lista para conseguir los usuarios que tengana actividades
     @Override
@@ -107,7 +111,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             // (número de actividades)
             // se recupera como un BigInteger, por lo que necesita ser convertido a un int.
             UsuarioActividadDTO usuarioActividadDTO = new UsuarioActividadDTO(
-                    ((BigInteger) resultado[0]).longValue(), // id del usuario 
+                    ((BigInteger) resultado[0]).longValue(), // id del usuario
                     (String) resultado[1], // Nombre del responsable
                     (String) resultado[2], // Cargo del responsable
                     ((BigInteger) resultado[3]).intValue() // Número de actividades (convertido de BigInteger a int)
@@ -145,8 +149,9 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (String) resultado[4], // Estado
                     (String) resultado[5], // Nombre de la actividad
                     (double) resultado[6], // Presupuesto referencial
-                    (double) resultado[7] // Recursos propios
-            );
+                    (double) resultado[7], // Recursos propios
+                    (String) resultado[8] // responsable
+                );
 
             // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
@@ -156,8 +161,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return detaact;
     }
 
-    //Servicio que implementara las actividades del --POA--
-     @Override
+    // Servicio que implementara las actividades del --POA--
+    @Override
     public List<ActividadDTO> obtenerDetalleActividadesAprob(Long id_poa) {
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
@@ -179,14 +184,16 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (String) resultado[7], // Recursos propios
                     (String) resultado[8] // Responsable
             );
-               // Agregar el DTO a la lista de resultados.
+            // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
         }
         // Devolver la lista de DTOs.
         return detaact;
     }
-    
-    //listar actividades con archivos rechazados
+
+    // listar actividades con archivos rechazados
     @Override
-    public List<Actividades> listarActiEviRechazados() {return actividadesRepository.listarActEviRechazados();}
+    public List<Actividades> listarActiEviRechazados() {
+        return actividadesRepository.listarActEviRechazados();
+    }
 }
