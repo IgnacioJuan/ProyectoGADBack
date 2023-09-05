@@ -20,8 +20,10 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     List<UsuarioActividadesDTO>listarUsuariosAsignadosAActividades();
     List<DetalleActividadDTO> obtenerDetalleActividades(Long idUsuario);
 
+    //Modulo aprobacion del poa
     List<ActividadDTO> obtenerDetalleActividadesAprob(Long id_poa);
-    
+    void actualizarEstadoPorIdPoa(Long poaId, String estado);
+
     List<UsuarioActividadDTO> obtenerUsuariosConActividades();
 
 
