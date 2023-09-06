@@ -52,12 +52,21 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<PoaporUsuarioProjection> findPoaporUsuario();
 
 
-
-    @Query(value = "SELECT id_poa, barrio, cobertura, comunidad, fecha_inicio, fecha_fin, estado," +
-            "       linea_base, localizacion, tipo_periodo, meta_alcanzar, meta_planificada " +
-            "FROM poa " +
-            "WHERE estado = :estado AND visible = true AND id_responsable = :idResponsable", nativeQuery = true)
+    @Query(value = "SELECT\n" +
+            "   pr.nombre,\n" +
+            "    p.id_poa,\n" +
+            "    p.barrio,\n" +
+            "    p.cobertura,\n" +
+            "    p.comunidad,\n" +
+            "\tp.fecha_inicio,\n" +
+            "    p.fecha_fin,\n" +
+            "    p.estado,\n" +
+            "    p.localizacion\n" +
+            "FROM poa p\n" +
+            "INNER JOIN aprobacion_poa a ON p.id_poa = a.id_poa\n" +
+            "INNER JOIN proyecto pr ON a.id_proyecto = pr.id_proyecto\n" +
+            "WHERE p.id_responsable = :idResponsable\n" +
+            "    AND p.estado = :estado\n" +
+            "    AND p.visible = true AND a.visible=true AND pr.visible=true", nativeQuery = true)
     List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
-
-
 }

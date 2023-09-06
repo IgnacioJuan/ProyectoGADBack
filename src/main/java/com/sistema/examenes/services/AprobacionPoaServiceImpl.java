@@ -104,9 +104,12 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
         List<AprobacionPoa_DTO> aprobPoa = new ArrayList<>();
         for (Object[] resultado : resultados) {
             AprobacionPoa_DTO obj = new AprobacionPoa_DTO();
-            obj.setId_aprobacionpoa(((BigInteger) resultado[0]).longValue());
+            obj.setObservacion((String) resultado[0]);
             obj.setEstado((String) resultado[1]);
-            obj.setObservacion((String) resultado[2]);
+            obj.setId_aprobacionpoa(((BigInteger) resultado[2]).longValue());
+            obj.setPrimer_nombre((String) resultado[3]);
+            obj.setPrimer_apellido((String) resultado[4]);
+
             aprobPoa .add(obj);
         }
         return aprobPoa ;

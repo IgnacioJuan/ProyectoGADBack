@@ -128,18 +128,15 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
         for (Object[] result : resultados) {
             PoasAdmin_DTO dto = new PoasAdmin_DTO();
-            dto.setId_poa(((BigInteger) result[0]).longValue());
-            dto.setBarrio((String) result[1]);
-            dto.setCobertura((String) result[2]);
-            dto.setComunidad((String) result[3]);
-            dto.setFecha_inicio((Date) result[4]);
-            dto.setFecha_fin((Date) result[5]);
-            dto.setEstado((String) result[6]);
-            dto.setLinea_base((Double) result[7]);
+            dto.setNombre((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setBarrio((String) result[2]);
+            dto.setCobertura((String) result[3]);
+            dto.setComunidad((String) result[4]);
+            dto.setFecha_inicio((Date) result[5]);
+            dto.setFecha_fin((Date) result[6]);
+            dto.setEstado((String) result[7]);
             dto.setLocalizacion((String) result[8]);
-            dto.setTipo_periodo((String) result[9]);
-            dto.setMeta_alcanzar((Double) result[10]);
-            dto.setMeta_planificada((Double) result[11]);
 
             poas.add(dto);
         }
