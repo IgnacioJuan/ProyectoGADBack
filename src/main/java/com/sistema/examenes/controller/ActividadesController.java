@@ -130,6 +130,11 @@ public class ActividadesController {
     public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
         return actividadesService.listarUsuariosAsignadosAActividades();
     }
+
+    @GetMapping("/listarActividadesPorIdResponsable/{responsableId}")
+    public List<ActividadDTO> listarActividadesPorIdResponsable(@PathVariable Long responsableId) {
+        return actividadesService.listarActividadesPorIdResponsable(responsableId);
+    }
     @GetMapping("/usuactividades")
     public ResponseEntity<List<UsuarioActividadDTO>> obtenerUsuariosConActividades() {
 

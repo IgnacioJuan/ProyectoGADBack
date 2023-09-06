@@ -33,4 +33,6 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     //void actualizarCodificado(Long idActividad, double valor);
     Optional<Actividades> findActividadById(Long id);
 
+    List<ActividadDTO>listarActividadesPorIdResponsable(Long responsableId);
+
 }

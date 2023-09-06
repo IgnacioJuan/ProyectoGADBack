@@ -86,19 +86,23 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return acts;
     }
 
-    // Método para actualizar el campo "codificado"
-    /*
-     * @Transactional
-     * public void actualizarCodificado(Long idActividad, double valor) {
-     * Actividades actividad =
-     * actividadesRepository.findById(idActividad).orElse(null);
-     * if (actividad != null) {
-     * double nuevoCodificado = actividad.getCodificado() + valor;
-     * actividad.setCodificado(nuevoCodificado);
-     * actividadesRepository.save(actividad);
-     * }
-     * }
-     */
+    public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
+        List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
+        List<ActividadDTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ActividadDTO m = new ActividadDTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setNombre((String) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setPresupuesto_referencial((Double) resultado[3]);
+            m.setRecursos_propios((Double) resultado[4]);
+            m.setCodificado((Double) resultado[5]);
+            m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            acts.add(m);
+        }
+        return acts;
+    }
 
     // lista para conseguir los usuarios que tengana actividades
     @Override
@@ -137,13 +141,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
         List<Object[]> resultados = actividadesRepository.obtenerDetalleActividades(idUsuario);
-
         // Crear una lista para almacenar los DTOs transformados.
         List<DetalleActividadDTO> detaact = new ArrayList<>();
-
         // Iterar sobre cada registro recuperado.
         for (Object[] resultado : resultados) {
-
             // Convertir cada registro en un DTO.
             DetalleActividadDTO detalleActividadDTO = new DetalleActividadDTO(
                     // variables que tiene el DTO
@@ -156,11 +157,9 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (double) resultado[6], // Presupuesto referencial
                     (double) resultado[7] // Recursos propios
             );
-
             // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
         }
-
         // Devolver la lista de DTOs.
         return detaact;
     }

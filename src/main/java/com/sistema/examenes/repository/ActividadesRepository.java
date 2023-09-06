@@ -146,4 +146,9 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
          * idActividad, @Param("valor") double valor);
          */
 
+        @Query(value = "SELECT a.id_actividad, a.nombre, a.descripcion, a.presupuesto_referencial, a.recursos_propios, a.codificado, a.devengado, a.estado " +
+                "FROM actividades a " +
+                "WHERE a.visible = true AND a.id_responsable = :responsableId " +
+                "ORDER BY a.nombre ASC", nativeQuery = true)
+        List<Object[]> listarActividadesPorIdResponsable(@Param("responsableId") Long responsableId);
 }
