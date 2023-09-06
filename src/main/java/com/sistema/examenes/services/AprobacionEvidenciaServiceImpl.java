@@ -30,9 +30,12 @@ public class AprobacionEvidenciaServiceImpl  extends GenericServiceImpl<Aprobaci
         List<AprobacionEvidenciaDTO> aprobEvid = new ArrayList<>();
         for (Object[] resultado : resultados) {
             AprobacionEvidenciaDTO obj = new AprobacionEvidenciaDTO();
-            obj.setId_aprobacionevid(((BigInteger) resultado[0]).longValue());
+            obj.setObservacion((String) resultado[0]);
             obj.setEstado((String) resultado[1]);
-            obj.setObservacion((String) resultado[2]);
+            obj.setId_aprobacionevid(((BigInteger) resultado[2]).longValue());
+            obj.setPrimer_nombre((String) resultado[3]);
+            obj.setPrimer_apellido((String) resultado[4]);
+
             aprobEvid .add(obj);
         }
         return aprobEvid ;

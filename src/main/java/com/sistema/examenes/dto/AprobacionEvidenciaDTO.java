@@ -10,7 +10,10 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @ToString
 public class AprobacionEvidenciaDTO {
-    private Long id_aprobacionevid;
     private String observacion;
     private String estado;
+    private Long id_aprobacionevid;
+    private String primer_nombre;
+    private String primer_apellido;
+
 }
