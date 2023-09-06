@@ -27,15 +27,22 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
-    @Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo " +
+    @Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo " + 
             "FROM poa p " +
             "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
             "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
             "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true)", nativeQuery = true)
     List<Object[]> listarPoasDeModelo();
-
-    @Query(value= "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.barrio, p.comunidad,"
+ 
+    @Query(value= "SELECT p.id_poa,p.fecha_inicio, p.localizacion, p.barrio, p.comunidad,"
             + " ap.estado, ap.observacion, pr.nombre FROM poa p INNER JOIN aprobacion_poa ap ON"
+            + " p.id_poa = ap.id_poa INNER JOIN proyecto pr ON pr.id_proyecto = pr.id_proyecto WHERE ap.estado != 'APROBADO'  AND ap.estado != 'PENDIENTE'", nativeQuery = true)
+    List<PoaNoAprobadoProjection> findNoAprobados(); 
+    
+    
+    @Query(value= "SELECT u.id , u.username, p.localizacion, p.barrio, pr.nombre, ap.estado FROM usuarios u INNER JOIN poa p ON u.id = p.id_responsable INNER JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa INNER JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto GROUP BY u.id, p.id_poa, p.localizacion, p.fecha_inicio, pr.nombre, ap.estado", nativeQuery = true)
+    List<PoaporUsuarioProjection> findPoaporUsuario(); 
+        
             + " p.id_poa = ap.id_poa INNER JOIN proyecto pr ON pr.id_proyecto = pr.id_proyecto WHERE ap.estado != 'APROBADO'", nativeQuery = true)
     List<PoaNoAprobadoProjection> findNoAprobados(); 
     
