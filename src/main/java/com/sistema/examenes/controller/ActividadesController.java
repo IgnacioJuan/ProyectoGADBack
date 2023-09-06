@@ -106,7 +106,7 @@ public class ActividadesController {
     }
 
     @GetMapping("/listarActividadesPoa/{poaId}")
-    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+    public List<Actividades> listarActividadesPorIdPoa(@PathVariable Long poaId) {
         return actividadesService.listarActividadesPorIdPoa(poaId);
     }
 

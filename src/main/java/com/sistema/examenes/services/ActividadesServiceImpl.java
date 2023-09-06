@@ -40,7 +40,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return actividadesRepository.listarActividades();
     }
 
-    @Override
+   /* @Override
     public List<ActividadDTO> listarActividadesPorIdPoa(Long poaId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdPoa(poaId);
         List<ActividadDTO> acts = new ArrayList<>();
@@ -58,6 +58,11 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             acts.add(m);
         }
         return acts;
+    }*/
+
+    @Override
+    public List<Actividades> listarActividadesPorIdPoa(Long poaId) {
+        return actividadesRepository.listarActividadesPorIdPoa(poaId);
     }
 
     @Override
