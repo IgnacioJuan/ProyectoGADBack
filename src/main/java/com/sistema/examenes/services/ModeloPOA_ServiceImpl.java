@@ -25,4 +25,9 @@ public class ModeloPOA_ServiceImpl  extends GenericServiceImpl<ModeloPOA, Long> 
     public List<ModeloPOA> listar() {
         return repository.listarModelosPOA();
     }
+
+    @Override
+    public int inhabilitarModelos(Long id_modelo) {
+        return repository.inhabilitarModelos(id_modelo);
+    }
 }

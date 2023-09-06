@@ -4,15 +4,24 @@ import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.projection.ArchivoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import org.springframework.data.repository.query.Param;
 
 public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     @Query(value = "SELECT * from archivo where visible =true", nativeQuery = true)
     List<Archivo_s> listararchivo();
 
-    @Query(value = "select * from archivo ar join actividades ac on ar.id_actividad=ac.id_actividad\n" +
-            "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true", nativeQuery = true)
+    //query archivos rechazados
+    @Query(value = "SELECT * FROM archivo WHERE id_actividad =:id_actividad",nativeQuery = true)
+    List<Archivo_s> listararchivorechazados();
+
+    //query para extraer el enlace del archivo
+    @Query(value = "SELECT enlace FROM archivo WHERE id_archivo = :id_archivo LIMIT 1", nativeQuery = true)
+    Archivo_s obtenerEnlacePorId(@Param("id_archivo") Long id_archivo);
+    @Query(value = "select * from archivo ar join actividad ac on ar.id_actividad=ac.id_actividad\n" +
+    "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true",nativeQuery = true)
     public List<Archivo_s> listararchivouser(String username);
 
     @Query(value = "SELECT * FROM archivo WHERE visible = true AND  id_actividad=:idActividad", nativeQuery = true)
@@ -30,4 +39,7 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
             "WHERE mo.id_modelo = (SELECT MAX(id_modelo) FROM modelo) GROUP BY idper, resp, correo, archiv, activid, ini, finish, enlac;",nativeQuery = true)
     List<ArchivoProjection> listararchi();*/
 
+     @Query(value = "SELECT * FROM archivo WHERE visible = true AND estado = :estado ORDER BY fecha DESC", nativeQuery = true)
+       public List<Archivo_s> listarArchivoPorEstadoOrdenadoPorFechaDesc(@Param("estado") String estado);
+    
 }

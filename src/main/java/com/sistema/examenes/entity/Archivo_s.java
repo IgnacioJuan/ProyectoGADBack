@@ -29,6 +29,8 @@ public class Archivo_s implements Serializable {
     private Date fecha = new Date();
     @Column(name = "valor")
     private double valor;
+    @Column(name = "estado", length = 50)
+    private String estado="PENDIENTE";
     @Column(name = "visible")
     private boolean visible;
 
@@ -39,7 +41,7 @@ public class Archivo_s implements Serializable {
     public Archivo_s() {
     }
 
-    public Archivo_s( String nombre, String descripcion, String enlace,double valor, boolean visible, Actividades actividad) {
+    public Archivo_s( String nombre, String descripcion, String enlace,double valor,  boolean visible, Actividades actividad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.enlace = enlace;
