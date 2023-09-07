@@ -21,5 +21,4 @@ public interface PresupuestoExternoRepository extends JpaRepository<PresupuestoE
             "JOIN aprobacion_poa ap ON aa.id_poa = ap.id_aprobacionpoa " +
             "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto", nativeQuery = true)
     List<Object[]> listarPEActividades();
-
 }
