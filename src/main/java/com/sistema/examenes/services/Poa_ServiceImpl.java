@@ -146,6 +146,11 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return poas;
     }
 
+    @Override
+    public List<Poa> listarPoasPromedio() {
+         return repository.listarPoasPromedio();
+    }
+
 
 
 

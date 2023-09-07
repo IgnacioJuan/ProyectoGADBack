@@ -56,6 +56,11 @@ public class Poa implements Serializable {
         fecha_fin = new Date();
         fecha_fin.setYear(fecha_inicio.getYear()+1);
     }
+    
+     @Transient
+    public double getValorTotal() {
+        return (double) meta_alcanzar / meta_planificada * 100;
+    }
 
 
     //Relaciones
