@@ -23,6 +23,9 @@ public class AprobacionActividad {
     @Column(name = "visible")
     private boolean visible;
 
+    @Column(name = "fecha_aprobacion")
+    private String fecha_aprobacion;
+
     //Relaciones
     //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)
