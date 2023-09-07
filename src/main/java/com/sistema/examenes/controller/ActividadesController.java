@@ -1,10 +1,6 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.ActividadDTO;
-import com.sistema.examenes.dto.Competencia_DTO;
-import com.sistema.examenes.dto.UsuarioActividadesDTO;
-import com.sistema.examenes.dto.DetalleActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadDTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
@@ -106,7 +102,7 @@ public class ActividadesController {
     }
 
     @GetMapping("/listarActividadesPoa/{poaId}")
-    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+    public List<Actividades> listarActividadesPorIdPoa(@PathVariable Long poaId) {
         return actividadesService.listarActividadesPorIdPoa(poaId);
     }
 
@@ -129,6 +125,11 @@ public class ActividadesController {
     @GetMapping("/listarUsuariosAsignadosAActividades")
     public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
         return actividadesService.listarUsuariosAsignadosAActividades();
+    }
+
+    @GetMapping("/listarActividadesPorIdResponsable/{responsableId}")
+    public List<ActividadDTO> listarActividadesPorIdResponsable(@PathVariable Long responsableId) {
+        return actividadesService.listarActividadesPorIdResponsable(responsableId);
     }
     @GetMapping("/usuactividades")
     public ResponseEntity<List<UsuarioActividadDTO>> obtenerUsuariosConActividades() {
@@ -180,6 +181,12 @@ public class ActividadesController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/listarActividadesConTotalPresupuestos/{poaId}")
+    public ResponseEntity<List<ListaActividadesPresupuestosDTO>> listarActividadesConTotales(@PathVariable Long poaId) {
+        List<ListaActividadesPresupuestosDTO> actividades = actividadesService.listarActividadesConTotalPresupuestos(poaId);
+        return ResponseEntity.ok(actividades);
     }
 
 }
