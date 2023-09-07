@@ -151,6 +151,12 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes() {
         return repository.PoasConActividadesPendientes();
     }
+    @Override
+    public List<Poa> listarPoasPromedio() {
+         return repository.listarPoasPromedio();
+    }
+
+
 
 
 }
