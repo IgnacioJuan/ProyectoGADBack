@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -234,6 +235,11 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             acts.add(m);
         }
         return acts;
+    }
+
+    @Override
+    public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa) {
+        return actividadesRepository.ActividadesPendientesPorPoa(id_Poa);
     }
 
     // listar actividades con archivos rechazados
