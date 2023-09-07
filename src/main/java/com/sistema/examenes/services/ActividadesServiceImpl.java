@@ -100,6 +100,19 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         }
         return acts;
     }
+    // Método para actualizar el campo "codificado"
+    /*
+     * @Transactional
+     * public void actualizarCodificado(Long idActividad, double valor) {
+     * Actividades actividad =
+     * actividadesRepository.findById(idActividad).orElse(null);
+     * if (actividad != null) {
+     * double nuevoCodificado = actividad.getCodificado() + valor;
+     * actividad.setCodificado(nuevoCodificado);
+     * actividadesRepository.save(actividad);
+     * }
+     * }
+     */
 
     // lista para conseguir los usuarios que tengana actividades
     @Override
@@ -152,8 +165,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (String) resultado[4], // Estado
                     (String) resultado[5], // Nombre de la actividad
                     (double) resultado[6], // Presupuesto referencial
-                    (double) resultado[7] // Recursos propios
-            );
+                    (double) resultado[7], // Recursos propios
+                    (String) resultado[8] // responsable
+                );
+
             // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
         }
@@ -197,11 +212,6 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         actividadesRepository.actualizarEstadoPorIdPoa(poaId, estado);
     }
 
-    // listar actividades con archivos rechazados
-    @Override
-    public List<Actividades> listarActiEviRechazados() {
-        return actividadesRepository.listarActEviRechazados();
-    }
 
     @Override
     public List<ListaActividadesPresupuestosDTO> listarActividadesConTotalPresupuestos(Long poaId) {
@@ -226,4 +236,9 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return acts;
     }
 
+    // listar actividades con archivos rechazados
+    @Override
+    public List<Actividades> listarActiEviRechazados() {
+        return actividadesRepository.listarActEviRechazados();
+    }
 }
