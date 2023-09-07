@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;
+import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -69,4 +70,33 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "    AND p.estado = :estado\n" +
             "    AND p.visible = true AND a.visible=true AND pr.visible=true", nativeQuery = true)
     List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
+
+    
+   
+
+    @Query(value = "SELECT mpdot.*,(mpdot.meta_alcanzar / mpdot.meta_planificada) * 100 AS valor_total\n" +
+        "FROM poa mpdot", nativeQuery = true)
+List<Poa> listarPoasPromedio();
+
+
+    //Obtener los poa con actividades pendientes
+    @Query(value = "select A.*,  " +
+            "COUNT(DISTINCT c.id_actividad) as nro_actividades, " +
+            "E.nombre " +
+            "from POA A " +
+            "join aprobacion_actividad B " +
+            "on A.id_poa = B.id_poa " +
+            "join actividades c " +
+            "on C.id_actividad = B.id_actividad " +
+            "join aprobacion_poa d " +
+            "on d.id_poa = A.id_poa " +
+            "join proyecto E " +
+            "on E.id_proyecto = d.id_proyecto " +
+            "where C.estado = 'PENDIENTE' " +
+            "and c.visible = true " +
+            "and a.visible = true " +
+            "group by a.id_poa, e.id_proyecto "
+            , nativeQuery = true)
+    List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
+
 }

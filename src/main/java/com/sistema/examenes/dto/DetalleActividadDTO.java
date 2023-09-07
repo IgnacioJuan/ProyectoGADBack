@@ -17,4 +17,5 @@ public class DetalleActividadDTO {
     private String nombre_actividad;
     private double presupuesto_referencial;
     private double recursos_propios;
+    private String nombre_responsable; // para poder mostrar en la ruta xd 
 }

@@ -8,6 +8,7 @@ import com.sistema.examenes.dto.PoasAdmin_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.Poa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,7 +66,16 @@ public class Poa_Controller {
         List<Poa> proyectos = Service.findByIds(ids);
         return ResponseEntity.ok(proyectos);
     }
-
+   
+   @GetMapping("/listar-promedio")
+    public ResponseEntity<List<Poa>> listarPoasPromedio() {
+         try {
+             List<Poa> proyectos =Service.listarPoasPromedio();
+            return ResponseEntity.ok(proyectos);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/findByIdAndVisibleTrue/{id}")
     public ResponseEntity<Object> getByIdVisibleTrue(@PathVariable("id") Long id) {
         try {
@@ -182,5 +192,14 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/PoasConActividadesP")
+    public ResponseEntity<List<PoasConActividadesPendientesProjection>> PoasConActividadesPendientes() {
+        try {
+            return new ResponseEntity<>(Service.PoasConActividadesPendientes(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
 
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 } 

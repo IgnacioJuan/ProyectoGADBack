@@ -54,6 +54,11 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     private Set<AprobacionEvidencia> lista_aprobacion_evidencias = new HashSet<>();
 
+    //ManyToOne Programa
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_programa")
+    private Programa programa;
+
     public Usuario() {
     }
 
