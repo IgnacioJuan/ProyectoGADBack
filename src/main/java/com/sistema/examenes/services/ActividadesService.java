@@ -1,9 +1,6 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.ActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadesDTO;
-import com.sistema.examenes.dto.DetalleActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadDTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.services.generic.GenericService;
@@ -34,5 +31,7 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     Optional<Actividades> findActividadById(Long id);
 
     List<ActividadDTO>listarActividadesPorIdResponsable(Long responsableId);
+
+    List<ListaActividadesPresupuestosDTO>listarActividadesConTotalPresupuestos(Long poaId);
 
 }

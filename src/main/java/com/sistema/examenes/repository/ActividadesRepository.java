@@ -151,4 +151,39 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 "WHERE a.visible = true AND a.id_responsable = :responsableId " +
                 "ORDER BY a.nombre ASC", nativeQuery = true)
         List<Object[]> listarActividadesPorIdResponsable(@Param("responsableId") Long responsableId);
+
+        @Query(value = "SELECT a.id_actividad, a.nombre, a.descripcion, a.presupuesto_referencial, a.recursos_propios, a.codificado, a.devengado, a.estado,\n" +
+                "    COALESCE(totalpresupuestoEterno, 0) AS totalpresupuestoEterno,\n" +
+                "    COALESCE(totalreformaSuplemento, 0) AS totalreformaSuplemento,\n" +
+                "    COALESCE(totalreformaTIncremento, 0) AS totalreformaTIncremento,\n" +
+                "    COALESCE(totalreformaTDecremento, 0) AS totalreformaTDecremento\n" +
+                "FROM actividades a\n" +
+                "JOIN aprobacion_actividad aa ON a.id_actividad = aa.id_actividad\n" +
+                "JOIN poa p ON aa.id_poa = p.id_poa\n" +
+                "LEFT JOIN (\n" +
+                "    SELECT id_actividad, SUM(valor) AS totalpresupuestoEterno\n" +
+                "    FROM presupuesto_externo\n" +
+                "    GROUP BY id_actividad\n" +
+                ") pe ON a.id_actividad = pe.id_actividad\n" +
+                "LEFT JOIN (\n" +
+                "    SELECT id_actividad, SUM(valor) AS totalreformaSuplemento\n" +
+                "    FROM reforma_suplemento\n" +
+                "    GROUP BY id_actividad\n" +
+                ") rs ON a.id_actividad = rs.id_actividad\n" +
+                "LEFT JOIN (\n" +
+                "    SELECT id_actividad, SUM(valor) AS totalreformaTIncremento\n" +
+                "    FROM reforma_traspasoi\n" +
+                "    GROUP BY id_actividad\n" +
+                ") rti ON a.id_actividad = rti.id_actividad\n" +
+                "LEFT JOIN (\n" +
+                "    SELECT id_actividad, SUM(valor) AS totalreformaTDecremento\n" +
+                "    FROM reforma_traspasod\n" +
+                "    GROUP BY id_actividad\n" +
+                ") rtd ON a.id_actividad = rtd.id_actividad\n" +
+                "WHERE a.visible = true AND p.id_poa = :poaId\n" +
+                "ORDER BY a.nombre ASC", nativeQuery = true)
+        List<Object[]> listarActividadesConTotalPresupuestos(@Param("poaId") Long poaId);
+
+
+
 }

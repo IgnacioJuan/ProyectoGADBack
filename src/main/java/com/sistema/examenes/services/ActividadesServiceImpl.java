@@ -1,9 +1,6 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.ActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadesDTO;
-import com.sistema.examenes.dto.DetalleActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadDTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.repository.ActividadesRepository;
@@ -205,4 +202,28 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public List<Actividades> listarActiEviRechazados() {
         return actividadesRepository.listarActEviRechazados();
     }
+
+    @Override
+    public List<ListaActividadesPresupuestosDTO> listarActividadesConTotalPresupuestos(Long poaId) {
+        List<Object[]> resultados = actividadesRepository.listarActividadesConTotalPresupuestos(poaId);
+        List<ListaActividadesPresupuestosDTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ListaActividadesPresupuestosDTO m = new ListaActividadesPresupuestosDTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setNombre((String) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setPresupuesto_referencial((Double) resultado[3]);
+            m.setRecursos_propios((Double) resultado[4]);
+            m.setCodificado((Double) resultado[5]);
+            m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            m.setTotalpresupuestoEterno((Double) (resultado[8] != null ? resultado[8] : 0.0));
+            m.setTotalreformaSuplemento((Double) (resultado[9] != null ? resultado[9] : 0.0));
+            m.setTotalreformaTIncremento((Double) (resultado[10] != null ? resultado[10] : 0.0));
+            m.setTotalreformaTDecremento((Double) (resultado[11] != null ? resultado[11] : 0.0));
+            acts.add(m);
+        }
+        return acts;
+    }
+
 }
