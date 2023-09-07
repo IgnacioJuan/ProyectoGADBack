@@ -11,5 +11,7 @@ public interface PoasConActividadesPendientesProjection {
     Date getFecha_fin();
     int getId_responsable();
     String getNombre();
+    String getCodigo();
+    String getUsuario();
     Long getNro_actividades();
 }
