@@ -2,6 +2,8 @@ package com.sistema.examenes.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,5 +15,6 @@ public class AprobacionPoa_DTO {
     private Long id_aprobacionpoa;
     private String primer_nombre;
     private String primer_apellido;
+    private Date fecha_aprobacion;
 
 }

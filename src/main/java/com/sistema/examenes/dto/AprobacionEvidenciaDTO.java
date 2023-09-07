@@ -3,6 +3,7 @@ package com.sistema.examenes.dto;
 import lombok.*;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,5 +16,6 @@ public class AprobacionEvidenciaDTO {
     private Long id_aprobacionevid;
     private String primer_nombre;
     private String primer_apellido;
+    private Date fecha_aprobacion;
 
 }

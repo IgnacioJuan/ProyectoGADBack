@@ -109,7 +109,7 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
             obj.setId_aprobacionpoa(((BigInteger) resultado[2]).longValue());
             obj.setPrimer_nombre((String) resultado[3]);
             obj.setPrimer_apellido((String) resultado[4]);
-
+            obj.setFecha_aprobacion((Date) resultado[5]);
             aprobPoa .add(obj);
         }
         return aprobPoa ;

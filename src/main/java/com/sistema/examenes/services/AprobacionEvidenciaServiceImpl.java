@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class AprobacionEvidenciaServiceImpl  extends GenericServiceImpl<AprobacionEvidencia, Long> implements AprobacionEvidenciaService{
@@ -35,7 +36,7 @@ public class AprobacionEvidenciaServiceImpl  extends GenericServiceImpl<Aprobaci
             obj.setId_aprobacionevid(((BigInteger) resultado[2]).longValue());
             obj.setPrimer_nombre((String) resultado[3]);
             obj.setPrimer_apellido((String) resultado[4]);
-
+            obj.setFecha_aprobacion((Date) resultado[5]);
             aprobEvid .add(obj);
         }
         return aprobEvid ;

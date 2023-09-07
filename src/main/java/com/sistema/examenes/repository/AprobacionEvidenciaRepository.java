@@ -11,7 +11,7 @@ public interface AprobacionEvidenciaRepository extends JpaRepository<AprobacionE
     @Query(value = "SELECT * from aprobacion_evidencia where visible = true", nativeQuery = true)
     List<AprobacionEvidencia> listarAprobacionEvidencia();
 
-    @Query(value = "SELECT ae.observacion,ae.estado, ae.id_evidencia,  p.primer_nombre, p.primer_apellido\n" +
+    @Query(value = "SELECT ae.observacion,ae.estado, ae.id_evidencia,  p.primer_nombre, p.primer_apellido, ae.fecha_aprobacion\n" +
             "FROM aprobacion_evidencia ae\n" +
             "INNER JOIN usuarios u ON ae.id_usuario = u.id\n" +
             "INNER JOIN persona p ON u.persona_id_persona = p.id_persona\n" +
