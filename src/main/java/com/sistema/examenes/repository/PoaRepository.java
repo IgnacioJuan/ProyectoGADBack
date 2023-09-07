@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.PoaNoAprobadoDTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;
+import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,17 +28,20 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
-    @Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo " +
+    @Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo " + 
             "FROM poa p " +
             "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
             "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
-            "WHERE p.estado = 'aprobado' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true)", nativeQuery = true)
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true)", nativeQuery = true)
     List<Object[]> listarPoasDeModelo();
-
-    @Query(value= "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.barrio, p.comunidad,"
+ 
+    @Query(value= "SELECT p.id_poa,p.fecha_inicio, p.localizacion, p.barrio, p.comunidad,"
             + " ap.estado, ap.observacion, pr.nombre FROM poa p INNER JOIN aprobacion_poa ap ON"
-            + " p.id_poa = ap.id_poa INNER JOIN proyecto pr ON pr.id_proyecto = pr.id_proyecto WHERE ap.estado != 'Aprobado'", nativeQuery = true)
+            + " p.id_poa = ap.id_poa INNER JOIN proyecto pr ON pr.id_proyecto = pr.id_proyecto WHERE ap.estado != 'APROBADO'  AND ap.estado != 'PENDIENTE'", nativeQuery = true)
     List<PoaNoAprobadoProjection> findNoAprobados(); 
+    
+    
+
     
     
     @Query(value= "SELECT u.id , u.username, p.localizacion,"
@@ -55,6 +59,26 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "FROM poa " +
             "WHERE estado = :estado AND visible = true AND id_responsable = :idResponsable", nativeQuery = true)
     List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
+
+    //Obtener los poa con actividades pendientes
+    @Query(value = "select A.*,  " +
+            "COUNT(DISTINCT c.id_actividad) as nro_actividades, " +
+            "E.nombre " +
+            "from POA A " +
+            "join aprobacion_actividad B " +
+            "on A.id_poa = B.id_poa " +
+            "join actividades c " +
+            "on C.id_actividad = B.id_actividad " +
+            "join aprobacion_poa d " +
+            "on d.id_poa = A.id_poa " +
+            "join proyecto E " +
+            "on E.id_proyecto = d.id_proyecto " +
+            "where C.estado = 'PENDIENTE' " +
+            "and c.visible = true " +
+            "and a.visible = true " +
+            "group by a.id_poa, e.id_proyecto "
+            , nativeQuery = true)
+    List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
 
 
 }

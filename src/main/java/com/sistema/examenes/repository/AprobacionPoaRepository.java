@@ -44,7 +44,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "JOIN usuarios u ON p.id_responsable = u.id " +
                         "JOIN persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE aa.visible = true " +
-                        "AND p.estado = 'En espera'", nativeQuery = true)
+                        "AND p.estado = 'PENDIENTE'", nativeQuery = true)
         List<Object[]> obtenerAprobacionesPoa();
 
         @Query(value = "SELECT " +
