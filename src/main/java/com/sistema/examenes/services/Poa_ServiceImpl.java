@@ -10,6 +10,7 @@ import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporUsuarioProjection;
+import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +147,10 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return poas;
     }
 
-
+    @Override
+    public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes() {
+        return repository.PoasConActividadesPendientes();
+    }
 
 
 }

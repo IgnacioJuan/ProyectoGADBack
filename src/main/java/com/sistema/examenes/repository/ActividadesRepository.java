@@ -74,11 +74,14 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.estado," +
                         "    a.nombre AS nombre_actividad," +
                         "    a.presupuesto_referencial," +
-                        "    a.recursos_propios " +
+                        "    a.recursos_propios," +
+                        "    p.primer_nombre || ' ' || p.primer_apellido AS nombre_responsable " +
                         "FROM " +
                         "    usuarios u " +
                         "JOIN " +
                         "    actividades a ON u.id = a.id_responsable " +
+                        "JOIN " +
+                        "    persona p ON u.persona_id_persona = p.id_persona " +
                         "WHERE " +
                         "    a.visible = true AND u.visible = true " +
                         "    AND u.id = :idUsuario " +
@@ -121,18 +124,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "UPDATE actividades SET estado = :estado WHERE id_actividad IN (SELECT aa.id_actividad FROM aprobacion_actividad aa WHERE aa.id_poa = :poaId)", nativeQuery = true)
         void actualizarEstadoPorIdPoa(@Param("poaId") Long poaId, @Param("estado") String estado);
 
-        // query - actividades que tenga archivos rechazados
-        @Query(value = "SELECT DISTINCT a.*\n" +
-                        "FROM actividades a\n" +
-                        "INNER JOIN archivo ar ON a.id_actividad = ar.id_actividad\n" +
-                        "WHERE LOWER(ar.estado) = 'rechazado';\n", nativeQuery = true)
-        List<Actividades> listarActEviRechazados();
-
-        @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
-                        "FROM actividades a " +
-                        "JOIN usuarios u ON a.id_responsable = u.id " +
-                        "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
-        List<Object[]> listarUsuariosAsignadosAActividades();
+   
 
         /*
          * @Modifying
@@ -184,6 +176,29 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 "ORDER BY a.nombre ASC", nativeQuery = true)
         List<Object[]> listarActividadesConTotalPresupuestos(@Param("poaId") Long poaId);
 
+        // query - actividades que tenga archivos rechazados
+        @Query(value = "SELECT DISTINCT a.*\n" +
+                        "FROM actividades a\n" +
+                        "INNER JOIN archivo ar ON a.id_actividad = ar.id_actividad\n" +
+                        "WHERE LOWER(ar.estado) = 'rechazado';\n", nativeQuery = true)
+        List<Actividades> listarActEviRechazados();
 
+        @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
+                        "FROM actividades a " +
+                        "JOIN usuarios u ON a.id_responsable = u.id " +
+                        "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
+        List<Object[]> listarUsuariosAsignadosAActividades();
+
+        /*
+         * @Modifying
+         * 
+         * @Transactional
+         * 
+         * @Query(value =
+         * "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad"
+         * , nativeQuery = true)
+         * void actualizarCodificado(@Param("idActividad") Long
+         * idActividad, @Param("valor") double valor);
+         */
 
 }

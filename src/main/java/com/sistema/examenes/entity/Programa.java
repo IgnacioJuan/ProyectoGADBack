@@ -1,6 +1,7 @@
 package com.sistema.examenes.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sistema.examenes.entity.auth.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,4 +31,8 @@ public class Programa implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "programa")
     @JsonIgnore
     private Set<Proyecto> lista_proyectos = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "programa")
+    @JsonIgnore
+    private Set<Usuario> lista_usuarios = new HashSet<>();
 }
