@@ -5,6 +5,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -154,7 +155,7 @@ public class ActividadesController {
 
     //Modulo de aprobacion POA
     @GetMapping("/detactividadesaprobpoa/{id_poa}")
-    public ResponseEntity<List<ActividadDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
+    public ResponseEntity<List<ActividadApPoaDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
         try {
             return new ResponseEntity<>(actividadesService.obtenerDetalleActividadesAprob(id_poa), HttpStatus.OK);
         } catch (Exception e) {
@@ -188,6 +189,11 @@ public class ActividadesController {
     public ResponseEntity<List<ListaActividadesPresupuestosDTO>> listarActividadesConTotales(@PathVariable Long poaId) {
         List<ListaActividadesPresupuestosDTO> actividades = actividadesService.listarActividadesConTotalPresupuestos(poaId);
         return ResponseEntity.ok(actividades);
+    }
+
+    @GetMapping("/ActividadesPendientesPorPoa/{id_Poa}")
+    public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(@PathVariable Long id_Poa) {
+        return actividadesService.ActividadesPendientesPorPoa(id_Poa);
     }
 
 }

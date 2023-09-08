@@ -9,17 +9,14 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class PoasAdmin_DTO {
+    private String nombre;
     private Long id_poa;
     private String barrio;
-    private String comunidad;
     private String cobertura;
+    private String comunidad;
     private Date fecha_inicio;
     private Date fecha_fin;
     private String estado;
-    private String tipo_periodo;
     private String localizacion;
-    private double linea_base;
-    private double meta_planificada;
-    private double meta_alcanzar;
 
 }
