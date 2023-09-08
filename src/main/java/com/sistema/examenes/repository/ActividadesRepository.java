@@ -92,30 +92,26 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.nombre AS nombre_actividad," +
                         "    a.descripcion," +
                         "    a.presupuesto_referencial," +
-                        "    a.codificado," +
-                        "    a.devengado," +
                         "    a.recursos_propios," +
-                        "    a.estado," +
-                        "    per.primer_nombre || ' ' || per.primer_apellido AS responsable " +
+                        "    pex.valor," +
+                        "    a.estado " +
                         "FROM " +
-                        "    usuarios u " +
+                        "    actividades a " +
                         "JOIN " +
-                        "    actividades a ON u.id = a.id_responsable " +
+                        "    presupuesto_externo pex ON a.id_actividad = pex.id_actividad " +
                         "JOIN " +
                         "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
                         "JOIN " +
                         "    poa p ON apac.id_poa = p.id_poa " +
-                        "JOIN " +
-                        "    persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE " +
-                        "    a.visible = true AND u.visible = true " +
+                        "    a.visible = true " +
                         "    AND p.id_poa = :id_Poa " +
                         "    AND a.estado = 'PENDIENTE' " +
                         "ORDER BY " +
                         "    a.id_actividad", nativeQuery = true)
         List<Object[]> obtenerDetalleActividadesAprob(@Param("id_Poa") Long id_Poa);
 
-        //Actualizar el estado de las actividades relacionadas por id_poa
+        // Actualizar el estado de las actividades relacionadas por id_poa
         @Modifying
         @Transactional
         @Query(value = "UPDATE actividades SET estado = :estado WHERE id_actividad IN (SELECT aa.id_actividad FROM aprobacion_actividad aa WHERE aa.id_poa = :poaId)", nativeQuery = true)
