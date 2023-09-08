@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -23,6 +24,13 @@ public class AprobacionActividad {
     @Column(name = "visible")
     private boolean visible;
 
+    @Column(name = "fecha_aprobacion")
+    private Date fechaAprobacion;
+
+    // Otros atributos y métodos de la entidad
+
+
+
     //Relaciones
     //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)
@@ -39,6 +47,9 @@ public class AprobacionActividad {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-
+    @PrePersist
+    protected void onCreate() {
+        fechaAprobacion = new Date(); // Configura la fecha actual al crear la entidad
+    }
 
 }

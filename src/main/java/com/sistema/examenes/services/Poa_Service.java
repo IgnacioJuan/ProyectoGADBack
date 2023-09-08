@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
+import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.generic.GenericService;
 
 import java.util.List;
@@ -25,5 +26,9 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     
     public  List<Poa> findByIds(List<Long> ids);
+    
+    public List<Poa> listarPoasPromedio();
     public List<PoasAdmin_DTO> listarPoasPorAdminEstado(Long idResponsable, String estado);
+    public     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
+
 }

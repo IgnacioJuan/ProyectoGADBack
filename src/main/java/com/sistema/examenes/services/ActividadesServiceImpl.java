@@ -1,11 +1,9 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.dto.ActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadesDTO;
-import com.sistema.examenes.dto.DetalleActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadDTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -34,12 +32,13 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public Optional<Actividades> findActividadById(Long id) {
         return actividadesRepository.findById(id);
     }
+
     @Override
     public List<Actividades> listarActividades() {
         return actividadesRepository.listarActividades();
     }
 
-    @Override
+   /* @Override
     public List<ActividadDTO> listarActividadesPorIdPoa(Long poaId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdPoa(poaId);
         List<ActividadDTO> acts = new ArrayList<>();
@@ -57,14 +56,20 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             acts.add(m);
         }
         return acts;
+    }*/
+
+    @Override
+    public List<Actividades> listarActividadesPorIdPoa(Long poaId) {
+        return actividadesRepository.listarActividadesPorIdPoa(poaId);
     }
 
     @Override
     public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
-    public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
-        List<Object[]> resultados = actividadesRepository.listarUsuariosAsignadosAActividades();
+
+    public List<UsuarioActividadesDTO> listarUsuariosActividadID(Long actividadId) {
+        List<Object[]> resultados = actividadesRepository.listarUsuariosActividadID(actividadId);
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
         for (Object[] resultado : resultados) {
             UsuarioActividadesDTO m = new UsuarioActividadesDTO();
@@ -73,23 +78,41 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             m.setNombre((String) resultado[2]);
             m.setApellido((String) resultado[3]);
             m.setCargo((String) resultado[4]);
-            m.setNombreActividad((String) resultado[5]);
             acts.add(m);
         }
         return acts;
     }
 
-    // Método para actualizar el campo "codificado"
-    /*@Transactional
-    public void actualizarCodificado(Long idActividad, double valor) {
-        Actividades actividad = actividadesRepository.findById(idActividad).orElse(null);
-        if (actividad != null) {
-            double nuevoCodificado = actividad.getCodificado() + valor;
-            actividad.setCodificado(nuevoCodificado);
-            actividadesRepository.save(actividad);
+    public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
+        List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
+        List<ActividadDTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ActividadDTO m = new ActividadDTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setNombre((String) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setPresupuesto_referencial((Double) resultado[3]);
+            m.setRecursos_propios((Double) resultado[4]);
+            m.setCodificado((Double) resultado[5]);
+            m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            acts.add(m);
         }
-    }*/
-
+        return acts;
+    }
+    // Método para actualizar el campo "codificado"
+    /*
+     * @Transactional
+     * public void actualizarCodificado(Long idActividad, double valor) {
+     * Actividades actividad =
+     * actividadesRepository.findById(idActividad).orElse(null);
+     * if (actividad != null) {
+     * double nuevoCodificado = actividad.getCodificado() + valor;
+     * actividad.setCodificado(nuevoCodificado);
+     * actividadesRepository.save(actividad);
+     * }
+     * }
+     */
 
     // lista para conseguir los usuarios que tengana actividades
     @Override
@@ -107,7 +130,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             // (número de actividades)
             // se recupera como un BigInteger, por lo que necesita ser convertido a un int.
             UsuarioActividadDTO usuarioActividadDTO = new UsuarioActividadDTO(
-                    ((BigInteger) resultado[0]).longValue(), // id del usuario 
+                    ((BigInteger) resultado[0]).longValue(), // id del usuario
                     (String) resultado[1], // Nombre del responsable
                     (String) resultado[2], // Cargo del responsable
                     ((BigInteger) resultado[3]).intValue() // Número de actividades (convertido de BigInteger a int)
@@ -128,13 +151,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
         List<Object[]> resultados = actividadesRepository.obtenerDetalleActividades(idUsuario);
-
         // Crear una lista para almacenar los DTOs transformados.
         List<DetalleActividadDTO> detaact = new ArrayList<>();
-
         // Iterar sobre cada registro recuperado.
         for (Object[] resultado : resultados) {
-
             // Convertir cada registro en un DTO.
             DetalleActividadDTO detalleActividadDTO = new DetalleActividadDTO(
                     // variables que tiene el DTO
@@ -145,19 +165,20 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (String) resultado[4], // Estado
                     (String) resultado[5], // Nombre de la actividad
                     (double) resultado[6], // Presupuesto referencial
-                    (double) resultado[7] // Recursos propios
-            );
+                    (double) resultado[7], // Recursos propios
+                    (String) resultado[8] // responsable
+                );
 
             // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
         }
-
         // Devolver la lista de DTOs.
         return detaact;
     }
 
-    //Servicio que implementara las actividades del --POA--
-     @Override
+    // Modulo aprobacion del poa
+    // Servicio que implementara las actividades del --POA--
+    @Override
     public List<ActividadDTO> obtenerDetalleActividadesAprob(Long id_poa) {
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
@@ -179,14 +200,55 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (String) resultado[7], // Recursos propios
                     (String) resultado[8] // Responsable
             );
-               // Agregar el DTO a la lista de resultados.
+            // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
         }
         // Devolver la lista de DTOs.
         return detaact;
     }
-    
-    //listar actividades con archivos rechazados
+
     @Override
-    public List<Actividades> listarActiEviRechazados() {return actividadesRepository.listarActEviRechazados();}
+    public void actualizarEstadoPorIdPoa(Long poaId, String estado) {
+        actividadesRepository.actualizarEstadoPorIdPoa(poaId, estado);
+    }
+
+
+    @Override
+    public List<ListaActividadesPresupuestosDTO> listarActividadesConTotalPresupuestos(Long poaId) {
+        List<Object[]> resultados = actividadesRepository.listarActividadesConTotalPresupuestos(poaId);
+        List<ListaActividadesPresupuestosDTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ListaActividadesPresupuestosDTO m = new ListaActividadesPresupuestosDTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setNombre((String) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setPresupuesto_referencial((Double) resultado[3]);
+            m.setRecursos_propios((Double) resultado[4]);
+            m.setCodificado((Double) resultado[5]);
+            m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            m.setTotalpresupuestoEterno((Double) (resultado[8] != null ? resultado[8] : 0.0));
+            m.setTotalreformaSuplemento((Double) (resultado[9] != null ? resultado[9] : 0.0));
+            m.setTotalreformaTIncremento((Double) (resultado[10] != null ? resultado[10] : 0.0));
+            m.setTotalreformaTDecremento((Double) (resultado[11] != null ? resultado[11] : 0.0));
+            acts.add(m);
+        }
+        return acts;
+    }
+
+    @Override
+    public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa) {
+        return actividadesRepository.ActividadesPendientesPorPoa(id_Poa);
+    }
+
+    // listar actividades con archivos rechazados
+    @Override
+    public List<Actividades> listarActiEviRechazados() {
+        return actividadesRepository.listarActEviRechazados();
+    }
+    @Override
+    public void actualizarEstadoPorAprobacion(Long id_actividad, String estado){
+        actividadesRepository.actualizarEstadoPorAprobacion(id_actividad,estado);
+    };
+
 }

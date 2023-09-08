@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,9 @@ public class AprobacionPoa implements Serializable {
     private String estado;
     @Column(name = "visible")
     private boolean visible;
+
+    @Column(name = "fecha_aprobacion")
+    private Date fecha_aprobacion;
 
     //Relaciones
     //ManyToOne POA

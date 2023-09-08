@@ -120,9 +120,9 @@ public class PresupuestoExternoController {
         }
     }
 
-    @GetMapping("/listarPEActividades")
-    public List<PresupuestoEActividadDTO> listarPEActividades() {
-        return presupuestoExternoService.listarPEActividades();
+    @GetMapping("/listarPEActividades/{actividadId}")
+    public List<PresupuestoEActividadDTO> listarPEActividades(@PathVariable Long actividadId) {
+        return presupuestoExternoService.listarPEActividades(actividadId);
     }
     @PostMapping("Solicitud")
     public ResponseEntity<PresupuestoExterno> crearSolicitud(@RequestParam("valor") double valor,

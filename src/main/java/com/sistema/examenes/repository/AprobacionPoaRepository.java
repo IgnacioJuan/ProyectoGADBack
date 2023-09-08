@@ -44,7 +44,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "JOIN usuarios u ON p.id_responsable = u.id " +
                         "JOIN persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE aa.visible = true " +
-                        "AND p.estado = 'En espera'", nativeQuery = true)
+                        "AND p.estado = 'PENDIENTE'", nativeQuery = true)
         List<Object[]> obtenerAprobacionesPoa();
 
         @Query(value = "SELECT " +
@@ -81,9 +81,19 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
         @Query("SELECT a FROM AprobacionPoa a WHERE a.poa.id = :idPoa")
         AprobacionPoa findByPoaId(@Param("idPoa") Long idPoa);
 
-    @Query(value = "SELECT id_aprobacionpoa, estado, observacion\n" +
+    /*@Query(value = "SELECT id_aprobacionpoa, estado, observacion\n" +
             "FROM  aprobacion_poa\n" +
             "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
+    List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);*/
+
+    @Query(value = "SELECT ap.observacion, ap.estado, ap.id_aprobacionpoa, p.primer_nombre, p.primer_apellido, ap.fecha_aprobacion \n" +
+            "FROM public.aprobacion_poa ap\n" +
+            "INNER JOIN public.usuarios u ON ap.id_usuario = u.id\n" +
+            "INNER JOIN public.persona p ON u.persona_id_persona = p.id_persona\n" +
+            "WHERE ap.id_poa = 1 AND ap.visible= true AND u.visible=true AND p.visible=true;\n", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
+
+
+
 
 }
