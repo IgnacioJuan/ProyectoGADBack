@@ -59,6 +59,10 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "id_programa")
     private Programa programa;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    private Set<AsignacionesUsuarios> rausuarios = new HashSet<>();
+
     public Usuario() {
     }
 
