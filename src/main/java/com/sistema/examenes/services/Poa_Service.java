@@ -22,6 +22,8 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     public List<PoaporUsuarioDTO> listarPoaporUsuarios();
 
     public List<AprobPoa_DTO> listarPoasparaAprobacion();
+    public List<Poa> listarPoasjohn();
+
     
     public  List<Poa> findByIds(List<Long> ids);
     
