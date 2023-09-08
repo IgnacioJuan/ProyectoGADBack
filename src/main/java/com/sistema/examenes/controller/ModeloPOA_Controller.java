@@ -20,7 +20,10 @@ public class ModeloPOA_Controller {
     public ResponseEntity<ModeloPOA> crear(@RequestBody ModeloPOA r) {
         try {
             r.setVisible(true);
-            return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
+            r.setEstado("ACTIVO");
+            ModeloPOA modelo = Service.save(r);
+            Service.inhabilitarModelos(modelo.getId_modelo_poa());
+            return new ResponseEntity<>(modelo, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -82,4 +85,5 @@ public class ModeloPOA_Controller {
             }
         }
     }
+
 }

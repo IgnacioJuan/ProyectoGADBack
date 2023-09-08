@@ -5,6 +5,7 @@ import com.sistema.examenes.entity.Archivo;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.mensajes.Archivosmensajes;
 import com.sistema.examenes.projection.ArchivoProjection;
+import com.sistema.examenes.repository.Archivo_repository;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.Archivo_Service;
 import com.sistema.examenes.services.Archivoservices;
@@ -27,6 +28,9 @@ import java.util.stream.Collectors;
 @RequestMapping("archivo")
 @AllArgsConstructor
 public class Archivo_Controller {
+    
+    @Autowired
+    Archivo_repository archivorepo;
     @Autowired
     Archivoservices servis;
     @Autowired
@@ -94,6 +98,21 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //listar archivo enlace
+    @GetMapping("/listararchivoenlace/{idArchi}")
+    public ResponseEntity<Archivo_s> listarArchiEnlace(@PathVariable("idArchi") Long idArchivo) {
+        try {
+            Archivo_s archivo = archivoservis.obtenerEnlacePorId(idArchivo);
+            if (archivo != null) {
+                return new ResponseEntity<>(archivo, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/listararchi")
     public ResponseEntity<List<ArchivoProjection>> listaarchi() {
         try {
@@ -214,7 +233,15 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
 
 
 
-
+@GetMapping("/listarPorEstadoYFechaDesc")
+public ResponseEntity<List<Archivo_s>> listarArchivosPorEstadoYFechaDesc(@RequestParam("estado") String estado) {
+    try {
+        List<Archivo_s> archivos = archivorepo.listarArchivoPorEstadoOrdenadoPorFechaDesc(estado);
+        return new ResponseEntity<>(archivos, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 
 
 
