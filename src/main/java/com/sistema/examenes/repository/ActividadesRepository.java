@@ -201,6 +201,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
          * void actualizarCodificado(@Param("idActividad") Long
          * idActividad, @Param("valor") double valor);
          */
+        //Query para obtener las actividades en estado pendiente
         @Query(value = "SELECT " +
                 "    a.id_actividad," +
                 "    a.nombre AS nombre_actividad," +
@@ -228,4 +229,11 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 "    a.id_actividad", nativeQuery = true)
         List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa);
 
+        //Actualizar el estado de la actividad cuando se crea una nueva evaluacion o aprobacion
+        @Modifying
+        @Transactional
+        @Query(value = "UPDATE actividades " +
+                "SET estado = :estado " +
+                "WHERE id_actividad = :id_actividad", nativeQuery = true)
+        void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
 }

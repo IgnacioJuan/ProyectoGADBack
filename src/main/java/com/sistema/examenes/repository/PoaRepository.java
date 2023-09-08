@@ -101,6 +101,7 @@ List<Poa> listarPoasPromedio();
             "where C.estado = 'PENDIENTE' " +
             "and c.visible = true " +
             "and a.visible = true " +
+            "and a.estado ='APROBADO' " +
             "group by a.id_poa, e.id_proyecto, g.id_persona "
             , nativeQuery = true)
     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();

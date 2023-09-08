@@ -247,4 +247,9 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public List<Actividades> listarActiEviRechazados() {
         return actividadesRepository.listarActEviRechazados();
     }
+    @Override
+    public void actualizarEstadoPorAprobacion(Long id_actividad, String estado){
+        actividadesRepository.actualizarEstadoPorAprobacion(id_actividad,estado);
+    };
+
 }
