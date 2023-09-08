@@ -177,9 +177,13 @@ public class Poa_Controller {
 
         try {
 
-            System.out.println("johnn poa " +Service.listarPoasjohn());
+            System.out.println("johnn poa " + Service.listarPoasjohn());
 
             return new ResponseEntity<>(Service.listarPoasjohn(), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PostMapping("/solicitud")
     public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {
         Poa poa = new Poa();
