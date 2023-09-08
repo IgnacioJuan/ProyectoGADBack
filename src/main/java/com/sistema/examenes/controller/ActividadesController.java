@@ -122,9 +122,9 @@ public class ActividadesController {
     }
 
     //ni mio miriam
-    @GetMapping("/listarUsuariosAsignadosAActividades")
-    public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
-        return actividadesService.listarUsuariosAsignadosAActividades();
+    @GetMapping("/listarUsuariosActividadID/{actividadId}")
+    public List<UsuarioActividadesDTO> listarUsuariosActividadID(@PathVariable Long actividadId) {
+        return actividadesService.listarUsuariosActividadID(actividadId);
     }
 
     @GetMapping("/listarActividadesPorIdResponsable/{responsableId}")

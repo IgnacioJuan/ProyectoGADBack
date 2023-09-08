@@ -28,16 +28,14 @@ public class ReformaTraspaso_IServiceImpl extends GenericServiceImpl<ReformaTras
     public List<ReformaTraspaso_I> listarReformasTraspaso_I() {
         return repository.listarReformasTraspaso_I();
     }
-    public List<RTIncrementoActividadDTO> listarRTIActividades() {
-        List<Object[]> resultados = repository.listarRTIActividades();
+    public List<RTIncrementoActividadDTO> listarRTIActividades(Long actividadId ) {
+        List<Object[]> resultados = repository.listarRTIActividades(actividadId);
         List<RTIncrementoActividadDTO> acts = new ArrayList<>();
         for (Object[] resultado : resultados) {
             RTIncrementoActividadDTO m = new RTIncrementoActividadDTO();
             m.setId_reftras_i(((BigInteger) resultado[0]).longValue());
             m.setValor((double) resultado[1]);
             m.setFecha((Date) resultado[2]);
-            m.setNombreActividad((String) resultado[3]);
-            m.setNombreProyecto((String) resultado[4]);
             acts.add(m);
         }
         return acts;
