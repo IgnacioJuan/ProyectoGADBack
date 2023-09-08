@@ -4,6 +4,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.AprobacionActividad;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.auth.Usuario;
+import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionActividadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,15 @@ public class AprobacionActividadController {
 
     @Autowired
     private AprobacionActividadService AprobacionActividadService;
-
+    @Autowired
+    private ActividadesService actividadesService;
     //post crear
 
     @PostMapping("/crear")
     public ResponseEntity<AprobacionActividad> crear(@RequestBody AprobacionActividad a){
         try {
             a.setVisible(true);
+            actividadesService.actualizarEstadoPorAprobacion(a.getActividad().getId_actividad(), a.getEstado());
             return new ResponseEntity<>(AprobacionActividadService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
