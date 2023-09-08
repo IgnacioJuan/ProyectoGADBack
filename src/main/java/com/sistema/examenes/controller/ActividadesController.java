@@ -155,7 +155,7 @@ public class ActividadesController {
 
     //Modulo de aprobacion POA
     @GetMapping("/detactividadesaprobpoa/{id_poa}")
-    public ResponseEntity<List<ActividadDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
+    public ResponseEntity<List<ActividadApPoaDTO>> obtenerDetalleActividadesAprob(@PathVariable Long id_poa) {
         try {
             return new ResponseEntity<>(actividadesService.obtenerDetalleActividadesAprob(id_poa), HttpStatus.OK);
         } catch (Exception e) {
