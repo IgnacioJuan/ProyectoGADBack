@@ -29,16 +29,14 @@ public class ReformaSuplementoServiceImpl extends GenericServiceImpl<ReformaSupl
         return repository.listarReformaSuplemento();
     }
 
-    public List<ReformaSActividadDTO> listarRSActividades() {
-        List<Object[]> resultados = repository.listarRSActividades();
+    public List<ReformaSActividadDTO> listarRSActividades(Long actividadId) {
+        List<Object[]> resultados = repository.listarRSActividades(actividadId);
         List<ReformaSActividadDTO> acts = new ArrayList<>();
         for (Object[] resultado : resultados) {
             ReformaSActividadDTO m = new ReformaSActividadDTO();
             m.setId_ref_suplemento(((BigInteger) resultado[0]).longValue());
             m.setValor((double) resultado[1]);
             m.setFecha((Date) resultado[2]);
-            m.setNombreActividad((String) resultado[3]);
-            m.setNombreProyecto((String) resultado[4]);
             acts.add(m);
         }
         return acts;

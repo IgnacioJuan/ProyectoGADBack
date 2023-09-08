@@ -113,8 +113,8 @@ public class ReformaSuplementoController {
         }
     }
 
-    @GetMapping("/listarRSActividades")
-    public List<ReformaSActividadDTO> listarRSActividades() {
-        return rsService.listarRSActividades();
+    @GetMapping("/listarRSActividades/{actividadId}")
+    public List<ReformaSActividadDTO> listarRSActividades(@PathVariable Long actividadId) {
+        return rsService.listarRSActividades(actividadId);
     }
 }

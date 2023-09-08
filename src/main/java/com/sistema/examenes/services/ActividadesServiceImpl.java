@@ -68,8 +68,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
 
-    public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
-        List<Object[]> resultados = actividadesRepository.listarUsuariosAsignadosAActividades();
+    public List<UsuarioActividadesDTO> listarUsuariosActividadID(Long actividadId) {
+        List<Object[]> resultados = actividadesRepository.listarUsuariosActividadID(actividadId);
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
         for (Object[] resultado : resultados) {
             UsuarioActividadesDTO m = new UsuarioActividadesDTO();
@@ -78,7 +78,6 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             m.setNombre((String) resultado[2]);
             m.setApellido((String) resultado[3]);
             m.setCargo((String) resultado[4]);
-            m.setNombreActividad((String) resultado[5]);
             acts.add(m);
         }
         return acts;

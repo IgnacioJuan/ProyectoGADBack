@@ -15,7 +15,6 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     List<Actividades> listarActividadesPorIdPoa(Long poaId);
 
     List<Actividades> listarActividadeSPORresponsable(Long id_resp);
-    List<UsuarioActividadesDTO>listarUsuariosAsignadosAActividades();
     List<DetalleActividadDTO> obtenerDetalleActividades(Long idUsuario);
 
     //Modulo aprobacion del poa
@@ -36,5 +35,7 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     List<ListaActividadesPresupuestosDTO>listarActividadesConTotalPresupuestos(Long poaId);
     List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa);
     void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
+
+    List<UsuarioActividadesDTO>listarUsuariosActividadID(Long actividadId);
 
 }
