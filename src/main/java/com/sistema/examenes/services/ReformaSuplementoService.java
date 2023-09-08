@@ -9,5 +9,5 @@ import java.util.List;
 public interface ReformaSuplementoService extends GenericService<ReformaSuplemento, Long> {
     public List<ReformaSuplemento> listarReformaSuplemento();
 
-    public List<ReformaSActividadDTO>listarRSActividades();
+    public List<ReformaSActividadDTO>listarRSActividades(Long actividadId);
 }

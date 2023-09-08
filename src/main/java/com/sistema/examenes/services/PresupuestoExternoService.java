@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PresupuestoExternoService extends GenericService<PresupuestoExterno, Long> {
     public List<PresupuestoExterno> listarPresupuestoExterno();
-    public List<PresupuestoEActividadDTO> listarPEActividades();
+    public List<PresupuestoEActividadDTO> listarPEActividades(Long actividadId);
 }
