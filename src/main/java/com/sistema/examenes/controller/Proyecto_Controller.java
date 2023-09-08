@@ -31,6 +31,9 @@ public class Proyecto_Controller {
                 Long secuenciaNumerica = Service.secuenciaproyecto(codigo);
                 secuencia = String.format("%03d", secuenciaNumerica);
             }
+            if(!r.getCodigo().endsWith("-")){
+                r.setCodigo(r.getCodigo() + "-");
+            }
             r.setCodigo(r.getCodigo() + secuencia);
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);

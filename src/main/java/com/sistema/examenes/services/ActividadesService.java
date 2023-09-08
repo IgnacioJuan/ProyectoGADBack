@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.services.generic.GenericService;
 
 import java.util.List;
@@ -32,6 +33,8 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     List<ActividadDTO>listarActividadesPorIdResponsable(Long responsableId);
 
     List<ListaActividadesPresupuestosDTO>listarActividadesConTotalPresupuestos(Long poaId);
+    List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa);
+    void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
 
     List<UsuarioActividadesDTO>listarUsuariosActividadID(Long actividadId);
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class AprobacionEvidencia {
     private boolean visible;
 
     @Column(name = "fecha_aprobacion")
-    private String fecha_aprobacion;
+    private Date fecha_aprobacion;
 
     //Relaciones
 
