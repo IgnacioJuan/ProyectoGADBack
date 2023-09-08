@@ -157,12 +157,7 @@ public class Poa_Controller {
         return new ResponseEntity<>(poaporUsuario, HttpStatus.OK);
     }
 
-    @PostConstruct
-    public void init() {
-        listarPoasjohn();
-    }
 
-   
     @PostMapping("/solicitud")
     public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {
         Poa poa = new Poa();
