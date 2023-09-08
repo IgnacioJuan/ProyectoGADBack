@@ -103,8 +103,8 @@ public class ReformaTraspaso_D_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/listarRTDActividades")
-    public List<RTDecrementoActividadDTO> listarRTDActividades() {
-        return rtdService.listarRTDActividades();
+    @GetMapping("/listarRTDActividades/{actividadId}")
+    public List<RTDecrementoActividadDTO> listarRTDActividades(@PathVariable Long actividadId) {
+        return rtdService.listarRTDActividades(actividadId);
     }
 }

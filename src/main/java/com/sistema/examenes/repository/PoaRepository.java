@@ -59,6 +59,13 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "FROM poa " +
             "WHERE estado = :estado AND visible = true AND id_responsable = :idResponsable", nativeQuery = true)
     List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
+    
+   
+
+    @Query(value = "SELECT mpdot.*,(mpdot.meta_alcanzar / mpdot.meta_planificada) * 100 AS valor_total\n" +
+        "FROM poa mpdot", nativeQuery = true)
+List<Poa> listarPoasPromedio();
+
 
     //Obtener los poa con actividades pendientes
     @Query(value = "select A.*,  " +

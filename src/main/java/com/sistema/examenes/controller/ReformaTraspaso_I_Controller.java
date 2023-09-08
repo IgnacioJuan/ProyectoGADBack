@@ -112,8 +112,8 @@ public class ReformaTraspaso_I_Controller {
         }
     }
 
-    @GetMapping("/listarRTIActividades")
-    public List<RTIncrementoActividadDTO> listarRTIActividades() {
-        return rtiService.listarRTIActividades();
+    @GetMapping("/listarRTIActividades/{actividadId}")
+    public List<RTIncrementoActividadDTO> listarRTIActividades(@PathVariable Long actividadId) {
+        return rtiService.listarRTIActividades(actividadId);
     }
 }
