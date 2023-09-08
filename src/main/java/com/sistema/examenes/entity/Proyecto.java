@@ -28,6 +28,9 @@ public class Proyecto implements Serializable {
     private String objetivo;
     @Column(name = "meta", length = 2000)
     private String meta;
+    @Column(name = "descripcion", length = 2000)
+    private String descripcion;
+    
     private double porcentaje_alcance;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
