@@ -162,14 +162,7 @@ public class Poa_Controller {
         listarPoasjohn();
     }
 
-    @GetMapping("/listarpoajohn")
-    public ResponseEntity<List<Poa>> listarPoasjohn() {
-
-        try {
-
-            System.out.println("johnn poa " +Service.listarPoasjohn());
-
-            return new ResponseEntity<>(Service.listarPoasjohn(), HttpStatus.OK);
+   
     @PostMapping("/solicitud")
     public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {
         Poa poa = new Poa();
