@@ -54,7 +54,6 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<PoaporUsuarioProjection> findPoaporUsuario(); 
  @Query(value = "SELECT * from poa where visible = true ",nativeQuery = true)
  List<Poa> listarPoasjohn();
-    List<PoaporUsuarioProjection> findPoaporUsuario();
 
 
     @Query(value = "SELECT\n" +
