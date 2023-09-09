@@ -86,4 +86,6 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
 
+    @Query(value = " SELECT * FROM aprobacion_poa", nativeQuery = true)
+    List<AprobacionPoa> findPoaporUsuario();
 }

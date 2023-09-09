@@ -150,7 +150,7 @@ public class Poa_Controller {
     @GetMapping("/listarporusuario")
     public ResponseEntity<List<PoaporUsuarioDTO>> getporUsuario() {
         List<PoaporUsuarioDTO> poaporUsuario = Service.listarPoaporUsuarios();
-        return new ResponseEntity<>(poaporUsuario, HttpStatus.OK);
+        return ResponseEntity.ok(poaporUsuario);
     }
 
     @PostMapping("/solicitud")

@@ -1,12 +1,20 @@
 package com.sistema.examenes.projection;
 
-
 public interface PoaporUsuarioProjection {
 
     Long getId();
+
     String getUsername();
-    String getLocalizacion();
-    String getBarrio();
+
+    String getPrimer_nombre();
+
+    String getPrimer_apellido();
+
+    String getCedula();
+
     String getEstado();
+
     String getNombre();
-    }
+
+
+}

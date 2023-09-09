@@ -69,10 +69,11 @@ public class Actividades {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_responsable")
-    private Usuario usuario;
+    private Usuario  usuario;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<Periodo> periodos = new HashSet<>();
 
 }
+  
