@@ -1,6 +1,7 @@
 package com.sistema.examenes.entity;
 
 import com.sistema.examenes.entity.auth.Usuario;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +24,7 @@ public class AprobacionEvidencia {
     private boolean visible;
 
     @Column(name = "fecha_aprobacion")
-    private String fecha_aprobacion;
+    private Date fecha_aprobacion = new Date(); 
 
     //Relaciones
 

@@ -234,9 +234,11 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
 
 
 @GetMapping("/listarPorEstadoYFechaDesc")
-public ResponseEntity<List<Archivo_s>> listarArchivosPorEstadoYFechaDesc(@RequestParam("estado") String estado) {
+public ResponseEntity<List<Archivo_s>> listarArchivosPorEstadoYFechaDesc(
+    @RequestParam("estado") String estado,
+    @RequestParam("username") String username) {
     try {
-        List<Archivo_s> archivos = archivorepo.listarArchivoPorEstadoOrdenadoPorFechaDesc(estado);
+        List<Archivo_s> archivos = archivorepo.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
         return new ResponseEntity<>(archivos, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

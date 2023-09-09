@@ -14,4 +14,8 @@ public interface AprobacionEvidenciaRepository extends JpaRepository<AprobacionE
             "FROM  aprobacion_evidencia\n" +
             "WHERE id_evidencia  = :archivoId  AND  visible=true;", nativeQuery = true)
     List<Object[]> listarAprobacionEvidenciaPorIdArchivo(@Param("archivoId") Long archivoId);
+    
+    @Query(value = "SELECT * FROM aprobacion_evidencia ae WHERE ae.id_evidencia = :archivoId AND ae.visible = true", nativeQuery = true)
+public List<AprobacionEvidencia> listarAprobacionesPorArchivoIdxxx(@Param("archivoId") Long archivoId);
+    
 }

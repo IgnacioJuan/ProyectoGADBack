@@ -39,7 +39,14 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
             "WHERE mo.id_modelo = (SELECT MAX(id_modelo) FROM modelo) GROUP BY idper, resp, correo, archiv, activid, ini, finish, enlac;",nativeQuery = true)
     List<ArchivoProjection> listararchi();*/
 
-     @Query(value = "SELECT * FROM archivo WHERE visible = true AND estado = :estado ORDER BY fecha DESC", nativeQuery = true)
-       public List<Archivo_s> listarArchivoPorEstadoOrdenadoPorFechaDesc(@Param("estado") String estado);
+     @Query(value = "SELECT * FROM archivo ar " +
+       "JOIN actividades ac ON ar.id_actividad = ac.id_actividad " +
+       "JOIN usuarios u ON ac.id_responsable = u.id " +
+       "WHERE ar.visible = true " +
+       "AND ar.estado = :estado " +
+       "AND u.username = :username " +
+       "ORDER BY ar.fecha DESC", nativeQuery = true)
+public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(
+    @Param("estado") String estado, @Param("username") String username);
     
 }
