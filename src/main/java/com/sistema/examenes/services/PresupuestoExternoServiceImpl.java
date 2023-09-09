@@ -28,8 +28,8 @@ public class PresupuestoExternoServiceImpl extends GenericServiceImpl<Presupuest
         return repository.listarPresupuestoExterno();
     }
 
-    public List<PresupuestoEActividadDTO> listarPEActividades() {
-        List<Object[]> resultados = repository.listarPEActividades();
+    public List<PresupuestoEActividadDTO> listarPEActividades(Long actividadId) {
+        List<Object[]> resultados = repository.listarPEActividades(actividadId);
         List<PresupuestoEActividadDTO> acts = new ArrayList<>();
         for (Object[] resultado : resultados) {
             PresupuestoEActividadDTO m = new PresupuestoEActividadDTO();
@@ -38,8 +38,6 @@ public class PresupuestoExternoServiceImpl extends GenericServiceImpl<Presupuest
             m.setValor((double) resultado[2]);
             m.setFecha((Date) resultado[3]);
             m.setObservacion((String) resultado[4]);
-            m.setNombreActividad((String) resultado[5]);
-            m.setNombreProyecto((String) resultado[6]);
             acts.add(m);
         }
         return acts;

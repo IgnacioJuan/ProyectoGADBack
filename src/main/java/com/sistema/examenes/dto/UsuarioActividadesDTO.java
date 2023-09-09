@@ -2,6 +2,8 @@ package com.sistema.examenes.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,5 +15,5 @@ public class UsuarioActividadesDTO {
     private String nombre;
     private String apellido;
     private String cargo;
-    private String nombreActividad;
+    private Date fecha_asignacion;
 }

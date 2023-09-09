@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.entity.AprobacionActividad;
+import com.sistema.examenes.projection.AprobacionporActividadProjection;
 import com.sistema.examenes.repository.AprobacionActividadRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class AprobacionActividadServiceImpl extends GenericServiceImpl<Aprobacio
     @Override
     public List<AprobacionActividad> listarAprobacionActividad() {
         return AprobacionActividadRepository.listarAprobacionActividad();
+    }
+
+    @Override
+    public List<AprobacionporActividadProjection> listarAprobacionesporActividad(Long id_actividad) {
+        return AprobacionActividadRepository.listarAprobacionesporActividad(id_actividad);
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PoaRepository extends JpaRepository<Poa, Long> {
-    @Query(value = "SELECT * from poa where visible =true ORDER BY fecha_inicio desc", nativeQuery = true)
+    @Query(value = "SELECT * from poa where visible = true  ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoas();
 
     @Query(value = "SELECT * FROM poa WHERE id_poa= :id AND visible = true", nativeQuery = true)
@@ -24,7 +24,8 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "on ap.id_poa = p.id_poa " +
             "where p.visible =true " +
             "and ap.id_proyecto = :id_proyecto " +
-            "and (ap.estado= :estado or :estado is null)" +
+            "and (p.estado= :estado or :estado is null) " +
+            "group by p.id_poa," +
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
@@ -50,15 +51,29 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             + "u.id = p.id_responsable INNER JOIN aprobacion_poa ap ON p.id_poa "
             + "= ap.id_poa INNER JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto "
             + "GROUP BY u.id, p.id_poa, p.localizacion, p.fecha_inicio, pr.nombre, ap.estado", nativeQuery = true)
-    List<PoaporUsuarioProjection> findPoaporUsuario();
+    List<PoaporUsuarioProjection> findPoaporUsuario(); 
+ @Query(value = "SELECT * from poa where visible = true ",nativeQuery = true)
+ List<Poa> listarPoasjohn();
 
 
-
-    @Query(value = "SELECT id_poa, barrio, cobertura, comunidad, fecha_inicio, fecha_fin, estado," +
-            "       linea_base, localizacion, tipo_periodo, meta_alcanzar, meta_planificada " +
-            "FROM poa " +
-            "WHERE estado = :estado AND visible = true AND id_responsable = :idResponsable", nativeQuery = true)
+    @Query(value = "SELECT\n" +
+            "   pr.nombre,\n" +
+            "    p.id_poa,\n" +
+            "    p.barrio,\n" +
+            "    p.cobertura,\n" +
+            "    p.comunidad,\n" +
+            "\tp.fecha_inicio,\n" +
+            "    p.fecha_fin,\n" +
+            "    p.estado,\n" +
+            "    p.localizacion\n" +
+            "FROM poa p\n" +
+            "INNER JOIN aprobacion_poa a ON p.id_poa = a.id_poa\n" +
+            "INNER JOIN proyecto pr ON a.id_proyecto = pr.id_proyecto\n" +
+            "WHERE p.id_responsable = :idResponsable\n" +
+            "    AND p.estado = :estado\n" +
+            "    AND p.visible = true AND a.visible=true AND pr.visible=true", nativeQuery = true)
     List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
+
     
    
 
@@ -70,7 +85,8 @@ List<Poa> listarPoasPromedio();
     //Obtener los poa con actividades pendientes
     @Query(value = "select A.*,  " +
             "COUNT(DISTINCT c.id_actividad) as nro_actividades, " +
-            "E.nombre " +
+            "E.nombre, e.codigo, " +
+            "concat(g.primer_nombre, ' ', g.primer_apellido) as usuario " +
             "from POA A " +
             "join aprobacion_actividad B " +
             "on A.id_poa = B.id_poa " +
@@ -80,12 +96,16 @@ List<Poa> listarPoasPromedio();
             "on d.id_poa = A.id_poa " +
             "join proyecto E " +
             "on E.id_proyecto = d.id_proyecto " +
+            "join usuarios f " +
+            "on f.id = a.id_responsable " +
+            "join persona g " +
+            "on g.id_persona = f.persona_id_persona " +
             "where C.estado = 'PENDIENTE' " +
             "and c.visible = true " +
             "and a.visible = true " +
-            "group by a.id_poa, e.id_proyecto "
+            "and a.estado ='APROBADO' " +
+            "group by a.id_poa, e.id_proyecto, g.id_persona "
             , nativeQuery = true)
     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
-
 
 }

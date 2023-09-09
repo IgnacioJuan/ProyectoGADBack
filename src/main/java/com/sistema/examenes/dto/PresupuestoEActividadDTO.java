@@ -15,6 +15,4 @@ public class PresupuestoEActividadDTO {
     private String observacion;
     private double valor;
     private Date fecha;
-    private String nombreActividad;
-    private String nombreProyecto;
 }

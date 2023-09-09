@@ -96,4 +96,13 @@ public class Persona_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/correo/{id}")
+    public ResponseEntity<Persona> obtenercorreo(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.obtenercorreo(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

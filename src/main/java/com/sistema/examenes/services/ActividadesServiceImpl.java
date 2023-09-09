@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -67,8 +68,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
 
-    public List<UsuarioActividadesDTO> listarUsuariosAsignadosAActividades() {
-        List<Object[]> resultados = actividadesRepository.listarUsuariosAsignadosAActividades();
+    public List<UsuarioActividadesDTO> listarUsuariosActividadID(Long actividadId) {
+        List<Object[]> resultados = actividadesRepository.listarUsuariosActividadID(actividadId);
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
         for (Object[] resultado : resultados) {
             UsuarioActividadesDTO m = new UsuarioActividadesDTO();
@@ -77,7 +78,6 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             m.setNombre((String) resultado[2]);
             m.setApellido((String) resultado[3]);
             m.setCargo((String) resultado[4]);
-            m.setNombreActividad((String) resultado[5]);
             acts.add(m);
         }
         return acts;
@@ -179,26 +179,24 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     // Modulo aprobacion del poa
     // Servicio que implementara las actividades del --POA--
     @Override
-    public List<ActividadDTO> obtenerDetalleActividadesAprob(Long id_poa) {
+    public List<ActividadApPoaDTO> obtenerDetalleActividadesAprob(Long id_poa) {
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
         List<Object[]> resultados = actividadesRepository.obtenerDetalleActividadesAprob(id_poa);
         // Crear una lista para almacenar los DTOs transformados.
-        List<ActividadDTO> detaact = new ArrayList<>();
+        List<ActividadApPoaDTO> detaact = new ArrayList<>();
         // Iterar sobre cada registro recuperado.
         for (Object[] resultado : resultados) {
             // Convertir cada registro en un DTO.
-            ActividadDTO detalleActividadDTO = new ActividadDTO(
+            ActividadApPoaDTO detalleActividadDTO = new ActividadApPoaDTO(
                     // variables que tiene el DTO
                     ((BigInteger) resultado[0]).longValue(), // ID de la actividad
-                    (String) resultado[1], // Codificado
+                    (String) resultado[1], // Nombre
                     (String) resultado[2], // Descripción
-                    (double) resultado[3], // Devengado
-                    (double) resultado[4], // Estado
-                    (double) resultado[5], // Nombre de la actividad
-                    (double) resultado[6], // Presupuesto referencial
-                    (String) resultado[7], // Recursos propios
-                    (String) resultado[8] // Responsable
+                    (double) resultado[3], // Presupuesto referencial
+                    (double) resultado[4],
+                    (double) resultado[5], // Recursos propios
+                    (String) resultado[6] // Estado
             );
             // Agregar el DTO a la lista de resultados.
             detaact.add(detalleActividadDTO);
@@ -236,9 +234,19 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return acts;
     }
 
+    @Override
+    public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa) {
+        return actividadesRepository.ActividadesPendientesPorPoa(id_Poa);
+    }
+
     // listar actividades con archivos rechazados
     @Override
     public List<Actividades> listarActiEviRechazados() {
         return actividadesRepository.listarActEviRechazados();
     }
+    @Override
+    public void actualizarEstadoPorAprobacion(Long id_actividad, String estado){
+        actividadesRepository.actualizarEstadoPorAprobacion(id_actividad,estado);
+    };
+
 }

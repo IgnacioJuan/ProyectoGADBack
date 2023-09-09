@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.dto.DetalleActividadDTO;
 import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -95,30 +96,26 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.nombre AS nombre_actividad," +
                         "    a.descripcion," +
                         "    a.presupuesto_referencial," +
-                        "    a.codificado," +
-                        "    a.devengado," +
                         "    a.recursos_propios," +
-                        "    a.estado," +
-                        "    per.primer_nombre || ' ' || per.primer_apellido AS responsable " +
+                        "    pex.valor," +
+                        "    a.estado " +
                         "FROM " +
-                        "    usuarios u " +
+                        "    actividades a " +
                         "JOIN " +
-                        "    actividades a ON u.id = a.id_responsable " +
+                        "    presupuesto_externo pex ON a.id_actividad = pex.id_actividad " +
                         "JOIN " +
                         "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
                         "JOIN " +
                         "    poa p ON apac.id_poa = p.id_poa " +
-                        "JOIN " +
-                        "    persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE " +
-                        "    a.visible = true AND u.visible = true " +
+                        "    a.visible = true " +
                         "    AND p.id_poa = :id_Poa " +
                         "    AND a.estado = 'PENDIENTE' " +
                         "ORDER BY " +
                         "    a.id_actividad", nativeQuery = true)
         List<Object[]> obtenerDetalleActividadesAprob(@Param("id_Poa") Long id_Poa);
 
-        //Actualizar el estado de las actividades relacionadas por id_poa
+        // Actualizar el estado de las actividades relacionadas por id_poa
         @Modifying
         @Transactional
         @Query(value = "UPDATE actividades SET estado = :estado WHERE id_actividad IN (SELECT aa.id_actividad FROM aprobacion_actividad aa WHERE aa.id_poa = :poaId)", nativeQuery = true)
@@ -183,11 +180,14 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "WHERE LOWER(ar.estado) = 'rechazado';\n", nativeQuery = true)
         List<Actividades> listarActEviRechazados();
 
+
         @Query(value = "SELECT u.id, u.username, pe.primer_nombre, pe.primer_apellido, pe.cargo, a.nombre " +
-                        "FROM actividades a " +
-                        "JOIN usuarios u ON a.id_responsable = u.id " +
-                        "JOIN persona pe ON u.persona_id_persona = pe.id_persona", nativeQuery = true)
-        List<Object[]> listarUsuariosAsignadosAActividades();
+                "FROM actividades a " +
+                "JOIN usuarios u ON a.id_responsable = u.id " +
+                "JOIN persona pe ON u.persona_id_persona = pe.id_persona " +
+                "WHERE a.id_actividad = :actividadId", nativeQuery = true)
+        List<Object[]> listarUsuariosActividadID(@Param("actividadId") Long actividadId);
+
 
         /*
          * @Modifying
@@ -200,5 +200,39 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
          * void actualizarCodificado(@Param("idActividad") Long
          * idActividad, @Param("valor") double valor);
          */
+        //Query para obtener las actividades en estado pendiente
+        @Query(value = "SELECT " +
+                "    a.id_actividad," +
+                "    a.nombre AS nombre_actividad," +
+                "    a.descripcion," +
+                "    a.codificado," +
+                "    a.devengado," +
+                "    a.recursos_propios," +
+                "    (per.primer_nombre || ' ' || per.primer_apellido) AS responsable " +
+                "FROM " +
+                "    usuarios u " +
+                "JOIN " +
+                "    actividades a ON u.id = a.id_responsable " +
+                "JOIN " +
+                "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
+                "JOIN " +
+                "    poa p ON apac.id_poa = p.id_poa " +
+                "JOIN " +
+                "    persona per ON u.persona_id_persona = per.id_persona " +
+                "WHERE " +
+                "    a.visible = true AND u.visible = true " +
+                "    AND p.id_poa = :id_Poa " +
+                "    AND a.estado = 'PENDIENTE' " +
+                "group by a.id_actividad, u.id, per.id_persona " +
+                "ORDER BY " +
+                "    a.id_actividad", nativeQuery = true)
+        List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa);
 
+        //Actualizar el estado de la actividad cuando se crea una nueva evaluacion o aprobacion
+        @Modifying
+        @Transactional
+        @Query(value = "UPDATE actividades " +
+                "SET estado = :estado " +
+                "WHERE id_actividad = :id_actividad", nativeQuery = true)
+        void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
 }
