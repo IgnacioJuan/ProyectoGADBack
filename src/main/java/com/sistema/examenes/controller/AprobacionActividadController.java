@@ -4,6 +4,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.AprobacionActividad;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.auth.Usuario;
+import com.sistema.examenes.projection.AprobacionporActividadProjection;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionActividadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,15 @@ public class AprobacionActividadController {
         try {
             a.setVisible(true);
             return new ResponseEntity<>(AprobacionActividadService.save(a), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarAprobacionesporActividad/{id_actividad}")
+    public ResponseEntity<List<AprobacionporActividadProjection>> listarAprobacionesporActividad(@PathVariable("id_actividad") Long id_actividad){
+        try {
+            return new ResponseEntity<>(AprobacionActividadService.listarAprobacionesporActividad(id_actividad), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
