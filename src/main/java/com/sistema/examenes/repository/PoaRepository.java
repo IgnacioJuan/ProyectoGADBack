@@ -25,7 +25,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "where p.visible =true " +
             "and ap.id_proyecto = :id_proyecto " +
             "and (p.estado= :estado or :estado is null) " +
-            "group by p.id_poa," +
+            "group by p.id_poa " +
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
