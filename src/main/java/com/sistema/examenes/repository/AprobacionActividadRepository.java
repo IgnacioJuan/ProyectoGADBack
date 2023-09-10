@@ -14,7 +14,7 @@ public interface AprobacionActividadRepository extends JpaRepository<AprobacionA
 
     //Consulta para obtener las aprobaciones segun el id de la actividad
     @Query(value = "SELECT  (c.primer_nombre || ' ' || c.primer_apellido) AS evaluador, " +
-            "a.estado, a.observacion, a.fecha_aprobacion " +
+            "a.estado, a.observacion, TO_TIMESTAMP(a.fecha_aprobacion, 'YYYY-MM-DD HH24:MI:SS') AS fecha_aprobacion " +
             "from aprobacion_actividad a " +
             "join usuarios b " +
             "on a.id_usuario = b.id " +
