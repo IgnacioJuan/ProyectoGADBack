@@ -1,11 +1,8 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.AprobacionEvidenciaDTO;
-import com.sistema.examenes.dto.PoasAdmin_DTO;
+
 import com.sistema.examenes.dto.SolicitudPresupuesto_DTO;
-import com.sistema.examenes.entity.AprobacionEvidencia;
 import com.sistema.examenes.entity.SolicitudPresupuesto;
-import com.sistema.examenes.services.AprobacionEvidenciaService;
 import com.sistema.examenes.services.SolicitudPresupuesto_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/solictudpresupuesto")
+@RequestMapping("/api/solicitudpresupuesto")
 public class SolicitudPresupuestoController {
     @Autowired
     SolicitudPresupuesto_Service SolicitudPresupuesto_Service ;
@@ -98,6 +95,15 @@ public class SolicitudPresupuestoController {
         } catch (Exception e) {
             e.printStackTrace();
 
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/listarSolicitudesSuperAdmin/{idSuperAdmin}")
+    public ResponseEntity<List<SolicitudPresupuesto>> listarPoasPorResponsableEstado(@PathVariable Long idSuperAdmin) {
+        try {
+            return new ResponseEntity<>(SolicitudPresupuesto_Service.listarSolicitudPresupuestoSuperAdmin(idSuperAdmin), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

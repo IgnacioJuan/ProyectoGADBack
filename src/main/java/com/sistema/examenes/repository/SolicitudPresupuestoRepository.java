@@ -24,7 +24,9 @@ public interface SolicitudPresupuestoRepository extends JpaRepository <Solicitud
             "AND pa.visible = true  AND sp.id_responsable = :idResponsable AND sp.estado = :estado", nativeQuery = true)
     List<Object[]> listarPoasPorResponsableEstado(Long idResponsable, String estado);
 
-
+    @Query(value = "SELECT * FROM solicitud_presupuesto\n" +
+            "WHERE estado = 'PENDIENTE' AND id_superadmin = :idSuperAdmin  AND visible = true ORDER BY fecha_solicitud", nativeQuery = true)
+    List<SolicitudPresupuesto> listarSolicitudPresupuestoSuperAdmin(Long idSuperAdmin);
 
 
 
