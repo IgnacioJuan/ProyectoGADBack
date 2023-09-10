@@ -18,8 +18,8 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
 
     //create query for this query SELECT p.id_proyecto,p.codigo,p.meta,p.nombre FROM public.proyecto p join public.modelopoa ON modelopoa.id_modelo_poa = p.id_modelo_poa
     //WHERE modelopoa.estado='ACTIVO' AND p.visible=true ORDER BY p.nombre;
-    @Query(value = "SELECT p.id_proyecto,p.codigo,p.meta,p.nombre FROM public.proyecto p join public.modelopoa ON modelopoa.id_modelo_poa = p.id_modelo_poa  WHERE modelopoa.estado='ACTIVO' AND p.visible=true ORDER BY p.nombre", nativeQuery = true)
-    List<Object[]> listActiveProjects();
+    @Query(value = "SELECT p.id_proyecto,p.codigo,p.meta,p.nombre FROM public.proyecto p join public.modelopoa ON modelopoa.id_modelo_poa = p.id_modelo_poa JOIN public.programa ON programa.id_programa = p.id_programa JOIN public.usuarios ON usuarios.id_programa = programa.id_programa WHERE modelopoa.estado='ACTIVO' AND p.visible=true AND usuarios.id=:id_usuario  ORDER BY p.nombre", nativeQuery = true)
+    List<Object[]> listActiveProjects(Long id_usuario);
 
 //SELECT
 //    p.id_proyecto,

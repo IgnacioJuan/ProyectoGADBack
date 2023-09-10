@@ -133,8 +133,8 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
     }
 
     @GetMapping("/listsActiveProjects")
-    public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects() {
-        List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects();
+    public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects( @RequestParam("id_usuario") Long id_usuario) {
+        List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects(id_usuario);
         return ResponseEntity.ok(projectsActivesDtoList);
     }
 
