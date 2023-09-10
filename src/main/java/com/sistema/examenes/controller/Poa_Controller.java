@@ -167,12 +167,7 @@ public class Poa_Controller {
         return new ResponseEntity<>(poaporUsuario, HttpStatus.OK);
     }
 
-    @PostConstruct
-    public void init() {
-        listarPoasjohn();
-    }
-
-    @GetMapping("/listarpoajohn")
+@GetMapping("/listarpoajohn")
     public ResponseEntity<List<Poa>> listarPoasjohn() {
 
         try {
