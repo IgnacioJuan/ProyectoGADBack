@@ -7,6 +7,7 @@ import com.sistema.examenes.dto.SolicitudPoa;
 import com.sistema.examenes.dto.PoasAdmin_DTO;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
+import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.Poa_Service;
@@ -180,9 +181,11 @@ public class Poa_Controller {
         }
     }
     @PostMapping("/solicitud")
-    public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {
+    public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r,@RequestParam("id_responsable") Long id_responsable) {
         Poa poa = new Poa();
+        Usuario usuario = new Usuario();
         try {
+            usuario.setId(id_responsable);
             poa.setMeta_planificada(r.getMeta_planificada());
             poa.setCobertura(r.getCobertura());
             poa.setBarrio(r.getBarrio());
@@ -192,6 +195,7 @@ public class Poa_Controller {
             poa.setLinea_base(0);
             poa.setMeta_alcanzar(0);
             poa.setEstado("PENDIENTE");
+            poa.setUsuario(usuario);
             poa.setVisible(true);
             return new ResponseEntity<>(Service.save(poa), HttpStatus.CREATED);
         } catch (Exception e) {
