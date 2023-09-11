@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.AprobacionEvidenciaDTO;
 import com.sistema.examenes.dto.ObjetivoPdot_DTO;
 import com.sistema.examenes.entity.AprobacionActividad;
 import com.sistema.examenes.entity.AprobacionEvidencia;
+import com.sistema.examenes.repository.AprobacionEvidenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,9 @@ import java.util.List;
 public class AprobacionEvidenciaController {
     @Autowired
     AprobacionEvidenciaService AprobacionEvidenciaService;
-
+    
+@Autowired
+AprobacionEvidenciaRepository AprobacionRepo;
 
     //post crear
 
@@ -44,6 +47,19 @@ public class AprobacionEvidenciaController {
     }
 
 
+    
+    @GetMapping("/listarPorArchivo/{archivoId}")
+public ResponseEntity<List<AprobacionEvidencia>> listarAprobacionesPorArchivoIdx(@PathVariable Long archivoId) {
+    try {
+        List<AprobacionEvidencia> aprobaciones = AprobacionRepo.listarAprobacionesPorArchivoIdxxx(archivoId);
+        return new ResponseEntity<>(aprobaciones, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+    
+    
+    
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody AprobacionEvidencia AprobacionActividad) {
         return ResponseEntity.status(HttpStatus.OK).body(AprobacionEvidenciaService.delete(id));
