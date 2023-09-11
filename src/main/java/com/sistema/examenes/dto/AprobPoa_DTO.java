@@ -13,6 +13,7 @@ public class AprobPoa_DTO {
     private String direccion_departamental;
     private String responsable;
     private String correo_responsable;
+    private String area;
     private Date fecha_inicio;
     private Date fecha_fin;
     private String codigo;
