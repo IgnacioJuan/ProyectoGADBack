@@ -1,7 +1,6 @@
 package com.sistema.examenes.entity;
 
 import com.sistema.examenes.entity.auth.Usuario;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +10,12 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "aprobacion_evidencia")
-public class AprobacionEvidencia {
+@Table(name = "aprobacion_solicitud_presupuesto")
+public class Aprobacion_SolicitudPresupuesto {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id_aprobacionevid")
-    private Long id_aprobacionevid;
+    @Column(name = "id_aprobacionsolicitudpres")
+    private Long id_aprobacionsolicitudpres;
     @Column(name = "observacion", length = 150)
     private String observacion;
     @Column(name = "estado", length = 50)
@@ -29,14 +28,13 @@ public class AprobacionEvidencia {
 
     //Relaciones
 
-    //ManyToOne Archivos
+    //ManyToOne Solicitud
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_evidencia")
-    private Archivo_s evidencia;
+    @JoinColumn(name = "id_solicitud")
+    private SolicitudPresupuesto solicitud;
 
     //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-
 }

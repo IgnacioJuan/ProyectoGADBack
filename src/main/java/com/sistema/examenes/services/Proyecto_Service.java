@@ -14,7 +14,7 @@ public interface Proyecto_Service extends GenericService<Proyecto, Long> {
    
    
 
-    List<ProjectsActivesDto> listActiveProjects();
+    List<ProjectsActivesDto> listActiveProjects(Long id_usuario);
 
     List<ProjectByIdDto> ProjectById(Long id_proyecto);
     Long secuenciaproyecto(String codigo);
