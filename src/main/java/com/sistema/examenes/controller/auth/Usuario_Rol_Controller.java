@@ -39,6 +39,7 @@ public class Usuario_Rol_Controller {
                     usuarioRolExistente.getUsuario().setPassword(bCryptPasswordEncoder.encode(nuevaContraseña));
                 }
                 usuarioRolExistente.setRol(usuarioRol.getRol());
+                usuarioRolExistente.getUsuario().setPrograma(usuarioRol.getUsuario().getPrograma());
                 usuarioRolExistente.getUsuario().setUsername(usuarioRol.getUsuario().getUsername());
                 usuarioRolExistente.getUsuario().getPersona().setCedula(usuarioRol.getUsuario().getPersona().getCedula());
                 usuarioRolExistente.getUsuario().getPersona().setPrimer_nombre(usuarioRol.getUsuario().getPersona().getPrimer_nombre());

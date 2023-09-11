@@ -26,6 +26,11 @@ public class Usuario implements UserDetails {
     @Column(name = "visible")
     private boolean visible;
 
+     //ManyToOne Programa
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_programa")
+    private Programa programa;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
@@ -54,10 +59,7 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     private Set<AprobacionEvidencia> lista_aprobacion_evidencias = new HashSet<>();
 
-    //ManyToOne Programa
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_programa")
-    private Programa programa;
+   
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
@@ -148,6 +150,14 @@ public class Usuario implements UserDetails {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+    
+    public Programa getPrograma() {
+        return programa;
+    }
+
+    public void setPrograma(Programa programa) {
+        this.programa = programa;
     }
 
     public boolean isVisible() {
