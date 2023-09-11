@@ -166,7 +166,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
                     (String) resultado[5], // Nombre de la actividad
                     (double) resultado[6], // Presupuesto referencial
                     (double) resultado[7], // Recursos propios
-                    (String) resultado[8] // responsable
+                    (double) resultado[8], // presupuesto_externo
+                    (String) resultado[9] // responsable
                 );
 
             // Agregar el DTO a la lista de resultados.
