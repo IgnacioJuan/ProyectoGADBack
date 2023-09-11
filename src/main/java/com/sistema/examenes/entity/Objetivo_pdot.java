@@ -18,7 +18,7 @@ public class Objetivo_pdot implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_objetivo_pdot")
     private Long id_objetivo_pdot;
-    @Column(name = "nombre", length = 200)
+    @Column(name = "nombre", length = 1000)
     private String nombre;
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
