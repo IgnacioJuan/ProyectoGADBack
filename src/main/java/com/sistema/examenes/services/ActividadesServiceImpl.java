@@ -180,7 +180,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     // Modulo aprobacion del poa
     // Servicio que implementara las actividades del --POA--
     @Override
-    public List<ActividadApPoaDTO> obtenerDetalleActividadesAprob(Long id_poa) {
+    public List<ActividadApPoaDTO> obtenerListaActividadesAprobPoa(Long id_poa) {
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
         List<Object[]> resultados = actividadesRepository.obtenerDetalleActividadesAprob(id_poa);
