@@ -50,9 +50,6 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "JOIN componente cm ON opt.id_componente = cm.id_componente " +
                         "JOIN usuarios u ON p.id_responsable = u.id " +
                         "JOIN persona per ON u.persona_id_persona = per.id_persona " +
-                        "JOIN aprobacion_actividad apact ON p.id_poa = apact.id_poa " +
-                        "JOIN actividades act ON apact.id_actividad = act.id_actividad " +
-                        "JOIN presupuesto_externo pext ON act.id_actividad = pext.id_actividad " +
                         "WHERE aa.visible = true " +
                         "AND p.estado = 'PENDIENTE'", nativeQuery = true)
         List<Object[]> obtenerAprobacionesPoa();
@@ -96,9 +93,6 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "JOIN componente cm ON opt.id_componente = cm.id_componente " +
                         "JOIN usuarios u ON p.id_responsable = u.id " +
                         "JOIN persona per ON u.persona_id_persona = per.id_persona " +
-                        "JOIN aprobacion_actividad apact ON p.id_poa = apact.id_poa " +
-                        "JOIN actividades act ON apact.id_actividad = act.id_actividad " +
-                        "JOIN presupuesto_externo pext ON act.id_actividad = pext.id_actividad " +
                         "WHERE aa.visible = true and p.id_poa= :idPoa", nativeQuery = true)
         List<Object[]> obtenerAprobacionPoaPorId(@Param("idPoa") Long id_poa);
 
@@ -116,4 +110,5 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             "INNER JOIN public.persona p ON u.persona_id_persona = p.id_persona\n" +
             "WHERE ap.id_poa = 1 AND ap.visible= true AND u.visible=true AND p.visible=true;\n", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
+
 }
