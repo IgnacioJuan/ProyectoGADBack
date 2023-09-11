@@ -16,23 +16,16 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class PoaporUsuarioDTO {
 
-    private Long id;
+    private String cedula;
     private String username;
-    private String localizacion;
-    private String barrio;
     private String estado;
     private String nombre;
-
-
-
+    private String primer_nombre;
+    private String primer_apellido;
+    private String nombrepro;
+  
    
-
-    
-
-    
 }

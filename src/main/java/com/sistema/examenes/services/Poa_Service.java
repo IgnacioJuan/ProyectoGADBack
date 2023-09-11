@@ -19,7 +19,7 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     public List<PoaNoAprobadoDTO> listarPoaNoAprobados();
     
-    public List<PoaporUsuarioDTO> listarPoaporUsuarios();
+    public List<PoaporUsuarioDTO> listarPoaporUsuarios( Long id_proyecto );
 
     public List<AprobPoa_DTO> listarPoasparaAprobacion();
     public List<Poa> listarPoasjohn();
