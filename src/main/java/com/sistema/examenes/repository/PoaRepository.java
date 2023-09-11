@@ -3,7 +3,6 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
-import com.sistema.examenes.projection.PoaporUsuarioProjection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -50,18 +49,6 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<PoaNoAprobadoProjection> findNoAprobados();
 
  
-
-    
-    
-//    @Query(value = "SELECT u.id, u.username,per.primer_nombre ,per.primer_apellido,per.cedula, p.id_poa,\n"
-//            + "            pro.nombre,ap.estado, ap.observacion FROM usuarios u\n"
-//            + "            INNER JOIN poa p ON u.id = p.id_responsable\n"
-//            + "            INNER JOIN aprobacion_poa  ap ON p.id_poa = ap.id_poa\n"
-//            + "            INNER JOIN proyecto pro ON ap.id_proyecto = pro.id_proyecto\n"
-//            + "            INNER JOIN persona per ON u.id = per.id_persona\n"
-//            + "            INNER JOIN programa progra ON pro.id_programa = progra.id_programa;", nativeQuery = true)
-//    List<AprobacionPoa> findPoaporUsuario();
-
     @Query(value = "SELECT id_poa, barrio, cobertura, comunidad, fecha_inicio, fecha_fin, estado,"
             + "       linea_base, localizacion, tipo_periodo, meta_alcanzar, meta_planificada "
             + "FROM poa "

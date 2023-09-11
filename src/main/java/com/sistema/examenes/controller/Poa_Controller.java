@@ -147,11 +147,14 @@ public class Poa_Controller {
         return new ResponseEntity<>(poaNoAprobados, HttpStatus.OK);
     }
     
-    @GetMapping("/listarporusuario")
-    public ResponseEntity<List<PoaporUsuarioDTO>> getporUsuario() {
-        List<PoaporUsuarioDTO> poaporUsuario = Service.listarPoaporUsuarios();
+    @GetMapping("/listarporusuario/{id_proyecto}")
+    public ResponseEntity<List<PoaporUsuarioDTO>> getporUsuario(@PathVariable("id_proyecto") Long id_proyecto) {
+        List<PoaporUsuarioDTO> poaporUsuario = Service.listarPoaporUsuarios(id_proyecto);
         return ResponseEntity.ok(poaporUsuario);
     }
+    
+    
+   
 
     @PostMapping("/solicitud")
     public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {

@@ -34,4 +34,5 @@ public class PoaNoAprobadoDTO {
     private String primer_apellido;
     private String username;
 
+
 }

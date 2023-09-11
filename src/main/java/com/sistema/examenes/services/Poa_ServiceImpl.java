@@ -29,6 +29,13 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     @Autowired
     private AprobacionPoaRepository repositoryAP;
 
+    public Poa_ServiceImpl(PoaRepository repository, AprobacionPoaRepository repositoryAP) {
+        this.repository = repository;
+        this.repositoryAP = repositoryAP;
+    }
+
+ 
+
     @Override
     public CrudRepository<Poa, Long> getDao() {
         return repository;
@@ -96,30 +103,9 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
         return dtos;
     }
-
-//    @Override
-//    public List<PoaporUsuarioDTO> listarPoaporUsuarios() {
-//        List<PoaporUsuarioProjection> poaporUsuario = repository.findPoaporUsuario();
-//        List<PoaporUsuarioDTO> datos = new ArrayList<>();
-//
-//        for (PoaporUsuarioProjection projection : poaporUsuario) {
-//            PoaporUsuarioDTO dato = new PoaporUsuarioDTO();
-//            dato.setId(projection.getId());
-//            dato.setPrimer_nombre(projection.getPrimer_nombre());
-//            dato.setPrimer_apellido(projection.getPrimer_apellido());
-//            dato.setEstado(projection.getEstado());
-//            dato.setNombre(projection.getNombre());
-//            dato.setUsername(projection.getUsername());
-//            dato.setCedula(projection.getCedula());
-//            datos.add(dato);
-//
-//        }
-//        System.out.println(datos.toString());
-//        return datos;
-//    }
-//    
-     public List<PoaporUsuarioDTO> listarPoaporUsuarios() {
-        List<AprobacionPoa> poaporUsuario = repositoryAP.findPoaporUsuario();
+  
+     public List<PoaporUsuarioDTO> listarPoaporUsuarios(Long id_proyecto) {
+        List<AprobacionPoa> poaporUsuario = repositoryAP.findPoaporUsuario(id_proyecto);
         List<PoaporUsuarioDTO> datos = new ArrayList<>();
 
         for (AprobacionPoa projection : poaporUsuario) {
@@ -131,12 +117,15 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dato.setNombre(projection.getProyecto().getNombre());
             dato.setUsername(projection.getUsuario().getUsername());
             dato.setNombrepro(projection.getProyecto().getPrograma().getNombre());
-            datos.add(dato);
+            datos.add(dato); 
 
         }
-         System.out.println("datos");        
          return datos;
-    }
+    } 
+     
+     
+     
+     
     
     
 
@@ -172,5 +161,7 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes() {
         return repository.PoasConActividadesPendientes();
     }
+
+   
 
 }

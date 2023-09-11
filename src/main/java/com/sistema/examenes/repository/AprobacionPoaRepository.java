@@ -86,6 +86,19 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
 
-    @Query(value = " SELECT * FROM aprobacion_poa", nativeQuery = true)
-    List<AprobacionPoa> findPoaporUsuario();
+//    @Query(value = " SELECT * FROM aprobacion_poa", nativeQuery = true)
+//    List<AprobacionPoa> findPoaporUsuario();
+    
+    
+     @Query(value = "SELECT  u.id, u.username,per.primer_nombre, ap.id_aprobacionpoa ,per.primer_apellido, p.id_poa,progra.nombre,\n" +
+"                       pro.nombre,pro.id_proyecto,ap.id_usuario,ap.visible,ap.estado, ap.observacion, ap.fecha_aprobacion FROM usuarios u\n" +
+"                       INNER JOIN poa p ON u.id = p.id_responsable\n" +
+"                       INNER JOIN aprobacion_poa  ap ON p.id_poa = ap.id_poa\n" +
+"                       INNER JOIN proyecto pro ON ap.id_proyecto = pro.id_proyecto\n" +
+"                        INNER JOIN persona per ON u.id = per.id_persona\n" +
+"            INNER JOIN programa progra ON pro.id_programa = progra.id_programa\n" +
+"			where  pro.id_proyecto =:id_proyecto", nativeQuery = true)
+            List<AprobacionPoa> findPoaporUsuario(@Param("id_proyecto") Long id_proyecto);          
+            
+    
 }

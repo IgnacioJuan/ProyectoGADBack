@@ -25,6 +25,5 @@ public interface PoaNoAprobadoProjection {
     String getPrimer_apellido();
 
     String getUsername();
-        String getNombrePro();
 
 }
