@@ -1,7 +1,8 @@
 package com.sistema.examenes.controller;
 
-
 import com.sistema.examenes.dto.Eje_DTO;
+import com.sistema.examenes.dto.PeriodoTotalPOA_DTO;
+import com.sistema.examenes.dto.Periodo_DTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
@@ -39,6 +40,7 @@ public class Periodo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Periodo> getById(@PathVariable("id") Long id) {
         try {
@@ -79,7 +81,7 @@ public class Periodo_Controller {
                 a.setPorcentaje(p.getPorcentaje());
                 a.setReferencia(p.getReferencia());
                 a.setActividad(p.getActividad());
-                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -88,8 +90,8 @@ public class Periodo_Controller {
 
     @PostMapping("/solicitud")
     public ResponseEntity<Periodo> solicitud(@RequestParam("value") double value,
-                                             @RequestParam("id_actividad") Long id_actividad,
-                                             @RequestParam("referencia") int referencia) {
+            @RequestParam("id_actividad") Long id_actividad,
+            @RequestParam("referencia") int referencia) {
         Periodo p = new Periodo();
         Actividades a = new Actividades();
         a.setId_actividad(id_actividad);
@@ -100,6 +102,37 @@ public class Periodo_Controller {
         try {
             return new ResponseEntity<>(Service.save(p), HttpStatus.CREATED);
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/porcentajereferencia/{id_poa}")
+    public ResponseEntity<List<Periodo_DTO>> obtenerPorcentajeYReferenciaPorPoa(
+            @PathVariable("id_poa") Long id_poa) {
+        try {
+            List<Periodo_DTO> dtos = Service.obtenerPorcentajeYReferenciaPorPoa(id_poa);
+            if (!dtos.isEmpty()) {
+                return new ResponseEntity<>(dtos, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/totalespoa/{id_poa}")
+    public ResponseEntity<PeriodoTotalPOA_DTO> obtenerTotalesPorPoa(
+            @PathVariable("id_poa") Long idPoa) {
+        try {
+            PeriodoTotalPOA_DTO dto = Service.obtenerTotalesPorPoa(idPoa);
+            if (dto != null) {
+                return new ResponseEntity<>(dto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

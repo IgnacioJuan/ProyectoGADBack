@@ -1,14 +1,10 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Long> {
 
@@ -19,6 +15,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "p.id_poa, " +
                         "prg.nombre AS direccion_departamental, " +
                         "per.primer_nombre || ' ' || per.primer_apellido AS responsable_super_admin, " +
+                        "per.correo, " +
                         "pr.area, " +
                         "pr.fecha_inicio AS fecha_inicio, " +
                         "pr.fecha_fin AS fecha_fin, " +
@@ -32,9 +29,8 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "pr.objetivo AS objetivo_proyecto, " +
                         "ind.nombre AS nombre_indicador, " +
                         "mtp.nombre AS nombre_metapdot, " +
-                        "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "
-                        +
-                        "pr.meta AS meta_proyecto, " +
+                         "pr.meta AS meta_proyecto, " +
+                        "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "+
                         "p.linea_base, " +
                         "p.cobertura, " +
                         "p.localizacion, " +
@@ -65,6 +61,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "p.id_poa, " +
                         "prg.nombre AS direccion_departamental, " +
                         "per.primer_nombre || ' ' || per.primer_apellido AS responsable_super_admin, " +
+                        "per.correo, " +
                         "pr.area, " +
                         "pr.fecha_inicio AS fecha_inicio, " +
                         "pr.fecha_fin AS fecha_fin, " +
@@ -78,9 +75,8 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "pr.objetivo AS objetivo_proyecto, " +
                         "ind.nombre AS nombre_indicador, " +
                         "mtp.nombre AS nombre_metapdot, " +
-                        "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "
-                        +
-                        "pr.meta AS meta_proyecto, " +
+                         "pr.meta AS meta_proyecto, " +
+                        "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "+
                         "p.linea_base, " +
                         "p.cobertura, " +
                         "p.localizacion, " +
@@ -109,9 +105,15 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
         @Query("SELECT a FROM AprobacionPoa a WHERE a.poa.id = :idPoa")
         AprobacionPoa findByPoaId(@Param("idPoa") Long idPoa);
 
-        @Query(value = "SELECT id_aprobacionpoa, estado, observacion\n" +
-                        "FROM  aprobacion_poa\n" +
-                        "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
-        List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
+    /*@Query(value = "SELECT id_aprobacionpoa, estado, observacion\n" +
+            "FROM  aprobacion_poa\n" +
+            "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
+    List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);*/
 
+    @Query(value = "SELECT ap.observacion, ap.estado, ap.id_aprobacionpoa, p.primer_nombre, p.primer_apellido, ap.fecha_aprobacion \n" +
+            "FROM public.aprobacion_poa ap\n" +
+            "INNER JOIN public.usuarios u ON ap.id_usuario = u.id\n" +
+            "INNER JOIN public.persona p ON u.persona_id_persona = p.id_persona\n" +
+            "WHERE ap.id_poa = 1 AND ap.visible= true AND u.visible=true AND p.visible=true;\n", nativeQuery = true)
+    List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
 }

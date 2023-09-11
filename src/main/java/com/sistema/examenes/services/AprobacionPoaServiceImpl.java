@@ -41,9 +41,9 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[1],
                     (String) resultado[2],
                     (String) resultado[3],
-                    (Date) resultado[4],
+                    (String) resultado[4],
                     (Date) resultado[5],
-                    (String) resultado[6],
+                    (Date) resultado[6],
                     (String) resultado[7],
                     (String) resultado[8],
                     (String) resultado[9],
@@ -55,13 +55,14 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[15],
                     (String) resultado[16],
                     (String) resultado[17],
-                    (Double) resultado[18],
-                    (String) resultado[19],
+                    (String) resultado[18],
+                    (Double) resultado[19],
                     (String) resultado[20],
                     (String) resultado[21],
                     (String) resultado[22],
+                    (String) resultado[22],
                     (String) resultado[23],
-                    (String) resultado[24]);
+                    (String) resultado[25]);
             aprobaciones.add(aprobPoaDTO);
         }
         return aprobaciones;
@@ -74,13 +75,13 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
 
         for (Object[] resultado : resultados) {
             AprobPoa_DTO aprobPoaDTO = new AprobPoa_DTO(
-                      ((BigInteger) resultado[0]).longValue(),
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (String) resultado[3],
-                    (Date) resultado[4],
+                    (String) resultado[4],
                     (Date) resultado[5],
-                    (String) resultado[6],
+                    (Date) resultado[6],
                     (String) resultado[7],
                     (String) resultado[8],
                     (String) resultado[9],
@@ -92,13 +93,14 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[15],
                     (String) resultado[16],
                     (String) resultado[17],
-                    (Double) resultado[18],
-                    (String) resultado[19],
+                    (String) resultado[18],
+                    (Double) resultado[19],
                     (String) resultado[20],
                     (String) resultado[21],
                     (String) resultado[22],
+                    (String) resultado[22],
                     (String) resultado[23],
-                    (String) resultado[24]);
+                    (String) resultado[25]);
             aprobaciones = aprobPoaDTO;
         }
         return aprobaciones;
@@ -114,12 +116,15 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
         List<AprobacionPoa_DTO> aprobPoa = new ArrayList<>();
         for (Object[] resultado : resultados) {
             AprobacionPoa_DTO obj = new AprobacionPoa_DTO();
-            obj.setId_aprobacionpoa(((BigInteger) resultado[0]).longValue());
+            obj.setObservacion((String) resultado[0]);
             obj.setEstado((String) resultado[1]);
-            obj.setObservacion((String) resultado[2]);
-            aprobPoa.add(obj);
+            obj.setId_aprobacionpoa(((BigInteger) resultado[2]).longValue());
+            obj.setPrimer_nombre((String) resultado[3]);
+            obj.setPrimer_apellido((String) resultado[4]);
+            obj.setFecha_aprobacion((Date) resultado[5]);
+            aprobPoa .add(obj);
         }
-        return aprobPoa;
+        return aprobPoa ;
     }
 
 }

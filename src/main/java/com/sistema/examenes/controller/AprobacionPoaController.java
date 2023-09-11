@@ -1,12 +1,10 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
-import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.AprobacionPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
-import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionPoaService;
