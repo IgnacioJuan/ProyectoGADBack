@@ -79,5 +79,10 @@ public class Actividades {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividad")
     private Set<AsignacionesUsuarios> rausurios = new HashSet<>();
 
+    //ManytoONe Poa
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_poa")
+    private Poa poa;
+
 }
   
