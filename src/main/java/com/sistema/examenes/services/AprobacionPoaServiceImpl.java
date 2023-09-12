@@ -31,8 +31,31 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
     }
 
     @Override
-    public List<AprobPoa_DTO> obtenerAprobacionesPoa() {
-        List<Object[]> resultados = AprobacionPoaRepository.obtenerAprobacionesPoa();
+    public AprobacionPoa obtenerAprobacionPorIdPoa(Long id_poa) {
+        return AprobacionPoaRepository.findByPoaId(id_poa);
+    }
+
+    public List<AprobacionPoa_DTO> listarAprobacionPoaPorIdPoa(Long idPoa) {
+        List<Object[]> resultados = AprobacionPoaRepository.listarAprobacionPoaPorIdPoa(idPoa);
+        List<AprobacionPoa_DTO> aprobPoa = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            AprobacionPoa_DTO obj = new AprobacionPoa_DTO();
+            obj.setObservacion((String) resultado[0]);
+            obj.setEstado((String) resultado[1]);
+            obj.setId_aprobacionpoa(((BigInteger) resultado[2]).longValue());
+            obj.setPrimer_nombre((String) resultado[3]);
+            obj.setPrimer_apellido((String) resultado[4]);
+            obj.setFecha_aprobacion((Date) resultado[5]);
+            aprobPoa .add(obj);
+        }
+        return aprobPoa ;
+    }
+
+
+     /******* MODULO APROBACION POA ********/
+  @Override
+    public List<AprobPoa_DTO> obtenerPoasCompletos() {
+        List<Object[]> resultados = AprobacionPoaRepository.obtenerPoasCompletos();
         List<AprobPoa_DTO> aprobaciones = new ArrayList<>();
 
         for (Object[] resultado : resultados) {
@@ -60,8 +83,8 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[20],
                     (String) resultado[21],
                     (String) resultado[22],
-                    (String) resultado[22],
                     (String) resultado[23],
+                    (String) resultado[24],
                     (String) resultado[25]);
             aprobaciones.add(aprobPoaDTO);
         }
@@ -69,13 +92,13 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
     }
 
     @Override
-    public AprobPoa_DTO obtenerAprobacionPoaPorId(Long idPoa) {
-        List<Object[]> resultados = AprobacionPoaRepository.obtenerAprobacionPoaPorId(idPoa);
+    public AprobPoa_DTO obtenerPoaCompletoPorId(Long idPoa) {
+        List<Object[]> resultados = AprobacionPoaRepository.obtenerPoaCompletoPorId(idPoa);
         AprobPoa_DTO aprobaciones = new AprobPoa_DTO();
 
         for (Object[] resultado : resultados) {
             AprobPoa_DTO aprobPoaDTO = new AprobPoa_DTO(
-                    ((BigInteger) resultado[0]).longValue(),
+                  ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (String) resultado[2],
                     (String) resultado[3],
@@ -98,33 +121,11 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[20],
                     (String) resultado[21],
                     (String) resultado[22],
-                    (String) resultado[22],
                     (String) resultado[23],
+                    (String) resultado[24],
                     (String) resultado[25]);
             aprobaciones = aprobPoaDTO;
         }
         return aprobaciones;
     }
-
-    @Override
-    public AprobacionPoa obtenerAprobacionPorIdPoa(Long id_poa) {
-        return AprobacionPoaRepository.findByPoaId(id_poa);
-    }
-
-    public List<AprobacionPoa_DTO> listarAprobacionPoaPorIdPoa(Long idPoa) {
-        List<Object[]> resultados = AprobacionPoaRepository.listarAprobacionPoaPorIdPoa(idPoa);
-        List<AprobacionPoa_DTO> aprobPoa = new ArrayList<>();
-        for (Object[] resultado : resultados) {
-            AprobacionPoa_DTO obj = new AprobacionPoa_DTO();
-            obj.setObservacion((String) resultado[0]);
-            obj.setEstado((String) resultado[1]);
-            obj.setId_aprobacionpoa(((BigInteger) resultado[2]).longValue());
-            obj.setPrimer_nombre((String) resultado[3]);
-            obj.setPrimer_apellido((String) resultado[4]);
-            obj.setFecha_aprobacion((Date) resultado[5]);
-            aprobPoa .add(obj);
-        }
-        return aprobPoa ;
-    }
-
 }
