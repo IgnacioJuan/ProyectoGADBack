@@ -83,4 +83,9 @@ public class Proyecto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
     @JsonIgnore
     private Set<AprobacionPoa> lista_aprobacionesPoa  = new HashSet<>();
+
+    //OneToMany Poa
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
+    @JsonIgnore
+    private Set<Poa> lista_poa  = new HashSet<>();
 }
