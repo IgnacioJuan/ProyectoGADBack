@@ -40,10 +40,9 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         return repository.findAllById(ids);
     }
 
-
     @Override
-    public List<ProjectsActivesDto> listActiveProjects() {
-        List<Object[]> results = repository.listActiveProjects();
+    public List<ProjectsActivesDto> listActiveProjects(Long id_usuario) {
+        List<Object[]> results = repository.listActiveProjects(id_usuario);
         List<ProjectsActivesDto> projectsActive = new ArrayList<>();
 
         for(Object[] result : results){
@@ -58,6 +57,25 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
 
         return projectsActive;
     }
+
+
+//    @Override
+//    public List<ProjectsActivesDto> listActiveProjects(Long id_usuario
+//        List<Object[]> results = repository
+//        List<ProjectsActivesDto> projectsActive = new ArrayList<>();
+//
+//        for(Object[] result : results){
+//            ProjectsActivesDto project = new ProjectsActivesDto(
+//                    ((BigInteger) result[0]).longValue(),
+//                    (String) result[1],
+//                    (String) result[2],
+//                    (String) result[3]
+//            );
+//            projectsActive.add(project);
+//        }
+//
+//        return projectsActive;
+//    }
 
     @Override
     public List<ProjectByIdDto> ProjectById(Long id_proyecto) {

@@ -11,4 +11,6 @@ public interface SolicitudPresupuesto_Service extends GenericService<SolicitudPr
 
     public List<SolicitudPresupuesto> listarSolicitudPresupuesto();
     public List<SolicitudPresupuesto_DTO> listarPoasPorResponsableEstado(Long idResponsable, String estado);
+    public List<SolicitudPresupuesto> listarSolicitudPresupuestoSuperAdmin(Long idSuperAdmin);
+
 }

@@ -1,16 +1,14 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.*;
-import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
-import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
+import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
-import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
-import com.sistema.examenes.projection.PoaporUsuarioProjection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
+import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,16 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
     @Autowired
     private PoaRepository repository;
+    
+    @Autowired
+    private AprobacionPoaRepository repositoryAP;
+
+    public Poa_ServiceImpl(PoaRepository repository, AprobacionPoaRepository repositoryAP) {
+        this.repository = repository;
+        this.repositoryAP = repositoryAP;
+    }
+
+ 
 
     @Override
     public CrudRepository<Poa, Long> getDao() {
@@ -47,14 +55,11 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado) {
         return repository.listarPoadelProyectoconEstado(id_proyecto, estado);
     }
-    
-     
+
     @Override
     public List<Poa> findByIds(List<Long> ids) {
         return repository.findAllById(ids);
     }
-    
-    
 
     @Override
     public List<Poa_DTO> listarPoasDeModelo() {
@@ -87,9 +92,9 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dto.setId_poa(projection.getId_poa());
             dto.setFecha_inicio(projection.getFecha_inicio());
             dto.setFecha_fin(projection.getFecha_fin());
-            dto.setLocalizacion(projection.getLocalizacion());
-            dto.setBarrio(projection.getBarrio());
-            dto.setComunidad(projection.getComunidad());
+            dto.setPrimer_nombre(projection.getPrimer_nombre());
+            dto.setPrimer_apellido(projection.getPrimer_apellido());
+            dto.setFecha_aprobacion(projection.getFecha_aprobacion());
             dto.setEstado(projection.getEstado());
             dto.setObservacion(projection.getObservacion());
             dto.setNombre(projection.getNombre());
@@ -98,27 +103,32 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
         return dtos;
     }
-    
-    
-    @Override
-    public List<PoaporUsuarioDTO> listarPoaporUsuarios() {
-        List<PoaporUsuarioProjection> poaporUsuario = repository.findPoaporUsuario();
+  
+     public List<PoaporUsuarioDTO> listarPoaporUsuarios(Long id_proyecto) {
+        List<AprobacionPoa> poaporUsuario = repositoryAP.findPoaporUsuario(id_proyecto);
         List<PoaporUsuarioDTO> datos = new ArrayList<>();
 
-        for (PoaporUsuarioProjection projection : poaporUsuario) {
+        for (AprobacionPoa projection : poaporUsuario) {
             PoaporUsuarioDTO dato = new PoaporUsuarioDTO();
-            dato.setId(projection.getId());
-            dato.setLocalizacion(projection.getLocalizacion());
-            dato.setBarrio(projection.getBarrio());
+            dato.setPrimer_nombre(projection.getUsuario().getPersona().getPrimer_nombre());
+            dato.setPrimer_apellido(projection.getUsuario().getPersona().getPrimer_apellido());
+            dato.setCedula(projection.getUsuario().getPersona().getCedula());
             dato.setEstado(projection.getEstado());
-            dato.setNombre(projection.getNombre());
-            dato.setUsername(projection.getUsername());
-            datos.add(dato);   
+            dato.setNombre(projection.getProyecto().getNombre());
+            dato.setUsername(projection.getUsuario().getUsername());
+            dato.setNombrepro(projection.getProyecto().getPrograma().getNombre());
+            datos.add(dato); 
+
         }
-        System.out.println(datos.toString());
-        return datos;
-    }
+         return datos;
+    } 
+     
+     
+     
+     
     
+    
+
     public List<AprobPoa_DTO> listarPoasparaAprobacion() {
         return null;
     }
@@ -159,5 +169,6 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
 
 
 
+   
 
 }

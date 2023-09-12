@@ -24,7 +24,7 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true",nativeQuery = true)
     public List<Archivo_s> listararchivouser(String username);
 
-    @Query(value = "SELECT * FROM archivo WHERE visible = true AND  id_actividad=:idActividad", nativeQuery = true)
+    @Query(value = "SELECT * FROM archivo WHERE visible = true  AND  estado = 'PENDIENTE' AND  id_actividad=:idActividad", nativeQuery = true)
     public List<Archivo_s> listararchivoActividad(Long idActividad);
 
     /*@Query(value = "SELECT u.id as idper, per.primer_nombre || ' ' || per.primer_apellido as resp, COALESCE(per.correo, 'Sin correo') AS correo,\n" +
@@ -39,7 +39,20 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
             "WHERE mo.id_modelo = (SELECT MAX(id_modelo) FROM modelo) GROUP BY idper, resp, correo, archiv, activid, ini, finish, enlac;",nativeQuery = true)
     List<ArchivoProjection> listararchi();*/
 
-     @Query(value = "SELECT * FROM archivo WHERE visible = true AND estado = :estado ORDER BY fecha DESC", nativeQuery = true)
-       public List<Archivo_s> listarArchivoPorEstadoOrdenadoPorFechaDesc(@Param("estado") String estado);
+     @Query(value = "SELECT ar.* " +
+       "FROM archivo ar " +
+       "JOIN actividades ac ON ar.id_actividad = ac.id_actividad " +
+       "JOIN aprobacion_actividad aa ON ac.id_actividad = aa.id_actividad " +
+       "JOIN poa po ON aa.id_poa = po.id_poa " +
+       "JOIN aprobacion_poa ap ON po.id_poa = ap.id_poa " +
+       "JOIN proyecto p ON ap.id_proyecto = p.id_proyecto " +
+       "JOIN modelopoa mp ON p.id_modelo_poa = mp.id_modelo_poa " +
+       "WHERE mp.estado = 'ACTIVO' " +
+       "AND ar.visible = true " +
+       "AND ar.estado = :estado " +
+       "AND ac.id_responsable IN (SELECT id FROM usuarios WHERE username = :username) " +
+       "ORDER BY ar.fecha DESC", nativeQuery = true)
+public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(
+    @Param("estado") String estado, @Param("username") String username);
     
 }

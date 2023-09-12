@@ -98,23 +98,19 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.nombre AS nombre_actividad," +
                         "    a.descripcion," +
                         "    a.presupuesto_referencial," +
-                        "    a.codificado," +
-                        "    a.devengado," +
                         "    a.recursos_propios," +
-                        "    a.estado," +
-                        "    per.primer_nombre || ' ' || per.primer_apellido AS responsable " +
+                        "    COALESCE(pex.valor, 0) AS presupuesto_externo," + 
+                        "    a.estado " +
                         "FROM " +
-                        "    usuarios u " +
-                        "JOIN " +
-                        "    actividades a ON u.id = a.id_responsable " +
+                        "    actividades a " +
+                        "LEFT JOIN " + 
+                        "    presupuesto_externo pex ON a.id_actividad = pex.id_actividad " +
                         "JOIN " +
                         "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
                         "JOIN " +
                         "    poa p ON apac.id_poa = p.id_poa " +
-                        "JOIN " +
-                        "    persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE " +
-                        "    a.visible = true AND u.visible = true " +
+                        "    a.visible = true " +
                         "    AND p.id_poa = :id_Poa " +
                         "    AND a.estado = 'PENDIENTE' " +
                         "ORDER BY " +

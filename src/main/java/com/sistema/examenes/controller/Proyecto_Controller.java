@@ -113,6 +113,7 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
                 a.setPrograma(p.getPrograma());
                 a.setIndicador(p.getIndicador());
                 a.setCompetencia(p.getCompetencia());
+                a.setDescripcion(p.getDescripcion());
                 a.setFecha_inicio(p.getFecha_inicio());
                 a.setFecha_fin(p.getFecha_fin());
                 a.setVisible(p.isVisible());
@@ -133,8 +134,8 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
     }
 
     @GetMapping("/listsActiveProjects")
-    public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects() {
-        List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects();
+    public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects( @RequestParam("id_usuario") Long id_usuario) {
+        List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects(id_usuario);
         return ResponseEntity.ok(projectsActivesDtoList);
     }
 

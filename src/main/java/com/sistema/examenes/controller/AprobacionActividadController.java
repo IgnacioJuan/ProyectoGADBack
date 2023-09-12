@@ -4,8 +4,10 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.AprobacionActividad;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.auth.Usuario;
+import com.sistema.examenes.projection.AprobacionporActividadProjection;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionActividadService;
+import com.sistema.examenes.services.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +25,18 @@ public class AprobacionActividadController {
     @Autowired
     private ActividadesService actividadesService;
     //post crear
-
+    @Autowired
+    private IEmailService emailService;
     @PostMapping("/crear")
     public ResponseEntity<AprobacionActividad> crear(@RequestBody AprobacionActividad a){
         try {
             a.setVisible(true);
+            AprobacionActividad ap= AprobacionActividadService.save(a);
             actividadesService.actualizarEstadoPorAprobacion(a.getActividad().getId_actividad(), a.getEstado());
-            return new ResponseEntity<>(AprobacionActividadService.save(a), HttpStatus.CREATED);
+            if(ap.getUsuario().getPersona().getCorreo() != null) {
+                emailService.sendEmail(new String[]{ap.getUsuario().getPersona().getCorreo()}, ap.getEstado(), ap.getObservacion());
+            }
+            return new ResponseEntity<>(ap, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -105,6 +112,15 @@ public class AprobacionActividadController {
         try {
             a.setVisible(true);
             return new ResponseEntity<>(AprobacionActividadService.save(a), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarAprobacionesporActividad/{id_actividad}")
+    public ResponseEntity<List<AprobacionporActividadProjection>> listarAprobacionesporActividad(@PathVariable("id_actividad") Long id_actividad){
+        try {
+            return new ResponseEntity<>(AprobacionActividadService.listarAprobacionesporActividad(id_actividad), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

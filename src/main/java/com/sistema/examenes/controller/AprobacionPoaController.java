@@ -1,12 +1,10 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.AprobPoa_DTO;
-import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.AprobacionPoa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
-import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionPoaService;
@@ -97,59 +95,6 @@ public class AprobacionPoaController {
         }
     }
 
-    @GetMapping("/listarAprobaciones")
-    public ResponseEntity<List<AprobPoa_DTO>> obtenerAprobacionesPoa() {
-        try {
-            return new ResponseEntity<>(AprobacionPoaService.obtenerAprobacionesPoa(), HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/obtenerAprobacionPorId/{idPoa}")
-    public ResponseEntity<AprobPoa_DTO> obtenerAprobacionPoaPorId(@PathVariable Long idPoa) {
-        try {
-            AprobPoa_DTO aprobPoaDTO = AprobacionPoaService.obtenerAprobacionPoaPorId(idPoa);
-            if (aprobPoaDTO != null) {
-                return new ResponseEntity<>(aprobPoaDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @PutMapping("/actualizarestadoaprob/{id_poa}")
-    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id_poa, @RequestBody AprobacionPoa p) {
-
-        try {
-            //Obtengo mi poa de la base
-            Poa poa = poa_Service.obtenerPoaId(id_poa); 
-            
-
-            //Obtengo actividades de la base
-            AprobacionPoa a = AprobacionPoaService.obtenerAprobacionPorIdPoa(id_poa);
-            
-            if (a == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else {
-                a.setEstado(p.getEstado());
-                a.setObservacion(p.getObservacion());
-
-                //Seteo el nuevo estado del poa con el estado de la aprobacion
-                poa.setEstado(p.getEstado());
-                poa_Service.save(poa);
-                actividadesService.actualizarEstadoPorIdPoa(id_poa,p.getEstado());
-                return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PostMapping("/solicitarAprobacion")
     public ResponseEntity<AprobacionPoa> solicitarAprobacion(@RequestParam("idPoa") Long idPoa, @RequestParam("idUsuario") Long idUsuario, @RequestParam("idProyecto") Long idProyecto) {
         AprobacionPoa aprobacionPoa = new AprobacionPoa();
@@ -180,7 +125,58 @@ public class AprobacionPoaController {
     }
 
 
+   /******* MODULO APROBACION POA ********/
 
+    @GetMapping("/obtenerpoasaprb")
+    public ResponseEntity<List<AprobPoa_DTO>> obtenerPoasCompletos() {
+        try {
+            return new ResponseEntity<>(AprobacionPoaService.obtenerPoasCompletos(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/obtenerpoaprb/{idPoa}")
+    public ResponseEntity<AprobPoa_DTO> obtenerAprobacionPoaPorId(@PathVariable Long idPoa) {
+        try {
+            AprobPoa_DTO aprobPoaDTO = AprobacionPoaService.obtenerPoaCompletoPorId(idPoa);
+            if (aprobPoaDTO != null) {
+                return new ResponseEntity<>(aprobPoaDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/actualizarestadoaprob/{id_poa}")
+    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id_poa, @RequestBody AprobacionPoa p) {
+
+        try {
+            //Obtengo mi poa de la base
+            Poa poa = poa_Service.obtenerPoaId(id_poa); 
+
+            AprobacionPoa a = AprobacionPoaService.obtenerAprobacionPorIdPoa(id_poa);
+            
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setEstado(p.getEstado());
+                a.setObservacion(p.getObservacion());
+
+                //Seteo el nuevo estado del poa con el estado de la aprobacion
+                poa.setEstado(p.getEstado());
+                poa_Service.save(poa);
+                actividadesService.actualizarEstadoPorIdPoa(id_poa,p.getEstado());
+                return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

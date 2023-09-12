@@ -1,6 +1,7 @@
 package com.sistema.examenes.entity;
 
 import com.sistema.examenes.entity.auth.Usuario;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 

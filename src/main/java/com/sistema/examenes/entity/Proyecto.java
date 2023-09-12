@@ -28,6 +28,9 @@ public class Proyecto implements Serializable {
     private String objetivo;
     @Column(name = "meta", length = 2000)
     private String meta;
+    @Column(name = "descripcion", length = 2000)
+    private String descripcion;
+    
     private double porcentaje_alcance;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -80,4 +83,9 @@ public class Proyecto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
     @JsonIgnore
     private Set<AprobacionPoa> lista_aprobacionesPoa  = new HashSet<>();
+
+    //OneToMany Poa
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")
+    @JsonIgnore
+    private Set<Poa> lista_poa  = new HashSet<>();
 }

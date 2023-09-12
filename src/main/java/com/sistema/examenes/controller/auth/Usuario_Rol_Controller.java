@@ -28,6 +28,15 @@ public class Usuario_Rol_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listarUsuariosResponsables")
+    public ResponseEntity<List<UsuarioRol>> listarUsuariosResponsables() {
+        try {
+            return new ResponseEntity<>(usuarioService.listarUsuariosResponsables(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PutMapping("/actualizar/{usuarioRolId}")
     public ResponseEntity<UsuarioRol> actualizarRol(@RequestBody UsuarioRol usuarioRol, @PathVariable Long usuarioRolId) {
         try {
