@@ -36,5 +36,4 @@ public class AprobPoa_DTO {
     private String comunidad;
     private String tipo_periodo;
     private String cargo; 
-    //private Date fecha_emision;    
 }

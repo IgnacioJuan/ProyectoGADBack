@@ -99,12 +99,11 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.descripcion," +
                         "    a.presupuesto_referencial," +
                         "    a.recursos_propios," +
-                        "    COALESCE(pex.valor, 0) AS presupuesto_externo," + // Usamos COALESCE para manejar valores
-                                                                               // NULL
+                        "    COALESCE(pex.valor, 0) AS presupuesto_externo," + 
                         "    a.estado " +
                         "FROM " +
                         "    actividades a " +
-                        "LEFT JOIN " + // Cambiamos JOIN a LEFT JOIN
+                        "LEFT JOIN " + 
                         "    presupuesto_externo pex ON a.id_actividad = pex.id_actividad " +
                         "JOIN " +
                         "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
