@@ -38,7 +38,9 @@ public class PresupuestoExternoController {
                     Actividades actividadCompleta = actividadOptional.get();
                     // Actualizar solo el campo "codificado"
                     double nuevoCodificado = actividadCompleta.getCodificado() + presupuestoExterno.getValor();
+                    double nuevoPR = actividadCompleta.getPresupuesto_referencial() + presupuestoExterno.getValor();
                     actividadCompleta.setCodificado(nuevoCodificado);
+                    actividadCompleta.setPresupuesto_referencial(nuevoPR);
                     actividadesService.save(actividadCompleta); // Guardar la actividad actualizada
                 }
             }
