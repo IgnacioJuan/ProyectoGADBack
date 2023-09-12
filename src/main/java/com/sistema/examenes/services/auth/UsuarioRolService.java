@@ -11,4 +11,6 @@ public interface UsuarioRolService extends GenericService<UsuarioRol, Long> {
     public UsuarioRol findByUsuario_UsuarioId(Long usuarioId);
 
     public List<UsuarioRol> listarUsuariosResponsables();
+    public List<UsuarioRol> listarUsuariosSuperAdmin();
+
 }
