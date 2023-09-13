@@ -10,12 +10,11 @@ import java.util.List;
 public interface AprobacionPoaService extends GenericService<AprobacionPoa, Long> {
 
     public List<AprobacionPoa> listarAprobacionPoa();
-
-    List<AprobPoa_DTO> obtenerAprobacionesPoa();
-    
-    AprobPoa_DTO obtenerAprobacionPoaPorId(Long idPoa);
-
     AprobacionPoa obtenerAprobacionPorIdPoa(Long idPoa);
-
     List<AprobacionPoa_DTO> listarAprobacionPoaPorIdPoa(Long idPoa);
+
+         /******* MODULO APROBACION POA ********/
+    List<AprobPoa_DTO> obtenerPoasCompletos();
+    AprobPoa_DTO obtenerPoaCompletoPorId(Long idPoa);
+
 }

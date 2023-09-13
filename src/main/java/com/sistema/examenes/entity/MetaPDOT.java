@@ -18,7 +18,7 @@ public class MetaPDOT implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_meta_pdot")
     private Long id_meta_pdot;
-    @Column(name = "nombre", length = 200)
+    @Column(name = "nombre", length = 1000)
     private String nombre;
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
