@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
@@ -194,4 +195,9 @@ public class ActividadesController {
         return actividadesService.ActividadesPendientesPorPoa(id_Poa);
     }
 
+    @GetMapping("/listarPeriodosPorActividad/{actividadId}")
+    public ResponseEntity<List<Periodo>> listarPeriodosPorActividad(@PathVariable Long actividadId) {
+        List<Periodo> periodos = actividadesService.listarPeriodosPorActividad(actividadId);
+        return ResponseEntity.ok(periodos);
+    }
 }
