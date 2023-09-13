@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.dto.DetalleActividadDTO;
 import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -232,4 +233,9 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "SET estado = :estado " +
                         "WHERE id_actividad = :id_actividad", nativeQuery = true)
         void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
+
+        @Query(value = "SELECT id_periodo, porcentaje, referencia, visible FROM periodo p WHERE p.id_actividad = :actividadId", nativeQuery = true)
+        List<Object[]> listarPeriodosPorActividad(@Param("actividadId") Long actividadId);
+
+
 }
