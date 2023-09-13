@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.AprobacionActividad;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.AprobacionporActividadProjection;
@@ -37,6 +38,16 @@ public class AprobacionActividadController {
                 emailService.sendEmail(new String[]{ap.getUsuario().getPersona().getCorreo()}, ap.getEstado(), ap.getObservacion());
             }
             return new ResponseEntity<>(ap, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/crearAprobacion")
+    public ResponseEntity<AprobacionActividad> crearActividad(@RequestBody AprobacionActividad r) {
+        try {
+            r.setVisible(true);
+            return new ResponseEntity<>(AprobacionActividadService.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

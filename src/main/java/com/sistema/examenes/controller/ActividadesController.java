@@ -94,6 +94,7 @@ public class ActividadesController {
                 a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setEstado(actividades.getEstado());
                 a.setUsuario(actividades.getUsuario());
+                a.setPoa(actividades.getPoa());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
