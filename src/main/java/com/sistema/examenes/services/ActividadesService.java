@@ -39,7 +39,5 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
 
     List<UsuarioActividadesDTO>listarUsuariosActividadID(Long actividadId);
-
-    List<Periodo>listarPeriodosPorActividad(Long actividadId);
-
+    
 }

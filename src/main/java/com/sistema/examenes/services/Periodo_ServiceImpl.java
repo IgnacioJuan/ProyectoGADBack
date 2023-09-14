@@ -12,8 +12,10 @@ import com.sistema.examenes.repository.PeriodoRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +64,18 @@ public class Periodo_ServiceImpl extends GenericServiceImpl<Periodo, Long> imple
             periodoTotalPOA_DTO = periodosTotalPOA_DTO;
         }
         return periodoTotalPOA_DTO;
+    }
+
+    @Override
+    public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
+        return repository.listarPeriodosPorActividad(actividadId);
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<Void> eliminarPeriodosPorActividad(Long actividadId) {
+        repository.eliminarPorActividad(actividadId);
+        return ResponseEntity.noContent().build();
     }
 
 }
