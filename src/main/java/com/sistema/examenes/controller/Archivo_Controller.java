@@ -208,9 +208,18 @@ public class Archivo_Controller {
                 meNsaje = "No se encontró el archivo con id " + archivoId;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
             }
+            double oldValue = archivo.getValor();
             archivo.setDescripcion(descripcion);
             archivo.setValor(valor);
             archivoservis.save(archivo);
+
+            // Subtract the oldValue from actividad's value and add the new valor
+            double actividadValor = actividad.getDevengado()
+                    ;
+            actividadValor += valor - oldValue;
+            actividad.setDevengado(actividadValor);
+            actiservis.save(actividad);
+
             meNsaje = "Se actualizó correctamente";
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje));
         } catch (Exception e) {
@@ -218,6 +227,7 @@ public class Archivo_Controller {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
     }
+
 
 
 
