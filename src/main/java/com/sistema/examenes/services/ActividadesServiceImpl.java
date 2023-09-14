@@ -68,7 +68,6 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
-
     public List<UsuarioActividadesDTO> listarUsuariosActividadID(Long actividadId) {
         List<Object[]> resultados = actividadesRepository.listarUsuariosActividadID(actividadId);
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
@@ -84,7 +83,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return acts;
     }
 
-    @Override
+   /* @Override
     public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
         List<Object[]> resultados = actividadesRepository.listarPeriodosPorActividad(actividadId);
         List<Periodo> periodos = new ArrayList<>();
@@ -98,7 +97,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
             periodos.add(periodo);
         }
         return periodos;
-    }
+    }*/
     public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
         List<ActividadDTO> acts = new ArrayList<>();
