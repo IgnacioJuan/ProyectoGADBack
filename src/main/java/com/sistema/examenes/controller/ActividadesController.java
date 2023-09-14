@@ -35,8 +35,6 @@ public class ActividadesController {
         }
     }
 
-    // get listar
-
     @GetMapping("/listar")
     public ResponseEntity<List<Actividades>> listar() {
         try {
@@ -45,8 +43,7 @@ public class ActividadesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
+    
     //listar actividades que tengan archivos rechazados
     @GetMapping("/listarActEviRechazados")
     public ResponseEntity<List<Actividades>> obtenerListarechazado() {
@@ -194,11 +191,5 @@ public class ActividadesController {
     @GetMapping("/ActividadesPendientesPorPoa/{id_Poa}")
     public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(@PathVariable Long id_Poa) {
         return actividadesService.ActividadesPendientesPorPoa(id_Poa);
-    }
-
-    @GetMapping("/listarPeriodosPorActividad/{actividadId}")
-    public ResponseEntity<List<Periodo>> listarPeriodosPorActividad(@PathVariable Long actividadId) {
-        List<Periodo> periodos = actividadesService.listarPeriodosPorActividad(actividadId);
-        return ResponseEntity.ok(periodos);
     }
 }

@@ -211,8 +211,4 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "WHERE id_actividad = :id_actividad", nativeQuery = true)
         void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
 
-        @Query(value = "SELECT id_periodo, porcentaje, referencia, visible FROM periodo p WHERE p.id_actividad = :actividadId", nativeQuery = true)
-        List<Object[]> listarPeriodosPorActividad(@Param("actividadId") Long actividadId);
-
-
 }
