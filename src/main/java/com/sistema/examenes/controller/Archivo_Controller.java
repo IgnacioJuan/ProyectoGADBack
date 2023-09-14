@@ -183,14 +183,29 @@ public class Archivo_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                // Get the associated actividad
+                Actividades actividad = as.getActividad();
+
+                // Update the valor of actividad
+                double valor = as.getValor();
+                double actividadValor = actividad.getDevengado();
+                actividadValor += valor;
+                actividad.setDevengado(actividadValor);
+
+                // Mark the Archivo_s as not visible
                 as.setVisible(false);
-                return new ResponseEntity<>(archivoservis.save(as), HttpStatus.CREATED);
+
+                // Save the changes to both Archivo_s and Actividades
+                archivoservis.save(as);
+                actiservis.save(actividad);
+
+                return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
         }
     }
+
     @PutMapping("/editar/{archivoId}")
     public ResponseEntity<Archivosmensajes> editUpload(@PathVariable Long archivoId,
                                                        @RequestParam("descripcion") String descripcion,
