@@ -41,7 +41,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             List<AprobacionPoa> findPoaporUsuario(@Param("id_proyecto") Long id_proyecto);          
 
             
-            /******* MODULO APROBACION POA ********/
+            /******* MODULO APROBACION POA c.c********/
     @Query(value = "SELECT " +
                         "p.id_poa, " +
                         "prg.nombre AS direccion_departamental, " +
@@ -62,6 +62,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "mtp.nombre AS nombre_metapdot, " +
                          "pr.meta AS meta_proyecto, " +
                         "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "+
+                        "p.meta_planificada, " +
                         "p.linea_base, " +
                         "p.cobertura, " +
                         "p.localizacion, " +
@@ -105,6 +106,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "mtp.nombre AS nombre_metapdot, " +
                          "pr.meta AS meta_proyecto, " +
                         "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "+
+                        "p.meta_planificada, " +
                         "p.linea_base, " +
                         "p.cobertura, " +
                         "p.localizacion, " +
