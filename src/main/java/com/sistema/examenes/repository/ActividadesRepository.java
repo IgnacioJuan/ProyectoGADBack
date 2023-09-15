@@ -124,18 +124,6 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "UPDATE actividades SET estado = :estado WHERE id_actividad IN (SELECT aa.id_actividad FROM aprobacion_actividad aa WHERE aa.id_poa = :poaId)", nativeQuery = true)
         void actualizarEstadoPorIdPoa(@Param("poaId") Long poaId, @Param("estado") String estado);
 
-        /*
-         * @Modifying
-         * 
-         * @Transactional
-         * 
-         * @Query(value =
-         * "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad"
-         * , nativeQuery = true)
-         * void actualizarCodificado(@Param("idActividad") Long
-         * idActividad, @Param("valor") double valor);
-         */
-
         @Query(value = "SELECT a.id_actividad, a.nombre, a.descripcion, a.presupuesto_referencial, a.recursos_propios, a.codificado, a.devengado, a.estado "
                         +
                         "FROM actividades a " +
@@ -190,17 +178,6 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "WHERE a.id_actividad = :actividadId", nativeQuery = true)
         List<Object[]> listarUsuariosActividadID(@Param("actividadId") Long actividadId);
 
-        /*
-         * @Modifying
-         * 
-         * @Transactional
-         * 
-         * @Query(value =
-         * "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad"
-         * , nativeQuery = true)
-         * void actualizarCodificado(@Param("idActividad") Long
-         * idActividad, @Param("valor") double valor);
-         */
         // Query para obtener las actividades en estado pendiente
         @Query(value = "SELECT " +
                         "    a.id_actividad," +
@@ -233,9 +210,5 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "SET estado = :estado " +
                         "WHERE id_actividad = :id_actividad", nativeQuery = true)
         void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
-
-        @Query(value = "SELECT id_periodo, porcentaje, referencia, visible FROM periodo p WHERE p.id_actividad = :actividadId", nativeQuery = true)
-        List<Object[]> listarPeriodosPorActividad(@Param("actividadId") Long actividadId);
-
 
 }

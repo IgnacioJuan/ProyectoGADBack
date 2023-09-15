@@ -49,7 +49,7 @@ public class Archivo_Controller {
                                                    @RequestParam("id_evidencia") Long id_actividad) {
         String meNsaje = "";
         try {
-           Actividades actividad = actiservis.findById(id_actividad);
+            Actividades actividad = actiservis.findById(id_actividad);
             if (actividad == null) {
                 meNsaje = "No se encontró la evidencia con id " + id_actividad;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
@@ -62,7 +62,14 @@ public class Archivo_Controller {
             String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
             String url = ServletUriComponentsBuilder.fromHttpUrl(host)
                     .path("/archivo/").path(fileNames.get(0)).toUriString();
-archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),describcion,url.toString(),valor, true, actividad));
+
+            // Subtract valor from actividad's value
+            double actividadValor = actividad.getDevengado();
+            actividadValor += valor;
+            actividad.setDevengado(actividadValor);
+            actiservis.save(actividad);
+
+            archivoservis.save(new Archivo_s(fileNames.toString().join(",", fileNames), describcion, url.toString(), valor, true, actividad));
             meNsaje = "Se subieron correctamente " + fileNames;
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje + "url:" + url));
         } catch (Exception e) {
@@ -201,9 +208,18 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
                 meNsaje = "No se encontró el archivo con id " + archivoId;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
             }
+            double oldValue = archivo.getValor();
             archivo.setDescripcion(descripcion);
             archivo.setValor(valor);
             archivoservis.save(archivo);
+
+            // Subtract the oldValue from actividad's value and add the new valor
+            double actividadValor = actividad.getDevengado()
+                    ;
+            actividadValor += valor - oldValue;
+            actividad.setDevengado(actividadValor);
+            actiservis.save(actividad);
+
             meNsaje = "Se actualizó correctamente";
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje));
         } catch (Exception e) {
@@ -211,6 +227,7 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
     }
+
 
 
 

@@ -80,6 +80,7 @@ public class Actividades {
     private Set<AsignacionesUsuarios> rausurios = new HashSet<>();
 
     //ManytoONe Poa
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_poa")
     private Poa poa;
