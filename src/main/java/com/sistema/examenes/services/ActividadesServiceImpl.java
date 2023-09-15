@@ -5,6 +5,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -98,6 +99,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         }
         return periodos;
     }*/
+
+
     public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
         List<ActividadDTO> acts = new ArrayList<>();
@@ -264,5 +267,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public void actualizarEstadoPorAprobacion(Long id_actividad, String estado){
         actividadesRepository.actualizarEstadoPorAprobacion(id_actividad,estado);
     };
-
+    @Override
+    public valorprojec valoracti(Long idact) {
+        return actividadesRepository.valoracti(idact) ;
+    }
 }

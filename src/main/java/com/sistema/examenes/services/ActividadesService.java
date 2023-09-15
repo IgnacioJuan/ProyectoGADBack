@@ -5,6 +5,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.services.generic.GenericService;
 
 import java.util.List;
@@ -40,4 +41,5 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
 
     List<UsuarioActividadesDTO>listarUsuariosActividadID(Long actividadId);
     
+    valorprojec valoracti(Long idact);
 }
