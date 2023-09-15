@@ -8,13 +8,17 @@ import com.sistema.examenes.repository.auth.UsuarioRepository;
 import com.sistema.examenes.services.auth.RolService;
 import com.sistema.examenes.services.auth.UsuarioRolService;
 import com.sistema.examenes.services.auth.UsuarioService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @RestController
@@ -207,6 +211,15 @@ public class UsuarioController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    //Usamos el servicio para generar el reporte
+    @GetMapping("/export-pdf")
+    public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("petsReport", "Users.pdf");
+        return ResponseEntity.ok().headers(headers).body(usuarioService.exportPdf());
     }
 
     // MODULO CREAR USUARIO RESPONSABLE

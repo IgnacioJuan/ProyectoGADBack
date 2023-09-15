@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
@@ -67,7 +68,6 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
-
     public List<UsuarioActividadesDTO> listarUsuariosActividadID(Long actividadId) {
         List<Object[]> resultados = actividadesRepository.listarUsuariosActividadID(actividadId);
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
@@ -83,6 +83,21 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         return acts;
     }
 
+   /* @Override
+    public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
+        List<Object[]> resultados = actividadesRepository.listarPeriodosPorActividad(actividadId);
+        List<Periodo> periodos = new ArrayList<>();
+
+        for (Object[] resultado : resultados) {
+            Periodo periodo = new Periodo();
+            periodo.setId_periodo(((BigInteger) resultado[0]).longValue());
+            periodo.setPorcentaje((Double) resultado[1]);
+            periodo.setReferencia((Double) resultado[2]);
+            periodo.setVisible((Boolean) resultado[3]);
+            periodos.add(periodo);
+        }
+        return periodos;
+    }*/
     public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
         List<ActividadDTO> acts = new ArrayList<>();

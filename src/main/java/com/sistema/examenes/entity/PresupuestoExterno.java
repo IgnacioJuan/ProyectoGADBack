@@ -27,6 +27,12 @@ public class PresupuestoExterno implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
+    //fecha de creacion
+    @PrePersist
+    public void prePersist(){
+        fecha = new Date();
+    }
+
     //Relaciones
     //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)

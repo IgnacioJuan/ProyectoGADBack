@@ -27,6 +27,7 @@ public class AprobacionActividad {
     @Column(name = "fecha_aprobacion")
     private Date fechaAprobacion;
 
+
     // Otros atributos y métodos de la entidad
 
 
