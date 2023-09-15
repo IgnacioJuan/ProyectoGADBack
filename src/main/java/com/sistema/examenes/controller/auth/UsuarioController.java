@@ -140,6 +140,7 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/responsables")
     public ResponseEntity<List<ResponsableProjection>> Responsables() {
         try {
@@ -148,6 +149,7 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/buscar/{username}")
     public Usuario obtenerUsuario(@PathVariable("username") String username) {
         return usuarioService.obtenerUsuario(username);
@@ -166,7 +168,7 @@ public class UsuarioController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizarCliente(@PathVariable Long id, @RequestBody Usuario p) {
         Usuario usu = usuarioService.findById(id);
-        UsuarioRol urol=userrol.findByUsuario_UsuarioId(id);
+        UsuarioRol urol = userrol.findByUsuario_UsuarioId(id);
         if (usu == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -202,6 +204,44 @@ public class UsuarioController {
         try {
 
             return new ResponseEntity<>(uR.listaAdminDatos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // MODULO CREAR USUARIO RESPONSABLE
+    @PostMapping("/crearResponsable")
+    public ResponseEntity<Usuario> crearResponsable(@RequestBody Usuario r, @PathVariable Long rolId) {
+        try {
+            if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
+
+                // Buscar el rol por ID
+                Rol rol = rolService.findById((long) 3);
+                r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
+                r.setVisible(true);
+                // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
+                UsuarioRol usuarioRol = new UsuarioRol();
+                usuarioRol.setUsuario(r);
+                usuarioRol.setRol(rol);
+
+                // Agregar el UsuarioRol a la lista de roles del usuario
+                r.getUsuarioRoles().add(usuarioRol);
+
+                // Guardar el usuario en la base de datos
+                // Usuario nuevoUsuario = usuarioService.save(r);
+                return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarUResponsables")
+    public ResponseEntity<List<Usuario>> listarUResponsables() {
+        try {
+            return new ResponseEntity<>(uR.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
