@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.dto.DetalleActividadDTO;
 import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -123,18 +124,6 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "UPDATE actividades SET estado = :estado WHERE id_actividad IN (SELECT aa.id_actividad FROM aprobacion_actividad aa WHERE aa.id_poa = :poaId)", nativeQuery = true)
         void actualizarEstadoPorIdPoa(@Param("poaId") Long poaId, @Param("estado") String estado);
 
-        /*
-         * @Modifying
-         * 
-         * @Transactional
-         * 
-         * @Query(value =
-         * "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad"
-         * , nativeQuery = true)
-         * void actualizarCodificado(@Param("idActividad") Long
-         * idActividad, @Param("valor") double valor);
-         */
-
         @Query(value = "SELECT a.id_actividad, a.nombre, a.descripcion, a.presupuesto_referencial, a.recursos_propios, a.codificado, a.devengado, a.estado "
                         +
                         "FROM actividades a " +
@@ -189,17 +178,6 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "WHERE a.id_actividad = :actividadId", nativeQuery = true)
         List<Object[]> listarUsuariosActividadID(@Param("actividadId") Long actividadId);
 
-        /*
-         * @Modifying
-         * 
-         * @Transactional
-         * 
-         * @Query(value =
-         * "UPDATE actividades SET codificado = codificado + :valor WHERE id_actividad = :idActividad"
-         * , nativeQuery = true)
-         * void actualizarCodificado(@Param("idActividad") Long
-         * idActividad, @Param("valor") double valor);
-         */
         // Query para obtener las actividades en estado pendiente
         @Query(value = "SELECT " +
                         "    a.id_actividad," +
@@ -208,22 +186,18 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.codificado," +
                         "    a.devengado," +
                         "    a.recursos_propios," +
-                        "    (per.primer_nombre || ' ' || per.primer_apellido) AS responsable " +
-                        "FROM " +
-                        "    usuarios u " +
-                        "JOIN " +
-                        "    actividades a ON u.id = a.id_responsable " +
+                        "    a.descripcion AS responsable " +
+                        "from " +
+                        "    actividades a " +
                         "JOIN " +
                         "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
                         "JOIN " +
                         "    poa p ON apac.id_poa = p.id_poa " +
-                        "JOIN " +
-                        "    persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE " +
-                        "    a.visible = true AND u.visible = true " +
+                        "    a.visible = true " +
                         "    AND p.id_poa = :id_Poa " +
                         "    AND a.estado = 'PENDIENTE' " +
-                        "group by a.id_actividad, u.id, per.id_persona " +
+                        "group by a.id_actividad " +
                         "ORDER BY " +
                         "    a.id_actividad", nativeQuery = true)
         List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa);
@@ -236,4 +210,5 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "SET estado = :estado " +
                         "WHERE id_actividad = :id_actividad", nativeQuery = true)
         void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
+
 }
