@@ -72,7 +72,12 @@ public class SolicitudPresupuestoController {
             if (a == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
+                a.setMotivo(p.getMotivo());
+                a.setMonto_actual(p.getMonto_actual());
+                a.setReforma(p.getReforma());
+                a.setMonto_total(p.getMonto_total());
                 a.setEstado(p.getEstado());
+                a.setFecha_solicitud(p.getFecha_solicitud());
                 return new ResponseEntity<>(SolicitudPresupuesto_Service.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
