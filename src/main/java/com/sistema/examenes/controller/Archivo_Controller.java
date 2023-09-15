@@ -189,7 +189,7 @@ public class Archivo_Controller {
                 // Update the valor of actividad
                 double valor = as.getValor();
                 double actividadValor = actividad.getDevengado();
-                actividadValor += valor;
+                actividadValor -= valor;
                 actividad.setDevengado(actividadValor);
 
                 // Mark the Archivo_s as not visible

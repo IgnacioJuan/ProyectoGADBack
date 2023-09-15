@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.DetalleActividadDTO;
 import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -41,7 +42,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
          * "ORDER BY a.nombre ASC", nativeQuery = true)
          * List<Object[]> listarActividadesPorIdPoa(@Param("poaId") Long poaId);
          */
-        @Query(value = "select * from actividades where id_responsable = :id_resp and visible =true;", nativeQuery = true)
+        @Query(value = "SELECT * FROM public.actividades WHERE estado = 'APROBADO' AND visible = true AND id_responsable = :id_resp", nativeQuery = true)
         List<Actividades> listarActividadeSPORresponsable(Long id_resp);
 
         @Query(value = "SELECT " +
@@ -239,4 +240,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 "SET estado = :estado " +
                 "WHERE id_actividad = :id_actividad", nativeQuery = true)
         void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
+
+        @Query(value = "select codificado-devengado  as valor from actividades where id_actividad=:idact", nativeQuery = true)
+        valorprojec valoracti(Long idact);
+
 }

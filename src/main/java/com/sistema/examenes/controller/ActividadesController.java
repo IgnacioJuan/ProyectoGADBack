@@ -6,6 +6,7 @@ import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.services.ActividadesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -195,5 +196,12 @@ public class ActividadesController {
     public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(@PathVariable Long id_Poa) {
         return actividadesService.ActividadesPendientesPorPoa(id_Poa);
     }
-
+    @GetMapping("/valor/{id}")
+    public ResponseEntity<valorprojec> getalor(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(actividadesService.valoracti(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
