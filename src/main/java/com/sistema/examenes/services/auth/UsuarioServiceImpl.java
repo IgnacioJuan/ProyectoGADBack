@@ -4,10 +4,13 @@ import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.ResponsableProjection;
 import com.sistema.examenes.repository.auth.UsuarioRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import com.sistema.examenes.util.ExampleReportGenerator;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @Service
@@ -15,7 +18,9 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    //Inyectamos el ReportGenerator
+    @Autowired
+    private ExampleReportGenerator petReportGenerator;
     @Override
     public CrudRepository<Usuario, Long> getDao() {
         return usuarioRepository;
@@ -44,5 +49,11 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     @Override
     public List<Usuario> listaAdminDatos() {
         return usuarioRepository.listaAdminDatos();
+    }
+
+    //Llamamos al ReportGenerator
+    @Override
+    public byte[] exportPdf() throws JRException, FileNotFoundException {
+        return petReportGenerator.exportToPdf(usuarioRepository.listaAdminDatos());
     }
 }

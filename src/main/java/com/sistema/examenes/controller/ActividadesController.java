@@ -4,10 +4,13 @@ import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.entity.*;
 import com.sistema.examenes.entity.auth.Usuario;
-import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.services.ActividadesService;
+import com.sistema.examenes.services.AprobacionActividadService;
+import com.sistema.examenes.services.Periodo_Service;
+import com.sistema.examenes.services.PresupuestoExternoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,15 @@ public class ActividadesController {
 
     @Autowired
     private ActividadesService actividadesService;
+
+    @Autowired
+    private AprobacionActividadService aprobacionActividadService;
+
+    @Autowired
+    private PresupuestoExternoService presupuestoExternoService;
+
+    @Autowired
+    private Periodo_Service periodoService;
 
     // post crear
 
@@ -162,21 +174,88 @@ public class ActividadesController {
     }
     //mtodo post
     @PostMapping("/solicitud")
-    public ResponseEntity<Actividades> crearActividad(@RequestParam String nombre, @RequestParam String descripcion,
-                                                       @RequestParam Double recursos_propios, @RequestParam Double presupuesto_referencial) {
-        Actividades a = new Actividades();
-        a.setNombre(nombre);
-        a.setDescripcion(descripcion);
-        a.setRecursos_propios(recursos_propios);
-        a.setPresupuesto_referencial(presupuesto_referencial);
-        a.setEstado("PENDIENTE");
-        a.setVisible(true);
-        a.setCodificado(0);
-        a.setDevengado(0);
-        a.setUsuario(null);
+    public ResponseEntity<Actividades> crearActividad(@RequestParam("nombre") String nombre,
+                                                      @RequestParam("institucion_beneficiaria") String institucion_beneficiaria,
+                                                      @RequestParam("recursos_externos") Double recursos_externos,
+                                                      @RequestParam("valor_uno") Double valor_uno,
+                                                      @RequestParam("valor_dos") Double valor_dos,
+                                                      @RequestParam("valor_tres") Double valor_tres,
+                                                      @RequestParam("valor_cuatro") Double valor_cuatro,
+                                                      @RequestParam("descripcion") String descripcion,
+                                                      @RequestParam("id_poa") Long id_poa,
+                                                      @RequestParam("id_superadmin") Long id_superadmin,
+                                                      @RequestParam("recursos_propios") Double recursos_propios,
+                                                      @RequestParam("presupuesto_referencial") Double presupuesto_referencial) {
+
         try {
+            Actividades a = new Actividades();
+            Poa poa = new Poa();
+            Usuario usuario = new Usuario();
+            poa.setId_poa(id_poa);
+            usuario.setId(id_superadmin);
+            //llenar los datos de la actividad
+            a.setNombre(nombre);
+            a.setDescripcion(descripcion);
+            a.setRecursos_propios(recursos_propios);
+            a.setPresupuesto_referencial(presupuesto_referencial);
+            a.setEstado("PENDIENTE");
             a.setVisible(true);
-            return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+            a.setCodificado(presupuesto_referencial);
+            a.setDevengado(0);
+            a.setPoa(poa);
+            a.setUsuario(null);
+            a.setVisible(true);
+            Actividades actividad = actividadesService.save(a);
+            //llena los datos de la aprobacion
+            AprobacionActividad aprobacionActividad = new AprobacionActividad();
+            aprobacionActividad.setObservacion("Solicitud de creacion de actividad");
+            aprobacionActividad.setEstado("PENDIENTE");
+            aprobacionActividad.setUsuario(usuario);
+            aprobacionActividad.setActividad(actividad);
+            aprobacionActividad.setPoa(poa);
+            aprobacionActividad.setVisible(true);
+            aprobacionActividad=aprobacionActividadService.save(aprobacionActividad);
+
+            //llenar los datos de los presupuestos externos
+            if(recursos_externos!=0){
+                PresupuestoExterno presupuestoExterno = new PresupuestoExterno();
+                presupuestoExterno.setActividad(actividad);
+                presupuestoExterno.setValor(recursos_externos);
+                presupuestoExterno.setNombre_institucion(institucion_beneficiaria);
+                presupuestoExterno.setObservacion("");
+                presupuestoExterno.setVisible(true);
+                presupuestoExternoService.save(presupuestoExterno);
+            }
+
+            Periodo periodo = new Periodo();
+            periodo.setPorcentaje(valor_uno);
+            periodo.setReferencia(1);
+            periodo.setVisible(true);
+            periodo.setActividad(actividad);
+            periodoService.save(periodo);
+
+            periodo = new Periodo();
+            periodo.setPorcentaje(valor_dos);
+            periodo.setReferencia(2);
+            periodo.setVisible(true);
+            periodo.setActividad(actividad);
+            periodoService.save(periodo);
+
+            periodo = new Periodo();
+            periodo.setPorcentaje(valor_tres);
+            periodo.setReferencia(3);
+            periodo.setVisible(true);
+            periodo.setActividad(actividad);
+            periodoService.save(periodo);
+
+            periodo = new Periodo();
+            periodo.setPorcentaje(valor_cuatro);
+            periodo.setReferencia(4);
+            periodo.setVisible(true);
+            periodo.setActividad(actividad);
+            periodoService.save(periodo);
+
+            return new ResponseEntity<>(actividad, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
