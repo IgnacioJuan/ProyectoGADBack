@@ -32,7 +32,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             + "FROM poa p "
             + "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa "
             + "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto "
-            + "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true)", nativeQuery = true)
+            + "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado='ACTIVO')", nativeQuery = true)
     List<Object[]> listarPoasDeModelo();
 
     @Query(value = "SELECT DISTINCT p.id_poa, p.fecha_inicio, p.fecha_fin,\n"

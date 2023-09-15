@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.dto.DetalleActividadDTO;
 import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -208,22 +209,18 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.codificado," +
                         "    a.devengado," +
                         "    a.recursos_propios," +
-                        "    (per.primer_nombre || ' ' || per.primer_apellido) AS responsable " +
-                        "FROM " +
-                        "    usuarios u " +
-                        "JOIN " +
-                        "    actividades a ON u.id = a.id_responsable " +
+                        "    a.descripcion AS responsable " +
+                        "from " +
+                        "    actividades a " +
                         "JOIN " +
                         "    aprobacion_actividad apac ON a.id_actividad = apac.id_actividad " +
                         "JOIN " +
                         "    poa p ON apac.id_poa = p.id_poa " +
-                        "JOIN " +
-                        "    persona per ON u.persona_id_persona = per.id_persona " +
                         "WHERE " +
-                        "    a.visible = true AND u.visible = true " +
+                        "    a.visible = true " +
                         "    AND p.id_poa = :id_Poa " +
                         "    AND a.estado = 'PENDIENTE' " +
-                        "group by a.id_actividad, u.id, per.id_persona " +
+                        "group by a.id_actividad " +
                         "ORDER BY " +
                         "    a.id_actividad", nativeQuery = true)
         List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(Long id_Poa);
@@ -236,4 +233,9 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "SET estado = :estado " +
                         "WHERE id_actividad = :id_actividad", nativeQuery = true)
         void actualizarEstadoPorAprobacion(Long id_actividad, String estado);
+
+        @Query(value = "SELECT id_periodo, porcentaje, referencia, visible FROM periodo p WHERE p.id_actividad = :actividadId", nativeQuery = true)
+        List<Object[]> listarPeriodosPorActividad(@Param("actividadId") Long actividadId);
+
+
 }
