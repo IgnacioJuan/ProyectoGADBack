@@ -2,18 +2,14 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
-import com.sistema.examenes.entity.Archivo_s;
-import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
-import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -270,5 +266,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     @Override
     public valorprojec valoracti(Long idact) {
         return actividadesRepository.valoracti(idact) ;
+    }
+
+    @Override
+    public List<Actividades> poaacti(Long idres, Long idpoa) {
+        return actividadesRepository.poaacti(idres, idpoa);
     }
 }

@@ -7,6 +7,7 @@ import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.PoaRepository;
@@ -162,6 +163,12 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes() {
         return repository.PoasConActividadesPendientes();
     }
+
+    @Override
+    public List<Poaactiprojection> poaacjq(Long id) {
+        return repository.poaacjq(id);
+    }
+
     @Override
     public List<Poa> listarPoasPromedio() {
          return repository.listarPoasPromedio();
