@@ -22,5 +22,6 @@ public interface Archivo_Service extends GenericService<Archivo_s, Long> {
     //listar archivos enlace
     public Archivo_s obtenerEnlacePorId(Long idArchivo);
 
-
+    public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(
+            String estado, String username);
 }
