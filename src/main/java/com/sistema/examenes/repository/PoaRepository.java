@@ -30,12 +30,22 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
-    @Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo "
+    /*@Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo "
             + "FROM poa p "
             + "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa "
             + "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto "
             + "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado='ACTIVO')", nativeQuery = true)
-    List<Object[]> listarPoasDeModelo();
+    List<Object[]> listarPoasDeModelo();*/
+
+    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada,p.tipo_periodo " +
+            "FROM poa p " +
+            "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
+            "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
+            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa " +
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' " +
+            "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin;" , nativeQuery = true)
+    List<Object[]> listarPoasProyectoDeModeloFiltroFechas();
 
     @Query(value = "SELECT DISTINCT p.id_poa, p.fecha_inicio, p.fecha_fin,\n"
             + "    p.id_responsable, ap.estado,\n"
