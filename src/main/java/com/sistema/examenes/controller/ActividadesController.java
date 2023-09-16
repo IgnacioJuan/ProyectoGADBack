@@ -7,6 +7,7 @@ import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.entity.*;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionActividadService;
 import com.sistema.examenes.services.Periodo_Service;
@@ -270,5 +271,13 @@ public class ActividadesController {
     @GetMapping("/ActividadesPendientesPorPoa/{id_Poa}")
     public List<ActividadesPendientesPorPoaProjection> ActividadesPendientesPorPoa(@PathVariable Long id_Poa) {
         return actividadesService.ActividadesPendientesPorPoa(id_Poa);
+    }
+    @GetMapping("/valor/{id}")
+    public ResponseEntity<valorprojec> getalor(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(actividadesService.valoracti(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
