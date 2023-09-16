@@ -45,6 +45,10 @@ public class Poa implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
+    //fecha de creacion
+    @Column(name = "fecha_creacion")
+    private Date fecha_creacion;
+
     //fecha_inicio automatica
     @PrePersist
     public void prePersist() {
