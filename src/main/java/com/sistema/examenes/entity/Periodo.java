@@ -25,6 +25,12 @@ public class Periodo implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
+    //fecha inicio y fecha fin  del periodo
+    @Column(name = "fecha_inicio")
+    private String fecha_inicio;
+    @Column(name = "fecha_fin")
+    private String fecha_fin;
+
     //Relaciones
     //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
