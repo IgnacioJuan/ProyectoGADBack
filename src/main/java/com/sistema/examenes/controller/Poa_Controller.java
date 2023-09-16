@@ -1,10 +1,6 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.PoaNoAprobadoDTO;
-import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.dto.PoaporUsuarioDTO;
-import com.sistema.examenes.dto.SolicitudPoa;
-import com.sistema.examenes.dto.PoasAdmin_DTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
@@ -240,6 +236,16 @@ public class Poa_Controller {
     public ResponseEntity<List<PoasConActividadesPendientesProjection>> PoasConActividadesPendientes() {
         try {
             return new ResponseEntity<>(Service.PoasConActividadesPendientes(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/PoasConSolicitudPresupuesto/{idAdmin}")
+    public ResponseEntity<List<PoaSolicitudPresupuesto_DTO>> listarPoasPorSolicitudPresupuesto(@PathVariable Long idAdmin) {
+        try {
+            return new ResponseEntity<>(Service.listarPoasPorSolicitudPresupuesto(idAdmin), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
 

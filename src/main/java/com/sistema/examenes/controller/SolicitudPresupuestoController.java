@@ -95,10 +95,11 @@ public class SolicitudPresupuestoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/listarSolicitudesSuperAdmin/{idSuperAdmin}")
-    public ResponseEntity<List<SolicitudPresupuesto>> listarPoasPorResponsableEstado(@PathVariable Long idSuperAdmin) {
+
+    @GetMapping("/listarSolicitudAdminPoa/{idSuperAdmin}/{idPoa}")
+    public ResponseEntity<List<SolicitudPresupuesto>> listarSolicitudPresupuestoAdminPoa(@PathVariable Long idSuperAdmin, @PathVariable Long idPoa) {
         try {
-            return new ResponseEntity<>(SolicitudPresupuesto_Service.listarSolicitudPresupuestoSuperAdmin(idSuperAdmin), HttpStatus.OK);
+            return new ResponseEntity<>(SolicitudPresupuesto_Service.listarSolicitudPresupuestoAdminPoa(idSuperAdmin, idPoa), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
