@@ -180,6 +180,7 @@ public class AprobacionPoaController {
                 aprobNue.setPoa(aprobBd.getPoa());
                 aprobNue.setProyecto(aprobBd.getProyecto());
                 aprobNue.setUsuario(aprobBd.getUsuario());
+                System.out.println("Aprobacion nueva: " + aprobNue.toString());
                 crearAprobacionPOA(aprobNue);
                 // Crear una nueva aprobacion de cada actividad 
                 List<Actividades> mActividades = actividadesService.listarActividadesPorIdPoa(id_poa);
