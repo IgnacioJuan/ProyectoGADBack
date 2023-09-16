@@ -50,9 +50,9 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
        "WHERE mp.estado = 'ACTIVO' " +
        "AND ar.visible = true " +
        "AND ar.estado = :estado " +
-       "AND ac.id_responsable IN (SELECT id FROM usuarios WHERE username = :username) " +
+       "AND (ac.id_responsable IN (SELECT id FROM usuarios WHERE username = :username) or :username is null OR :username = '') " +
        "ORDER BY ar.fecha DESC", nativeQuery = true)
 public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(
-    @Param("estado") String estado, @Param("username") String username);
+    String estado, String username);
     
 }
