@@ -55,6 +55,9 @@ public class Archivo_ServiceImpl extends GenericServiceImpl<Archivo_s, Long> imp
     public List<ArchivoProjection> listararchi() {
         return repository.listararchi();
     }*/
-
+    @Override
+    public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(String estado, String username) {
+        return repository.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
+    }
 
 }
