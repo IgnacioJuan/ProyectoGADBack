@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporFechaRepoProjection;
+import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -135,4 +136,29 @@ List<Poa> listarPoasPromedio();
             "    AND pr.visible=true \n" +
             "    and CURRENT_DATE between p.fecha_inicio and p.fecha_fin ", nativeQuery = true)
     List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
+
+    // @Query(value = "select A.*,  "
+    //         + "COUNT(DISTINCT c.id_actividad) as nro_actividades, "
+    //         + "E.nombre "
+    //         + "from POA A "
+    //         + "join aprobacion_actividad B "
+    //         + "on A.id_poa = B.id_poa "
+    //         + "join actividades c "
+    //         + "on C.id_actividad = B.id_actividad "
+    //         + "join aprobacion_poa d "
+    //         + "on d.id_poa = A.id_poa "
+    //         + "join proyecto E "
+    //         + "on E.id_proyecto = d.id_proyecto "
+    //         + "where C.estado = 'PENDIENTE' "
+    //         + "and c.visible = true "
+    //         + "and a.visible = true "
+    //         + "group by a.id_poa, e.id_proyecto ",
+    //         nativeQuery = true)
+    // List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
+    @Query(value = "SELECT distinct p.id_proyecto, poa.id_poa, p.nombre AS nombre_proyecto, poa.meta_planificada\n" +
+            "FROM public.poa poa join actividades ac on ac.id_poa = poa.id_poa\n" +
+            "JOIN public.proyecto p ON poa.id_proyecto = p.id_proyecto\n" +
+            "WHERE ac.id_responsable =:id and poa.visible=true;\n", nativeQuery = true)
+    List<Poaactiprojection> poaacjq(Long id);
+
 }

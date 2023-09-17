@@ -11,6 +11,7 @@ import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporFechaRepoProjection;
+import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
@@ -270,6 +271,14 @@ public class Poa_Controller {
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        }
+    }
+    @GetMapping("/aactijq/{id}")
+    public ResponseEntity<List<Poaactiprojection>> poactijq(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.poaacjq(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 } 
