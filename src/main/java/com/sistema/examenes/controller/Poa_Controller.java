@@ -257,4 +257,19 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/actualizarmeta/{id}")
+    public ResponseEntity<Poa> actualizarMetaAlcanzar(@PathVariable Long id, @RequestBody double nuevaMetaAlcanzar) {
+        Poa poa = Service.findById(id);
+        if (poa == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                poa.setMeta_alcanzar(nuevaMetaAlcanzar);
+                Poa poaActualizado = Service.save(poa);
+                return new ResponseEntity<>(poaActualizado, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
 } 
