@@ -10,6 +10,7 @@ import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
@@ -240,6 +241,16 @@ public class Poa_Controller {
     public ResponseEntity<List<PoasConActividadesPendientesProjection>> PoasConActividadesPendientes() {
         try {
             return new ResponseEntity<>(Service.PoasConActividadesPendientes(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/listarPoaApAdm/{idResponsable}")
+    public ResponseEntity<List<PoaporFechaRepoProjection>> listarPoaApAdm(@PathVariable Long idResponsable) {
+        try {
+            return new ResponseEntity<>(Service.listarPoaApAdm(idResponsable), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
 

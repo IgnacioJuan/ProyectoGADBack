@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -114,24 +115,25 @@ List<Poa> listarPoasPromedio();
             , nativeQuery = true)
     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
 
-
-    // @Query(value = "select A.*,  "
-    //         + "COUNT(DISTINCT c.id_actividad) as nro_actividades, "
-    //         + "E.nombre "
-    //         + "from POA A "
-    //         + "join aprobacion_actividad B "
-    //         + "on A.id_poa = B.id_poa "
-    //         + "join actividades c "
-    //         + "on C.id_actividad = B.id_actividad "
-    //         + "join aprobacion_poa d "
-    //         + "on d.id_poa = A.id_poa "
-    //         + "join proyecto E "
-    //         + "on E.id_proyecto = d.id_proyecto "
-    //         + "where C.estado = 'PENDIENTE' "
-    //         + "and c.visible = true "
-    //         + "and a.visible = true "
-    //         + "group by a.id_poa, e.id_proyecto ",
-    //         nativeQuery = true)
-    // List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
-
+//Listar los poas aporbados segun el admin, para evaluarlos
+    @Query(value = "SELECT\n" +
+            "   pr.nombre,\n" +
+            "    p.id_poa,\n" +
+            "    p.barrio,\n" +
+            "    p.cobertura,\n" +
+            "    p.comunidad,\n" +
+            "\tp.fecha_inicio,\n" +
+            "    p.fecha_fin,\n" +
+            "    p.estado,\n" +
+            "    p.localizacion,\n" +
+            "    p.meta_alcanzar,\n " +
+            "    p.meta_planificada " +
+            "FROM poa p\n" +
+            "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
+            "WHERE p.id_responsable = :idResponsable\n" +
+            "    AND p.estado = 'APROBADO'\n" +
+            "    AND p.visible = true \n" +
+            "    AND pr.visible=true \n" +
+            "    and CURRENT_DATE between p.fecha_inicio and p.fecha_fin ", nativeQuery = true)
+    List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
 }
