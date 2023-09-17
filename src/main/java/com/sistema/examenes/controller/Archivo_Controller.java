@@ -4,6 +4,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.mensajes.Archivosmensajes;
+import com.sistema.examenes.projection.ArchivoPoaProjection;
 import com.sistema.examenes.projection.ArchivoProjection;
 import com.sistema.examenes.repository.Archivo_repository;
 import com.sistema.examenes.services.ActividadesService;
@@ -265,19 +266,32 @@ public class Archivo_Controller {
 
 
 
-@GetMapping("/listarPorEstadoYFechaDesc")
+@GetMapping("/listarPorEstadoYFechaDesc/{estado}/{username}")
 public ResponseEntity<List<Archivo_s>> listarArchivosPorEstadoYFechaDesc(
-    @RequestParam("estado") String estado,
-    @RequestParam("username") String username) {
+    @PathVariable("estado") String estado,
+    @PathVariable("username") String username) {
     try {
-        List<Archivo_s> archivos = archivorepo.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
+        if ("SINUSERNAME".equals(username)) {
+            username = "";
+        }
+        List<Archivo_s> archivos = archivoservis.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
         return new ResponseEntity<>(archivos, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 
+    @GetMapping("/listarArchivosdelPoa/{id_poa}")
+    public ResponseEntity<List<ArchivoPoaProjection>> listarArchivosdelPoa(
+            @PathVariable("id_poa") Long id_poa) {
+        try {
 
+            List<ArchivoPoaProjection> archivos = archivoservis.listarArchivosdelPoa(id_poa);
+            return new ResponseEntity<>(archivos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
 

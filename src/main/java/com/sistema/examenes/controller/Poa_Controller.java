@@ -10,6 +10,7 @@ import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.AprobacionPoaService;
@@ -245,6 +246,31 @@ public class Poa_Controller {
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/listarPoaApAdm/{idResponsable}")
+    public ResponseEntity<List<PoaporFechaRepoProjection>> listarPoaApAdm(@PathVariable Long idResponsable) {
+        try {
+            return new ResponseEntity<>(Service.listarPoaApAdm(idResponsable), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/actualizarmeta/{id}")
+    public ResponseEntity<Poa> actualizarMetaAlcanzar(@PathVariable Long id, @RequestBody double nuevaMetaAlcanzar) {
+        Poa poa = Service.findById(id);
+        if (poa == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                poa.setMeta_alcanzar(nuevaMetaAlcanzar);
+                Poa poaActualizado = Service.save(poa);
+                return new ResponseEntity<>(poaActualizado, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
     @GetMapping("/aactijq/{id}")

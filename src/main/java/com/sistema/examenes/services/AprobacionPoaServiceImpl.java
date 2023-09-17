@@ -80,12 +80,13 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[17],
                     (String) resultado[18],
                     (Double) resultado[19],
-                    (String) resultado[20],
+                    (Double) resultado[20],
                     (String) resultado[21],
                     (String) resultado[22],
                     (String) resultado[23],
                     (String) resultado[24],
-                    (String) resultado[25]);
+                    (String) resultado[25],
+                    (String) resultado[26]);
             aprobaciones.add(aprobPoaDTO);
         }
         return aprobaciones;
@@ -118,12 +119,13 @@ public class AprobacionPoaServiceImpl extends GenericServiceImpl<AprobacionPoa, 
                     (String) resultado[17],
                     (String) resultado[18],
                     (Double) resultado[19],
-                    (String) resultado[20],
+                    (Double) resultado[20],
                     (String) resultado[21],
                     (String) resultado[22],
                     (String) resultado[23],
                     (String) resultado[24],
-                    (String) resultado[25]);
+                    (String) resultado[25],
+                    (String) resultado[26]);
             aprobaciones = aprobPoaDTO;
         }
         return aprobaciones;

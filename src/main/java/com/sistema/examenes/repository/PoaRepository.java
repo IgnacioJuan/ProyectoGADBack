@@ -1,8 +1,8 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -125,6 +125,27 @@ List<Poa> listarPoasPromedio();
             , nativeQuery = true)
     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
 
+//Listar los poas aporbados segun el admin, para evaluarlos
+    @Query(value = "SELECT\n" +
+            "   pr.nombre,\n" +
+            "    p.id_poa,\n" +
+            "    p.barrio,\n" +
+            "    p.cobertura,\n" +
+            "    p.comunidad,\n" +
+            "\tp.fecha_inicio,\n" +
+            "    p.fecha_fin,\n" +
+            "    p.estado,\n" +
+            "    p.localizacion,\n" +
+            "    p.meta_alcanzar,\n " +
+            "    p.meta_planificada " +
+            "FROM poa p\n" +
+            "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
+            "WHERE p.id_responsable = :idResponsable\n" +
+            "    AND p.estado = 'APROBADO'\n" +
+            "    AND p.visible = true \n" +
+            "    AND pr.visible=true \n" +
+            "    and CURRENT_DATE between p.fecha_inicio and p.fecha_fin ", nativeQuery = true)
+    List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
 
     // @Query(value = "select A.*,  "
     //         + "COUNT(DISTINCT c.id_actividad) as nro_actividades, "

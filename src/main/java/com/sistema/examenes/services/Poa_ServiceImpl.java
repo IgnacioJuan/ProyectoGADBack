@@ -7,6 +7,7 @@ import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
@@ -169,7 +170,10 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<Poa> listarPoasPromedio() {
          return repository.listarPoasPromedio();
     }
-
+    @Override
+    public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable){
+        return repository.listarPoaApAdm(idResponsable);
+    };
 
 
    
