@@ -50,6 +50,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "pr.area, " +
                         "pr.fecha_inicio AS fecha_inicio, " +
                         "pr.fecha_fin AS fecha_fin, " +
+                        "p.fecha_creacion AS fecha_creacion, " +
                         "pr.codigo AS codigo_proyecto, " +
                         "pr.nombre AS nombre_proyecto, " +
                         "pr.descripcion, " +
@@ -94,6 +95,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "pr.area, " +
                         "pr.fecha_inicio AS fecha_inicio, " +
                         "pr.fecha_fin AS fecha_fin, " +
+                        "p.fecha_creacion AS fecha_creacion, " +
                         "pr.codigo AS codigo_proyecto, " +
                         "pr.nombre AS nombre_proyecto, " +
                         "pr.descripcion, " +
