@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.ProjectByIdDto;
 import com.sistema.examenes.dto.ProjectsActivesDto;
+import com.sistema.examenes.dto.ProyectoExportarexcelDTO;
 import com.sistema.examenes.dto.ProyectoResumenDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.services.Proyecto_Service;
@@ -131,7 +132,14 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+     @GetMapping("/exportarexcel/{id_modelo_poa}")
+    public ResponseEntity<List<ProyectoExportarexcelDTO>> Exportarexcel(@PathVariable("id_modelo_poa") Long id_modelo_poa) {
+        List<ProyectoExportarexcelDTO> exportar = Service.exportarexcel(id_modelo_poa);
+        return ResponseEntity.ok(exportar);
+    }    
 
+    
     @GetMapping("/listsActiveProjects")
     public ResponseEntity<List<ProjectsActivesDto>> listActiveProjects( @RequestParam("id_usuario") Long id_usuario) {
         List<ProjectsActivesDto> projectsActivesDtoList = Service.listActiveProjects(id_usuario);

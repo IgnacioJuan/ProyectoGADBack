@@ -104,6 +104,7 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return dtos;
     }
   
+    @Override
      public List<PoaporUsuarioDTO> listarPoaporUsuarios(Long id_proyecto) {
         List<AprobacionPoa> poaporUsuario = repositoryAP.findPoaporUsuario(id_proyecto);
         List<PoaporUsuarioDTO> datos = new ArrayList<>();
