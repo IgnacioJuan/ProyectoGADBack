@@ -1,8 +1,9 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
+import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -114,6 +115,27 @@ List<Poa> listarPoasPromedio();
             , nativeQuery = true)
     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
 
+//Listar los poas aporbados segun el admin, para evaluarlos
+    @Query(value = "SELECT\n" +
+            "   pr.nombre,\n" +
+            "    p.id_poa,\n" +
+            "    p.barrio,\n" +
+            "    p.cobertura,\n" +
+            "    p.comunidad,\n" +
+            "\tp.fecha_inicio,\n" +
+            "    p.fecha_fin,\n" +
+            "    p.estado,\n" +
+            "    p.localizacion,\n" +
+            "    p.meta_alcanzar,\n " +
+            "    p.meta_planificada " +
+            "FROM poa p\n" +
+            "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
+            "WHERE p.id_responsable = :idResponsable\n" +
+            "    AND p.estado = 'APROBADO'\n" +
+            "    AND p.visible = true \n" +
+            "    AND pr.visible=true \n" +
+            "    and CURRENT_DATE between p.fecha_inicio and p.fecha_fin ", nativeQuery = true)
+    List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
 
     // @Query(value = "select A.*,  "
     //         + "COUNT(DISTINCT c.id_actividad) as nro_actividades, "
@@ -133,6 +155,11 @@ List<Poa> listarPoasPromedio();
     //         + "group by a.id_poa, e.id_proyecto ",
     //         nativeQuery = true)
     // List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
+    @Query(value = "SELECT distinct p.id_proyecto, poa.id_poa, p.nombre AS nombre_proyecto, poa.meta_planificada\n" +
+            "FROM public.poa poa join actividades ac on ac.id_poa = poa.id_poa\n" +
+            "JOIN public.proyecto p ON poa.id_proyecto = p.id_proyecto\n" +
+            "WHERE ac.id_responsable =:id and poa.visible=true;\n", nativeQuery = true)
+    List<Poaactiprojection> poaacjq(Long id);
 
 //Listar Poas con solicitudes de presupuesto
     @Query(value = "SELECT DISTINCT pr.nombre AS nombre_proyecto, p.id_poa, p.barrio, p.cobertura, p.comunidad, p.estado AS estado_poa, p.meta_alcanzar, p.meta_planificada\n" +
