@@ -156,44 +156,43 @@ public class AprobacionPoaController {
         }
     }
 
-    @PutMapping("/actualizarestadoaprob/{id_poa}")
-    public ResponseEntity<AprobacionPoa> actualizarEstadoAprobacion(@PathVariable Long id_poa,
+    @PostMapping("/crearnestadoaprob/{id_poa}")
+    public ResponseEntity<AprobacionPoa> crearAprobacionNEstado(@PathVariable Long id_poa,
             @RequestBody AprobacionPoa aprobNue) {
         try {
             // Obtengo mi poa de la base
             Poa poa = poa_Service.obtenerPoaId(id_poa);
-            // Obtener mi aprobacion de la base
+            // Obtener mi aprobacion de la base con ese idPOA
             AprobacionPoa aprobBd = AprobacionPoaService.obtenerAprobacionPorIdPoa(id_poa);
             if (aprobBd == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                // Actualizar mi aprobacion con los datos recibidos
-                aprobBd.setEstado(aprobNue.getEstado());
-                aprobBd.setObservacion(aprobNue.getObservacion());
                 // Seteo el nuevo estado del poa con el estado de la aprobacion
                 poa.setEstado(aprobNue.getEstado());
                 poa_Service.save(poa);
                 // Actualizar el estado de las actividades
                 actividadesService.actualizarEstadoPorIdPoa(id_poa, aprobNue.getEstado());
-                // Crear una nueva aprobacion con los datos de la aprobacion anterior y la nueva
-                // ingresada
+                // Crear una nueva aprobacion con los datos de la aprobacion anterior y la nueva ingresada
                 aprobNue.setPoa(aprobBd.getPoa());
                 aprobNue.setProyecto(aprobBd.getProyecto());
                 aprobNue.setUsuario(aprobBd.getUsuario());
+                aprobNue.setVisible(true);
                 System.out.println("Aprobacion nueva: " + aprobNue.toString());
-                crearAprobacionPOA(aprobNue);
                 // Crear una nueva aprobacion de cada actividad 
                 List<Actividades> mActividades = actividadesService.listarActividadesPorIdPoa(id_poa);
                 for (Actividades actividad : mActividades) {
                     AprobacionActividad aprobacionActividad = new AprobacionActividad();
-                    //aprobacionActividad.setObservacion(aprobNue.getObservacion());
+                    aprobacionActividad.setObservacion(aprobNue.getObservacion());
                     aprobacionActividad.setEstado(aprobNue.getEstado());
                     aprobacionActividad.setActividad(actividad);
                     aprobacionActividad.setVisible(true);
                     aprobacionActividad.setPoa(poa);
                     aprobacionActividadService.save(aprobacionActividad);
+                    System.out.println("--------------------------------------------------------");
+                    System.out.println("Aprobacion actividad: " + aprobacionActividad.getEstado());
                 }
-                return new ResponseEntity<>(AprobacionPoaService.save(aprobBd), HttpStatus.CREATED);
+                
+                return new ResponseEntity<>(AprobacionPoaService.save(aprobNue), HttpStatus.CREATED);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -201,14 +200,5 @@ public class AprobacionPoaController {
         }
     }
 
-    @PostMapping("/crearAprobacionPOA")
-    public ResponseEntity<AprobacionPoa> crearAprobacionPOA(@RequestBody AprobacionPoa a) {
-        try {
-            a.setVisible(true);
-            return new ResponseEntity<>(AprobacionPoaService.save(a), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
 }
