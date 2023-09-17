@@ -130,7 +130,7 @@ List<Poa> listarPoasPromedio();
             "    p.meta_planificada " +
             "FROM poa p\n" +
             "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
-            "WHERE p.id_responsable = :idResponsable\n" +
+            "WHERE (:idResponsable = -1 OR p.id_responsable = :idResponsable)\n" +
             "    AND p.estado = 'APROBADO'\n" +
             "    AND p.visible = true \n" +
             "    AND pr.visible=true \n" +

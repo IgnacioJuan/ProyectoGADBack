@@ -248,9 +248,12 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/listarPoaApAdm/{idResponsable}")
-    public ResponseEntity<List<PoaporFechaRepoProjection>> listarPoaApAdm(@PathVariable Long idResponsable) {
+    @GetMapping("/listarPoaApAdm")
+    public ResponseEntity<List<PoaporFechaRepoProjection>> listarPoaApAdm(@RequestParam(required = false) Long idResponsable) {
         try {
+            if (idResponsable == null) {
+                idResponsable = -1L;
+            }
             return new ResponseEntity<>(Service.listarPoaApAdm(idResponsable), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
