@@ -140,7 +140,7 @@ List<Poa> listarPoasPromedio();
             "    p.meta_planificada " +
             "FROM poa p\n" +
             "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
-            "WHERE p.id_responsable = :idResponsable\n" +
+            "WHERE (:idResponsable = -1 OR p.id_responsable = :idResponsable)\n" +
             "    AND p.estado = 'APROBADO'\n" +
             "    AND p.visible = true \n" +
             "    AND pr.visible=true \n" +
@@ -170,5 +170,21 @@ List<Poa> listarPoasPromedio();
             "JOIN public.proyecto p ON poa.id_proyecto = p.id_proyecto\n" +
             "WHERE ac.id_responsable =:id and poa.visible=true;\n", nativeQuery = true)
     List<Poaactiprojection> poaacjq(Long id);
+
+//Listar Poas con solicitudes de presupuesto
+    @Query(value = "SELECT DISTINCT pr.nombre AS nombre_proyecto, p.id_poa, p.barrio, p.cobertura, p.comunidad, p.estado AS estado_poa, p.meta_alcanzar, p.meta_planificada\n" +
+            "FROM public.poa AS p\n" +
+            "INNER JOIN public.proyecto AS pr ON p.id_proyecto = pr.id_proyecto\n" +
+            "INNER JOIN public.aprobacion_poa AS ap ON p.id_poa = ap.id_poa\n" +
+            "INNER JOIN public.solicitud_presupuesto AS sol ON p.id_poa = sol.id_poa\n" +
+            "WHERE p.estado = 'APROBADO'\n" +
+            "    AND ap.estado = 'APROBADO'\n" +
+            "    AND p.visible = true\n" +
+            "    AND ap.visible = true\n" +
+            "    AND sol.estado = 'PENDIENTE'\n" +
+            "    AND sol.visible = true\n" +
+            "    AND sol.id_superadmin =:idAdmin\n" +
+            "    AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado = 'ACTIVO');", nativeQuery = true)
+    List<Object[]> listarPoasPorSolicitudPresupuesto(Long idAdmin);
 
 }

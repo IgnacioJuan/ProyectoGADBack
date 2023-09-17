@@ -48,4 +48,8 @@ public class SolicitudPresupuesto {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_responsable")
     private Usuario responsable;
+    //ManyToOne POA
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_poa")
+    private Poa poa;
 }

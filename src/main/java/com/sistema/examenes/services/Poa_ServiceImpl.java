@@ -177,7 +177,24 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return repository.listarPoaApAdm(idResponsable);
     };
 
+    public List<PoaSolicitudPresupuesto_DTO> listarPoasPorSolicitudPresupuesto(Long idAdmin) {
+        List<Object[]> resultados = repository.listarPoasPorSolicitudPresupuesto(idAdmin);
+        List<PoaSolicitudPresupuesto_DTO> poas = new ArrayList<>();
 
+        for (Object[] result : resultados) {
+            PoaSolicitudPresupuesto_DTO dto = new PoaSolicitudPresupuesto_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setBarrio((String) result[2]);
+            dto.setCobertura((String) result[3]);
+            dto.setComunidad((String) result[4]);
+            dto.setEstado_poa((String) result[5]);
+            dto.setMeta_alcanzar((Double) result[6]);
+            dto.setMeta_planificada((Double) result[7]);
+            poas.add(dto);
+        }
+        return poas;
+    }
    
 
 }
