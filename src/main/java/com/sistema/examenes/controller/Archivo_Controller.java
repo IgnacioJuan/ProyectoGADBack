@@ -49,7 +49,7 @@ public class Archivo_Controller {
                                                    @RequestParam("id_evidencia") Long id_actividad) {
         String meNsaje = "";
         try {
-           Actividades actividad = actiservis.findById(id_actividad);
+            Actividades actividad = actiservis.findById(id_actividad);
             if (actividad == null) {
                 meNsaje = "No se encontró la evidencia con id " + id_actividad;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
@@ -62,7 +62,14 @@ public class Archivo_Controller {
             String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
             String url = ServletUriComponentsBuilder.fromHttpUrl(host)
                     .path("/archivo/").path(fileNames.get(0)).toUriString();
-archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),describcion,url.toString(),valor, true, actividad));
+
+            // Subtract valor from actividad's value
+            double actividadValor = actividad.getDevengado();
+            actividadValor += valor;
+            actividad.setDevengado(actividadValor);
+            actiservis.save(actividad);
+
+            archivoservis.save(new Archivo_s(fileNames.toString().join(",", fileNames), describcion, url.toString(), valor, true, actividad));
             meNsaje = "Se subieron correctamente " + fileNames;
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje + "url:" + url));
         } catch (Exception e) {
@@ -176,14 +183,29 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                // Get the associated actividad
+                Actividades actividad = as.getActividad();
+
+                // Update the valor of actividad
+                double valor = as.getValor();
+                double actividadValor = actividad.getDevengado();
+                actividadValor -= valor;
+                actividad.setDevengado(actividadValor);
+
+                // Mark the Archivo_s as not visible
                 as.setVisible(false);
-                return new ResponseEntity<>(archivoservis.save(as), HttpStatus.CREATED);
+
+                // Save the changes to both Archivo_s and Actividades
+                archivoservis.save(as);
+                actiservis.save(actividad);
+
+                return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
         }
     }
+
     @PutMapping("/editar/{archivoId}")
     public ResponseEntity<Archivosmensajes> editUpload(@PathVariable Long archivoId,
                                                        @RequestParam("descripcion") String descripcion,
@@ -201,9 +223,18 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
                 meNsaje = "No se encontró el archivo con id " + archivoId;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
             }
+            double oldValue = archivo.getValor();
             archivo.setDescripcion(descripcion);
             archivo.setValor(valor);
             archivoservis.save(archivo);
+
+            // Subtract the oldValue from actividad's value and add the new valor
+            double actividadValor = actividad.getDevengado()
+                    ;
+            actividadValor += valor - oldValue;
+            actividad.setDevengado(actividadValor);
+            actiservis.save(actividad);
+
             meNsaje = "Se actualizó correctamente";
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje));
         } catch (Exception e) {
@@ -211,6 +242,7 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
     }
+
 
 
 
@@ -233,12 +265,16 @@ archivoservis.save(new Archivo_s( fileNames.toString().join(",",fileNames),descr
 
 
 
-@GetMapping("/listarPorEstadoYFechaDesc")
+@GetMapping("/listarPorEstadoYFechaDesc/{estado}/{username}")
 public ResponseEntity<List<Archivo_s>> listarArchivosPorEstadoYFechaDesc(
-    @RequestParam("estado") String estado,
-    @RequestParam("username") String username) {
+    @PathVariable("estado") String estado,
+    @PathVariable("username") String username) {
     try {
-        List<Archivo_s> archivos = archivorepo.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
+        if ("SINUSERNAME".equals(username)) {
+            username = "";
+        }
+        System.out.println(username);
+        List<Archivo_s> archivos = archivoservis.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
         return new ResponseEntity<>(archivos, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

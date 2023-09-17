@@ -24,6 +24,11 @@ public class UsuarioRolServiceImpl extends GenericServiceImpl<UsuarioRol, Long> 
     }
 
     @Override
+    public List<UsuarioRol> listarUsuariosResponsables() {
+        return usuarioRolRepository.listarUsuariosResponsables();
+    }
+
+    @Override
     public UsuarioRol findByUsuario_UsuarioId(Long usuarioId) {
         return usuarioRolRepository.findByUsuario_Id(usuarioId);
     }

@@ -5,10 +5,13 @@ import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.dto.PoaporUsuarioDTO;
 import com.sistema.examenes.dto.SolicitudPoa;
 import com.sistema.examenes.dto.PoasAdmin_DTO;
+import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
+import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
+import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +28,9 @@ public class Poa_Controller {
 
     @Autowired
     Poa_Service Service;
+
+    @Autowired
+    AprobacionPoaService aprobacionService;
 
 
     @PostMapping("/crear")
@@ -183,9 +189,14 @@ public class Poa_Controller {
         }
     }
     @PostMapping("/solicitud")
-    public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r) {
+    public ResponseEntity<Poa> solicitud(@RequestBody SolicitudPoa r,@RequestParam("id_responsable") Long id_responsable, @RequestParam("id_superadmin") Long id_superadmin) {
         Poa poa = new Poa();
+        Usuario usuario = new Usuario();
+        Proyecto proyecto = new Proyecto();
+        AprobacionPoa aprobacionPoa = new AprobacionPoa();
         try {
+            proyecto.setId_proyecto(r.getId_proyecto());
+            usuario.setId(id_responsable);
             poa.setMeta_planificada(r.getMeta_planificada());
             poa.setCobertura(r.getCobertura());
             poa.setBarrio(r.getBarrio());
@@ -195,8 +206,21 @@ public class Poa_Controller {
             poa.setLinea_base(0);
             poa.setMeta_alcanzar(0);
             poa.setEstado("PENDIENTE");
+            poa.setUsuario(usuario);
+            poa.setProyecto(proyecto);
             poa.setVisible(true);
-            return new ResponseEntity<>(Service.save(poa), HttpStatus.CREATED);
+
+            Poa poaService = Service.save(poa);
+
+            usuario.setId(id_superadmin);
+            aprobacionPoa.setPoa(poaService);
+            aprobacionPoa.setEstado("PENDIENTE");
+            aprobacionPoa.setUsuario(usuario);
+            aprobacionPoa.setProyecto(proyecto);
+            aprobacionPoa.setVisible(true);
+
+            AprobacionPoa aprobacionPoaService = aprobacionService.save(aprobacionPoa);
+            return new ResponseEntity<>(poaService, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

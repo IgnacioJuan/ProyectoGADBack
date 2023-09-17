@@ -30,6 +30,11 @@ public class AprobacionPoa implements Serializable {
     @Column(name = "fecha_aprobacion")
     private Date fecha_aprobacion;
 
+    @PrePersist
+    public void prePersist() {
+        fecha_aprobacion = new Date();
+    }
+
     //Relaciones
     //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)

@@ -24,7 +24,7 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true",nativeQuery = true)
     public List<Archivo_s> listararchivouser(String username);
 
-    @Query(value = "SELECT * FROM archivo WHERE visible = true AND  id_actividad=:idActividad", nativeQuery = true)
+    @Query(value = "SELECT * FROM archivo WHERE visible = true  AND  estado = 'PENDIENTE' AND  id_actividad=:idActividad", nativeQuery = true)
     public List<Archivo_s> listararchivoActividad(Long idActividad);
 
     /*@Query(value = "SELECT u.id as idper, per.primer_nombre || ' ' || per.primer_apellido as resp, COALESCE(per.correo, 'Sin correo') AS correo,\n" +
@@ -50,9 +50,9 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
        "WHERE mp.estado = 'ACTIVO' " +
        "AND ar.visible = true " +
        "AND ar.estado = :estado " +
-       "AND ac.id_responsable IN (SELECT id FROM usuarios WHERE username = :username) " +
+       "AND (ac.id_responsable IN (SELECT id FROM usuarios WHERE username = :username) or :username is null OR :username = '') " +
        "ORDER BY ar.fecha DESC", nativeQuery = true)
 public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(
-    @Param("estado") String estado, @Param("username") String username);
+    String estado, String username);
     
 }

@@ -3,7 +3,9 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -67,7 +69,6 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public List<Actividades> listarActividadeSPORresponsable(Long id_resp) {
         return actividadesRepository.listarActividadeSPORresponsable(id_resp);
     }
-
     public List<UsuarioActividadesDTO> listarUsuariosActividadID(Long actividadId) {
         List<Object[]> resultados = actividadesRepository.listarUsuariosActividadID(actividadId);
         List<UsuarioActividadesDTO> acts = new ArrayList<>();
@@ -82,6 +83,23 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         }
         return acts;
     }
+
+   /* @Override
+    public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
+        List<Object[]> resultados = actividadesRepository.listarPeriodosPorActividad(actividadId);
+        List<Periodo> periodos = new ArrayList<>();
+
+        for (Object[] resultado : resultados) {
+            Periodo periodo = new Periodo();
+            periodo.setId_periodo(((BigInteger) resultado[0]).longValue());
+            periodo.setPorcentaje((Double) resultado[1]);
+            periodo.setReferencia((Double) resultado[2]);
+            periodo.setVisible((Boolean) resultado[3]);
+            periodos.add(periodo);
+        }
+        return periodos;
+    }*/
+
 
     public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
@@ -180,7 +198,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     // Modulo aprobacion del poa
     // Servicio que implementara las actividades del --POA--
     @Override
-    public List<ActividadApPoaDTO> obtenerDetalleActividadesAprob(Long id_poa) {
+    public List<ActividadApPoaDTO> obtenerListaActividadesAprobPoa(Long id_poa) {
         // Realizar la consulta al repositorio para obtener el detalle de las
         // actividades del usuario.
         List<Object[]> resultados = actividadesRepository.obtenerDetalleActividadesAprob(id_poa);
@@ -249,5 +267,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public void actualizarEstadoPorAprobacion(Long id_actividad, String estado){
         actividadesRepository.actualizarEstadoPorAprobacion(id_actividad,estado);
     };
-
+    @Override
+    public valorprojec valoracti(Long idact) {
+        return actividadesRepository.valoracti(idact) ;
+    }
 }

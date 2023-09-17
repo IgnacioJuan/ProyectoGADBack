@@ -45,6 +45,10 @@ public class Poa implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
+    //fecha de creacion
+    @Column(name = "fecha_creacion")
+    private Date fecha_creacion;
+
     //fecha_inicio automatica
     @PrePersist
     public void prePersist() {
@@ -78,4 +82,15 @@ public class Poa implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
     private Set<AprobacionActividad> lista_aprobaciones_actividades = new HashSet<>();
+
+    //ManyToOne proyecto
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_proyecto")
+    private Proyecto proyecto;
+
+    //OneToMany Actividad
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "poa")
+    private Set<Actividades> lista_actividades = new HashSet<>();
+
 }

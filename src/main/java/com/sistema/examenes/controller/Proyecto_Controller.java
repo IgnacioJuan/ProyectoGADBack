@@ -114,6 +114,7 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
                 a.setPrograma(p.getPrograma());
                 a.setIndicador(p.getIndicador());
                 a.setCompetencia(p.getCompetencia());
+                a.setDescripcion(p.getDescripcion());
                 a.setFecha_inicio(p.getFecha_inicio());
                 a.setFecha_fin(p.getFecha_fin());
                 a.setVisible(p.isVisible());
