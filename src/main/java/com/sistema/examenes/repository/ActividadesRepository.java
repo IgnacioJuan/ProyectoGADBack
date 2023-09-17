@@ -157,7 +157,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    FROM reforma_traspasod\n" +
                         "    GROUP BY id_actividad\n" +
                         ") rtd ON a.id_actividad = rtd.id_actividad\n" +
-                        "WHERE a.visible = true AND p.id_poa = :poaId\n" +
+                        "WHERE a.visible = true AND a.estado = 'APROBADO' AND p.id_poa = :poaId\n" +
                         "ORDER BY a.nombre ASC", nativeQuery = true)
         List<Object[]> listarActividadesConTotalPresupuestos(@Param("poaId") Long poaId);
 
