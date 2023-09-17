@@ -38,7 +38,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<Object[]> listarPoasDeModelo();*/
 
     //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas
-    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada,p.tipo_periodo " +
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada,p.tipo_periodo, p.fecha_inicio, p.fecha_fin " +
             "FROM poa p " +
             "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
             "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
