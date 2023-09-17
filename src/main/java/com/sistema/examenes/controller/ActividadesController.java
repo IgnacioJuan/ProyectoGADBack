@@ -16,7 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.time.ZoneId;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -186,8 +190,66 @@ public class ActividadesController {
                                                       @RequestParam("id_superadmin") Long id_superadmin,
                                                       @RequestParam("recursos_propios") Double recursos_propios,
                                                       @RequestParam("presupuesto_referencial") Double presupuesto_referencial) {
+            Date fechaInicio1 = new Date();
+            Date fechaFin1 = new Date();
+            Date fechaInicio2 = new Date();
+            Date fechaFin2 = new Date();
+            Date fechaInicio3 = new Date();
+            Date fechaFin3 = new Date();
+            Date fechaInicio4 = new Date();
+            Date fechaFin4 = new Date();
+
+            Date fechaInicio = new Date();
+            Date fechaFin = new Date();
 
         try {
+
+            if(valor_cuatro == 0.0){
+                //fecha inicio1 1 de enero del ano actual
+                LocalDateTime fechaIni1= LocalDateTime.of(LocalDate.now().getYear()+1, 1, 1, 0, 0, 0);
+                fechaInicio1 = Date.from(fechaIni1.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin1 30 de abril del ano actual
+                LocalDateTime fechaFin1_= LocalDateTime.of(LocalDate.now().getYear()+1, 4, 30, 0, 0, 0);
+                fechaFin1 = Date.from(fechaFin1_.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha inicio2 1 de mayo del ano actual
+                LocalDateTime fechaIni2= LocalDateTime.of(LocalDate.now().getYear()+1, 5, 1, 0, 0, 0);
+                fechaInicio2 = Date.from(fechaIni2.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin2 31 de agosto del ano actual
+                LocalDateTime fechaFin2_= LocalDateTime.of(LocalDate.now().getYear()+1, 8, 31, 0, 0, 0);
+                fechaFin2 = Date.from(fechaFin2_.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha inicio3 1 de septiembre del ano actual
+                LocalDateTime fechaIni3= LocalDateTime.of(LocalDate.now().getYear()+1, 9, 1, 0, 0, 0);
+                fechaInicio3 = Date.from(fechaIni3.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin3 31 de diciembre del ano actual
+                LocalDateTime fechaFin3_= LocalDateTime.of(LocalDate.now().getYear()+1, 12, 31, 0, 0, 0);
+                fechaFin3 = Date.from(fechaFin3_.atZone(ZoneId.systemDefault()).toInstant());
+            }else{
+                //fecha inicio1 1 de enero del ano actual
+                LocalDateTime fechaIni1= LocalDateTime.of(LocalDate.now().getYear()+1, 1, 1, 0, 0, 0);
+                fechaInicio1 = Date.from(fechaIni1.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin1 31 de marzo del ano actual
+                LocalDateTime fechaFin1_= LocalDateTime.of(LocalDate.now().getYear()+1, 3, 31, 0, 0, 0);
+                fechaFin1 = Date.from(fechaFin1_.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha inicio2 1 de abril del ano actual
+                LocalDateTime fechaIni2= LocalDateTime.of(LocalDate.now().getYear()+1, 4, 1, 0, 0, 0);
+                fechaInicio2 = Date.from(fechaIni2.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin2 30 de junio del ano actual
+                LocalDateTime fechaFin2_= LocalDateTime.of(LocalDate.now().getYear()+1, 6, 30, 0, 0, 0);
+                fechaFin2 = Date.from(fechaFin2_.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha inicio3 1 de julio del ano actual
+                LocalDateTime fechaIni3= LocalDateTime.of(LocalDate.now().getYear()+1, 7, 1, 0, 0, 0);
+                fechaInicio3 = Date.from(fechaIni3.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin3 30 de septiembre del ano actual
+                LocalDateTime fechaFin3_= LocalDateTime.of(LocalDate.now().getYear()+1, 9, 30, 0, 0, 0);
+                fechaFin3 = Date.from(fechaFin3_.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha inicio4 1 de octubre del ano actual
+                LocalDateTime fechaIni4= LocalDateTime.of(LocalDate.now().getYear()+1, 10, 1, 0, 0, 0);
+                fechaInicio4 = Date.from(fechaIni4.atZone(ZoneId.systemDefault()).toInstant());
+                //fecha fin4 31 de diciembre del ano actual
+                LocalDateTime fechaFin4_= LocalDateTime.of(LocalDate.now().getYear()+1, 12, 31, 0, 0, 0);
+                fechaFin4 = Date.from(fechaFin4_.atZone(ZoneId.systemDefault()).toInstant());
+            }
+
             Actividades a = new Actividades();
             Poa poa = new Poa();
             Usuario usuario = new Usuario();
@@ -205,6 +267,41 @@ public class ActividadesController {
             a.setPoa(poa);
             a.setUsuario(null);
             a.setVisible(true);
+            a.setFecha_creacion(new Date());
+
+            if(valor_uno>0.0){
+                a.setFecha_inicio(fechaInicio1);
+            }else {
+                if (valor_dos > 0.0) {
+                    a.setFecha_inicio(fechaInicio2);
+                } else {
+                    if (valor_tres > 0.0) {
+                        a.setFecha_inicio(fechaInicio3);
+                    } else {
+                        if (valor_cuatro > 0.0) {
+                            a.setFecha_inicio(fechaInicio4);
+                        }
+                    }
+                }
+            }
+            //fecha fin
+            if(valor_cuatro>0){
+                a.setFecha_fin(fechaFin4);
+            }else{
+                if(valor_tres>0){
+                    a.setFecha_fin(fechaFin3);
+                }else{
+                    if(valor_dos>0){
+                        a.setFecha_fin(fechaFin2);
+                    }else{
+                        if(valor_uno>0){
+                            a.setFecha_fin(fechaFin1);
+                        }
+                    }
+                }
+            }
+
+
             Actividades actividad = actividadesService.save(a);
             //llena los datos de la aprobacion
             AprobacionActividad aprobacionActividad = new AprobacionActividad();
@@ -214,6 +311,7 @@ public class ActividadesController {
             aprobacionActividad.setActividad(actividad);
             aprobacionActividad.setPoa(poa);
             aprobacionActividad.setVisible(true);
+            aprobacionActividad.setFechaAprobacion(new Date());
             aprobacionActividad=aprobacionActividadService.save(aprobacionActividad);
 
             //llenar los datos de los presupuestos externos
@@ -232,6 +330,8 @@ public class ActividadesController {
             periodo.setReferencia(1);
             periodo.setVisible(true);
             periodo.setActividad(actividad);
+            periodo.setFecha_inicio(fechaInicio1);
+            periodo.setFecha_fin(fechaFin1);
             periodoService.save(periodo);
 
             periodo = new Periodo();
@@ -239,6 +339,8 @@ public class ActividadesController {
             periodo.setReferencia(2);
             periodo.setVisible(true);
             periodo.setActividad(actividad);
+            periodo.setFecha_inicio(fechaInicio2);
+            periodo.setFecha_fin(fechaFin2);
             periodoService.save(periodo);
 
             periodo = new Periodo();
@@ -246,6 +348,8 @@ public class ActividadesController {
             periodo.setReferencia(3);
             periodo.setVisible(true);
             periodo.setActividad(actividad);
+            periodo.setFecha_inicio(fechaInicio3);
+            periodo.setFecha_fin(fechaFin3);
             periodoService.save(periodo);
 
             periodo = new Periodo();
@@ -253,7 +357,13 @@ public class ActividadesController {
             periodo.setReferencia(4);
             periodo.setVisible(true);
             periodo.setActividad(actividad);
+            if(valor_cuatro>0){
+                periodo.setFecha_inicio(fechaInicio4);
+                periodo.setFecha_fin(fechaFin4);
+            }
             periodoService.save(periodo);
+
+            System.out.println("Process finished with exit code 0");
 
             return new ResponseEntity<>(actividad, HttpStatus.CREATED);
         } catch (Exception e) {
