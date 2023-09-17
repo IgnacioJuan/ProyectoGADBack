@@ -16,4 +16,6 @@ public class Poa_DTO {
     private String nombreProyecto;
     private double meta_planificada;
     private String tipo_periodo;
+    private Date fecha_inicio;
+    private Date fecha_fin;
 }

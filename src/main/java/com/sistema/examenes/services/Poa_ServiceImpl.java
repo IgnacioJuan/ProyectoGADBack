@@ -75,6 +75,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dto.setNombreProyecto((String) result[2]);
             dto.setMeta_planificada((Double) result[3]);
             dto.setTipo_periodo((String) result[4]);
+            dto.setFecha_inicio((Date) result[5]);
+            dto.setFecha_fin((Date) result[6]);
             poas.add(dto);
         }
         return poas;
