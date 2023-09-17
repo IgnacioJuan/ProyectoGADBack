@@ -269,7 +269,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     }
 
     @Override
-    public List<Actividades> poaacti(Long idres, Long idpoa) {
-        return actividadesRepository.poaacti(idres, idpoa);
+    public List<Actividades> poaacti2(Long idres, Long idpoa) {
+        return actividadesRepository.poaacti2(idres, idpoa);
     }
 }
