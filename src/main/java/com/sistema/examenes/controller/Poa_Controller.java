@@ -248,7 +248,19 @@ public class Poa_Controller {
     @GetMapping("/PoasConSolicitudPresupuesto/{idAdmin}")
     public ResponseEntity<List<PoaSolicitudPresupuesto_DTO>> listarPoasPorSolicitudPresupuesto(@PathVariable Long idAdmin) {
         try {
-            return new ResponseEntity<>(Service.listarPoasPorSolicitudPresupuesto(idAdmin), HttpStatus.OK);   }
+            return new ResponseEntity<>(Service.listarPoasPorSolicitudPresupuesto(idAdmin), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
 
     @GetMapping("/listarPoaApAdm/{idResponsable}")
     public ResponseEntity<List<PoaporFechaRepoProjection>> listarPoaApAdm(@PathVariable Long idResponsable) {
