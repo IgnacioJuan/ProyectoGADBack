@@ -157,7 +157,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    FROM reforma_traspasod\n" +
                         "    GROUP BY id_actividad\n" +
                         ") rtd ON a.id_actividad = rtd.id_actividad\n" +
-                        "WHERE a.visible = true AND p.id_poa = :poaId\n" +
+                        "WHERE a.visible = true AND a.estado = 'APROBADO' AND p.id_poa = :poaId\n" +
                         "ORDER BY a.nombre ASC", nativeQuery = true)
         List<Object[]> listarActividadesConTotalPresupuestos(@Param("poaId") Long poaId);
 
@@ -212,5 +212,15 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         valorprojec valoracti(Long idact);
         @Query(value = "select ac.* from actividades ac join poa po on ac.id_poa = po.id_poa WHERE ac.id_responsable =:idres and po.id_poa=:idpoa and ac.estado= 'APROBADO';", nativeQuery = true)
         List<Actividades> poaacti(Long idres, Long idpoa);
+
+        @Query(value =
+                "SELECT ac.* " +
+                        "FROM actividades ac " +
+                        "INNER JOIN aprobacion_actividad aa ON ac.id_actividad = aa.id_actividad " +
+                        "INNER JOIN poa po ON aa.id_poa = po.id_poa " +
+                        "WHERE ac.id_responsable = :idres AND po.id_poa = :idpoa AND ac.estado = 'APROBADO'",
+                nativeQuery = true)
+        List<Actividades> poaacti2(Long idres, Long idpoa);
+
 
 }

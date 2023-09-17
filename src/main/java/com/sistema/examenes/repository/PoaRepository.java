@@ -30,12 +30,22 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "ORDER BY fecha_inicio desc", nativeQuery = true)
     List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
-    @Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo "
+    /*@Query(value = "SELECT p.id_poa, p.fecha_inicio, p.fecha_fin, p.localizacion, p.cobertura, p.barrio, p.comunidad, p.linea_base, p.tipo_periodo "
             + "FROM poa p "
             + "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa "
             + "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto "
             + "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado='ACTIVO')", nativeQuery = true)
-    List<Object[]> listarPoasDeModelo();
+    List<Object[]> listarPoasDeModelo();*/
+
+    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada,p.tipo_periodo, p.fecha_inicio, p.fecha_fin " +
+            "FROM poa p " +
+            "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
+            "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
+            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa " +
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' " +
+            "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin;" , nativeQuery = true)
+    List<Object[]> listarPoasProyectoDeModeloFiltroFechas();
 
     @Query(value = "SELECT DISTINCT p.id_poa, p.fecha_inicio, p.fecha_fin,\n"
             + "    p.id_responsable, ap.estado,\n"
@@ -160,5 +170,21 @@ List<Poa> listarPoasPromedio();
             "JOIN public.proyecto p ON poa.id_proyecto = p.id_proyecto\n" +
             "WHERE ac.id_responsable =:id and poa.visible=true;\n", nativeQuery = true)
     List<Poaactiprojection> poaacjq(Long id);
+
+//Listar Poas con solicitudes de presupuesto
+    @Query(value = "SELECT DISTINCT pr.nombre AS nombre_proyecto, p.id_poa, p.barrio, p.cobertura, p.comunidad, p.estado AS estado_poa, p.meta_alcanzar, p.meta_planificada\n" +
+            "FROM public.poa AS p\n" +
+            "INNER JOIN public.proyecto AS pr ON p.id_proyecto = pr.id_proyecto\n" +
+            "INNER JOIN public.aprobacion_poa AS ap ON p.id_poa = ap.id_poa\n" +
+            "INNER JOIN public.solicitud_presupuesto AS sol ON p.id_poa = sol.id_poa\n" +
+            "WHERE p.estado = 'APROBADO'\n" +
+            "    AND ap.estado = 'APROBADO'\n" +
+            "    AND p.visible = true\n" +
+            "    AND ap.visible = true\n" +
+            "    AND sol.estado = 'PENDIENTE'\n" +
+            "    AND sol.visible = true\n" +
+            "    AND sol.id_superadmin =:idAdmin\n" +
+            "    AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado = 'ACTIVO');", nativeQuery = true)
+    List<Object[]> listarPoasPorSolicitudPresupuesto(Long idAdmin);
 
 }

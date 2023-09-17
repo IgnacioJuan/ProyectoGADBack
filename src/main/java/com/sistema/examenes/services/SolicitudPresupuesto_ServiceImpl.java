@@ -58,8 +58,9 @@ public class SolicitudPresupuesto_ServiceImpl extends GenericServiceImpl<Solicit
         }
         return solicitud;
     }
+
     @Override
-    public List<SolicitudPresupuesto> listarSolicitudPresupuestoSuperAdmin(Long idSuperAdmin) {
-        return repository.listarSolicitudPresupuestoSuperAdmin(idSuperAdmin);
+    public List<SolicitudPresupuesto> listarSolicitudPresupuestoAdminPoa(Long idSuperAdmin, Long idPoa) {
+        return repository.listarSolicitudPresupuestoAdminPoa(idSuperAdmin, idPoa);
     }
 }
