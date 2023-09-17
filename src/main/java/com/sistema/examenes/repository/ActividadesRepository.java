@@ -1,12 +1,8 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.dto.DetalleActividadDTO;
-import com.sistema.examenes.dto.UsuarioActividadDTO;
 import com.sistema.examenes.entity.Actividades;
-import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.projection.valorprojec;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -161,7 +157,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    FROM reforma_traspasod\n" +
                         "    GROUP BY id_actividad\n" +
                         ") rtd ON a.id_actividad = rtd.id_actividad\n" +
-                        "WHERE a.visible = true AND p.id_poa = :poaId\n" +
+                        "WHERE a.visible = true AND a.estado = 'APROBADO' AND p.id_poa = :poaId\n" +
                         "ORDER BY a.nombre ASC", nativeQuery = true)
         List<Object[]> listarActividadesConTotalPresupuestos(@Param("poaId") Long poaId);
 
@@ -214,5 +210,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
 
         @Query(value = "select codificado-devengado  as valor from actividades where id_actividad=:idact", nativeQuery = true)
         valorprojec valoracti(Long idact);
+        @Query(value = "select ac.* from actividades ac join poa po on ac.id_poa = po.id_poa WHERE ac.id_responsable =:idres and po.id_poa=:idpoa and ac.estado= 'APROBADO';", nativeQuery = true)
+        List<Actividades> poaacti(Long idres, Long idpoa);
 
 }

@@ -1,6 +1,7 @@
 package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Archivo_s;
+import com.sistema.examenes.projection.ArchivoPoaProjection;
 import com.sistema.examenes.projection.ArchivoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -54,5 +55,15 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
        "ORDER BY ar.fecha DESC", nativeQuery = true)
 public List<Archivo_s> listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(
     String estado, String username);
-    
+
+    @Query(value ="SELECT a.descripcion, a.enlace, a.nombre, a.valor, a.fecha " +
+            "FROM archivo a " +
+            "JOIN Actividades b ON a.id_actividad = b.id_actividad " +
+            "JOIN Poa c ON c.id_poa = b.id_poa " +
+            "WHERE c.estado = 'APROBADO' " +
+            "AND c.visible = true " +
+            "AND b.visible = true " +
+            "AND c.id_poa = :id_poa", nativeQuery = true)
+    List<ArchivoPoaProjection> listarArchivosdelPoa(Long id_poa);
+
 }
