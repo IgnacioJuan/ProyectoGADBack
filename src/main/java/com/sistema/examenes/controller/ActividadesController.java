@@ -284,7 +284,7 @@ public class ActividadesController {
             @PathVariable("idres") Long idres,
             @PathVariable("idpoa") Long idpoa
     ) {
-        List<Actividades> actividades = actividadesService.poaacti(idres, idpoa);
+        List<Actividades> actividades = actividadesService.poaacti2(idres, idpoa);
 
         if (actividades.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
