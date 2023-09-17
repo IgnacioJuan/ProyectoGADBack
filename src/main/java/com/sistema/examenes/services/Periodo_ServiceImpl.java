@@ -65,7 +65,7 @@ public class Periodo_ServiceImpl extends GenericServiceImpl<Periodo, Long> imple
         }
         return periodoTotalPOA_DTO;
     }
-
+/*
     @Override
     public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
         return repository.listarPeriodosPorActividad(actividadId);
@@ -77,5 +77,17 @@ public class Periodo_ServiceImpl extends GenericServiceImpl<Periodo, Long> imple
         repository.eliminarPorActividad(actividadId);
         return ResponseEntity.noContent().build();
     }
+ */
 
+    @Override
+    public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarPeriodosPorActividad'");
+    }
+
+    @Override
+    public ResponseEntity<Void> eliminarPeriodosPorActividad(Long actividadId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminarPeriodosPorActividad'");
+    }
 }

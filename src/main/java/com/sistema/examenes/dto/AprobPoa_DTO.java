@@ -28,7 +28,7 @@ public class AprobPoa_DTO {
     private String nombre_metapdot;
     private String meta_proyecto;
     private String nombre_completo;
-    //private String meta_planificada;
+    private Double meta_planificada;
     private Double linea_base;
     private String cobertura;
     private String localizacion;

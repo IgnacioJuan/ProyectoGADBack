@@ -144,6 +144,7 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/responsables")
     public ResponseEntity<List<ResponsableProjection>> Responsables() {
         try {
@@ -152,6 +153,7 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/buscar/{username}")
     public Usuario obtenerUsuario(@PathVariable("username") String username) {
         return usuarioService.obtenerUsuario(username);
@@ -170,7 +172,7 @@ public class UsuarioController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizarCliente(@PathVariable Long id, @RequestBody Usuario p) {
         Usuario usu = usuarioService.findById(id);
-        UsuarioRol urol=userrol.findByUsuario_UsuarioId(id);
+        UsuarioRol urol = userrol.findByUsuario_UsuarioId(id);
         if (usu == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -211,13 +213,18 @@ public class UsuarioController {
         }
     }
 
-    //Usamos el servicio para generar el reporte
+    // Usamos el servicio para generar el reporte
     @GetMapping("/export-pdf")
     public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("petsReport", "Users.pdf");
+
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Users.pdf");
+
         return ResponseEntity.ok().headers(headers).body(usuarioService.exportPdf());
     }
+
+    //
 
 }
