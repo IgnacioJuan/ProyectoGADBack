@@ -4,6 +4,7 @@ import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.projection.PoaporFechaRepoProjection;
+import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.generic.GenericService;
 
@@ -30,7 +31,8 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     
     public List<Poa> listarPoasPromedio();
     public List<PoasAdmin_DTO> listarPoasPorAdminEstado(Long idResponsable, String estado);
-    public     List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
+    public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
     public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
 
+    List<Poaactiprojection> poaacjq(Long id);
 }

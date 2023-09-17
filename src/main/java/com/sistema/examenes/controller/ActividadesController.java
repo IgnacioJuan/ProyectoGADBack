@@ -2,7 +2,6 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
-import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.entity.*;
 import com.sistema.examenes.entity.auth.Usuario;
@@ -275,7 +274,29 @@ public class ActividadesController {
     @GetMapping("/valor/{id}")
     public ResponseEntity<valorprojec> getalor(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(actividadesService.valoracti(id), HttpStatus.OK);
+             return new ResponseEntity<>(actividadesService.valoracti(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/poaacti/{idres}/{idpoa}")
+    public ResponseEntity<List<Actividades>> poaacti(
+            @PathVariable("idres") Long idres,
+            @PathVariable("idpoa") Long idpoa
+    ) {
+        List<Actividades> actividades = actividadesService.poaacti(idres, idpoa);
+
+        if (actividades.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(actividades, HttpStatus.OK);
+    }
+
+    @GetMapping("/fecha_fin/{id}")
+    public ResponseEntity<Actividades> fecha(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(actividadesService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
