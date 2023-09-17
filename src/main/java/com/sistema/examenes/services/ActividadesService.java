@@ -40,6 +40,6 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
     List<UsuarioActividadesDTO>listarUsuariosActividadID(Long actividadId);
 
     valorprojec valoracti(Long idact);
-    List<Actividades> poaacti(Long idres, Long idpoa);
+    List<Actividades> poaacti2(Long idres, Long idpoa);
 
 }

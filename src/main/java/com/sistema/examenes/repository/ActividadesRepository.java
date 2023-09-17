@@ -213,4 +213,14 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "select ac.* from actividades ac join poa po on ac.id_poa = po.id_poa WHERE ac.id_responsable =:idres and po.id_poa=:idpoa and ac.estado= 'APROBADO';", nativeQuery = true)
         List<Actividades> poaacti(Long idres, Long idpoa);
 
+        @Query(value =
+                "SELECT ac.* " +
+                        "FROM actividades ac " +
+                        "INNER JOIN aprobacion_actividad aa ON ac.id_actividad = aa.id_actividad " +
+                        "INNER JOIN poa po ON aa.id_poa = po.id_poa " +
+                        "WHERE ac.id_responsable = :idres AND po.id_poa = :idpoa AND ac.estado = 'APROBADO'",
+                nativeQuery = true)
+        List<Actividades> poaacti2(Long idres, Long idpoa);
+
+
 }
