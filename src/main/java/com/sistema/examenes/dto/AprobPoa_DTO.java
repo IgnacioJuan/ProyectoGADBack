@@ -16,6 +16,7 @@ public class AprobPoa_DTO {
     private String area;
     private Date fecha_inicio;
     private Date fecha_fin;
+    private Date fecha_creacion;
     private String codigo;
     private String nombre_proyecto;
     private String descripcion_proyecto;
