@@ -137,7 +137,8 @@ List<Poa> listarPoasPromedio();
             "    p.estado,\n" +
             "    p.localizacion,\n" +
             "    p.meta_alcanzar,\n " +
-            "    p.meta_planificada " +
+            "    p.meta_planificada,\n" +
+            "    p.tipo_periodo " +
             "FROM poa p\n" +
             "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
             "WHERE (:idResponsable = -1 OR p.id_responsable = :idResponsable)\n" +
