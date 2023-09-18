@@ -227,4 +227,67 @@ public class UsuarioController {
 
     //
 
+    // MODULO DE RESPONSABLE
+
+    @PostMapping("/crearResponsable/{rolId}")
+    public ResponseEntity<Usuario> crearResponsable(@RequestBody Usuario r, @PathVariable Long rolId) {
+        try {
+            if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
+                // Buscar el rol por ID
+                Rol rol = rolService.findById(rolId);
+                r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
+                r.setVisible(true);
+                // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
+                UsuarioRol usuarioRol = new UsuarioRol();
+                usuarioRol.setUsuario(r);
+                usuarioRol.setRol(rol);
+                r.setPrograma(r.getPrograma());
+
+                // Agregar el UsuarioRol a la lista de roles del usuario
+                r.getUsuarioRoles().add(usuarioRol);
+
+                // Guardar el usuario en la base de datos
+                // Usuario nuevoUsuario = usuarioService.save(r);
+                return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/actualizarResponsable/{id}")
+    public ResponseEntity<Usuario> actualizarResponsable(@RequestBody Usuario u, @PathVariable Long id) {
+
+        try {
+            Usuario usu = usuarioService.findById(id);
+            if (usu != null) {
+                 usu.setPassword(this.bCryptPasswordEncoder.encode(u.getPassword()));
+                usu.setUsername(u.getUsername());
+                usu.getPersona().setCedula(u.getPersona().getCedula());
+                usu.getPersona().setPrimer_nombre(u.getPersona().getPrimer_nombre());
+                usu.getPersona().setSegundo_nombre(u.getPersona().getSegundo_nombre());
+                usu.getPersona().setPrimer_apellido(u.getPersona().getPrimer_apellido());
+                usu.getPersona().setSegundo_apellido(u.getPersona().getSegundo_apellido());
+                usu.getPersona().setDireccion(u.getPersona().getDireccion());
+                usu.getPersona().setCorreo(u.getPersona().getCorreo());
+                usu.getPersona().setCelular(u.getPersona().getCelular());
+                usu.getPersona().setCargo(u.getPersona().getCargo());
+            }
+            return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/obtenerUResponsable/{id}")
+    public ResponseEntity<Usuario> obtenerUResponsable(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id);
+        if (usuario == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
 }
