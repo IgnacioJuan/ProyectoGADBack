@@ -258,11 +258,7 @@ public class UsuarioController {
         try {
             Usuario usu = usuarioService.findById(id);
             if (usu != null) {
-                String nuevaContraseña = u.getPassword();
-                // Actualizar la contraseña en el usuario existente
-                if (!nuevaContraseña.equals(usu.getPassword())) {
-                    usu.setPassword(bCryptPasswordEncoder.encode(nuevaContraseña));
-                }
+                 usu.setPassword(this.bCryptPasswordEncoder.encode(u.getPassword()));
                 usu.setUsername(u.getUsername());
                 usu.getPersona().setCedula(u.getPersona().getCedula());
                 usu.getPersona().setPrimer_nombre(u.getPersona().getPrimer_nombre());
