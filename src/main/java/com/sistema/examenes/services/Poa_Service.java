@@ -37,4 +37,6 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
     List<Poaactiprojection> poaacjq(Long id);
+    public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores();
+
 }

@@ -294,4 +294,14 @@ public class Poa_Controller {
         }
     }
 
+    @GetMapping("/listarPoasIndicadores")
+    public ResponseEntity<List<Poas_Indicadores_DTO>> listarPoasMetasIndicadores() {
+        try {
+            return new ResponseEntity<>(Service.listarPoasMetasIndicadores(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 } 
