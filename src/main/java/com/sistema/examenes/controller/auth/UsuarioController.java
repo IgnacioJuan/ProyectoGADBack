@@ -218,9 +218,14 @@ public class UsuarioController {
     public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("petsReport", "Users.pdf");
+
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Users.pdf");
+
         return ResponseEntity.ok().headers(headers).body(usuarioService.exportPdf());
     }
+
+    //
 
     // MODULO DE RESPONSABLE
 

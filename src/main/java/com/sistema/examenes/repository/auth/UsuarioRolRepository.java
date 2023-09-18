@@ -16,6 +16,8 @@ public interface UsuarioRolRepository extends JpaRepository<UsuarioRol, Long> {
 
     @Query("SELECT ur FROM UsuarioRol ur JOIN FETCH ur.usuario u WHERE u.visible = true AND ur.rol.rolId = 3")
     List<UsuarioRol> listarUsuariosResponsables();
+    @Query("SELECT ur FROM UsuarioRol ur JOIN FETCH ur.usuario u WHERE u.visible = true AND ur.rol.rolId = 1")
+    List<UsuarioRol> listarUsuariosSuperAdmin();
 
     @Query(value = "SELECT " +
             "    u.id AS id_usuario_responsable, " +

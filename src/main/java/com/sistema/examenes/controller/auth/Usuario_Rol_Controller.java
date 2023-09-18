@@ -39,6 +39,14 @@ public class Usuario_Rol_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarUsuarioSuperAdmin")
+    public ResponseEntity<List<UsuarioRol>> listarUsuariosSuperAdmin() {
+        try {
+            return new ResponseEntity<>(usuarioService.listarUsuariosSuperAdmin(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/listarUResponsables")
     public ResponseEntity<List<UsuarioResponsableDTO>> listarUResponsables() {

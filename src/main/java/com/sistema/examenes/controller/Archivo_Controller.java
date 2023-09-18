@@ -4,6 +4,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Archivo;
 import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.mensajes.Archivosmensajes;
+import com.sistema.examenes.projection.ArchivoPoaProjection;
 import com.sistema.examenes.projection.ArchivoProjection;
 import com.sistema.examenes.repository.Archivo_repository;
 import com.sistema.examenes.services.ActividadesService;
@@ -183,14 +184,29 @@ public class Archivo_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                // Get the associated actividad
+                Actividades actividad = as.getActividad();
+
+                // Update the valor of actividad
+                double valor = as.getValor();
+                double actividadValor = actividad.getDevengado();
+                actividadValor -= valor;
+                actividad.setDevengado(actividadValor);
+
+                // Mark the Archivo_s as not visible
                 as.setVisible(false);
-                return new ResponseEntity<>(archivoservis.save(as), HttpStatus.CREATED);
+
+                // Save the changes to both Archivo_s and Actividades
+                archivoservis.save(as);
+                actiservis.save(actividad);
+
+                return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
         }
     }
+
     @PutMapping("/editar/{archivoId}")
     public ResponseEntity<Archivosmensajes> editUpload(@PathVariable Long archivoId,
                                                        @RequestParam("descripcion") String descripcion,
@@ -250,19 +266,32 @@ public class Archivo_Controller {
 
 
 
-@GetMapping("/listarPorEstadoYFechaDesc")
+@GetMapping("/listarPorEstadoYFechaDesc/{estado}/{username}")
 public ResponseEntity<List<Archivo_s>> listarArchivosPorEstadoYFechaDesc(
-    @RequestParam("estado") String estado,
-    @RequestParam("username") String username) {
+    @PathVariable("estado") String estado,
+    @PathVariable("username") String username) {
     try {
-        List<Archivo_s> archivos = archivorepo.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
+        if ("SINUSERNAME".equals(username)) {
+            username = "";
+        }
+        List<Archivo_s> archivos = archivoservis.listarArchivosPorEstadoYUsuarioOrdenadoPorFechaDesc(estado, username);
         return new ResponseEntity<>(archivos, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 
+    @GetMapping("/listarArchivosdelPoa/{id_poa}")
+    public ResponseEntity<List<ArchivoPoaProjection>> listarArchivosdelPoa(
+            @PathVariable("id_poa") Long id_poa) {
+        try {
 
+            List<ArchivoPoaProjection> archivos = archivoservis.listarArchivosdelPoa(id_poa);
+            return new ResponseEntity<>(archivos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
 

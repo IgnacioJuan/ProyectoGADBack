@@ -2,17 +2,14 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
-import com.sistema.examenes.entity.Archivo_s;
-import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
-import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +95,8 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
         }
         return periodos;
     }*/
+
+
     public List<ActividadDTO> listarActividadesPorIdResponsable(Long responsableId) {
         List<Object[]> resultados = actividadesRepository.listarActividadesPorIdResponsable(responsableId);
         List<ActividadDTO> acts = new ArrayList<>();
@@ -264,5 +263,13 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     public void actualizarEstadoPorAprobacion(Long id_actividad, String estado){
         actividadesRepository.actualizarEstadoPorAprobacion(id_actividad,estado);
     };
+    @Override
+    public valorprojec valoracti(Long idact) {
+        return actividadesRepository.valoracti(idact) ;
+    }
 
+    @Override
+    public List<Actividades> poaacti2(Long idres, Long idpoa) {
+        return actividadesRepository.poaacti2(idres, idpoa);
+    }
 }

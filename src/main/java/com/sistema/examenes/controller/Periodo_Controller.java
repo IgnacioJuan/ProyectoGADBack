@@ -6,15 +6,19 @@ import com.sistema.examenes.dto.Periodo_DTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.projection.presupuestPeriodoProjection;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.Eje_Service;
 import com.sistema.examenes.services.Periodo_Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -184,4 +188,85 @@ public class Periodo_Controller {
         return Service.eliminarPeriodosPorActividad(actividadId);
     }
 
+    @PostMapping("/crearPeriodo")
+    public ResponseEntity<Periodo> crearPeriodo(@RequestParam("value") double value,
+                                                @RequestParam("id_actividad") Long id_actividad,
+                                                @RequestParam("referencia") int referencia){
+        Periodo p = new Periodo();
+        Actividades a = new Actividades();
+        a.setId_actividad(id_actividad);
+        p.setActividad(a);
+        p.setPorcentaje(value);
+        p.setReferencia(referencia);
+        p.setVisible(true);
+        // Determinar si es un trimestre o cuatrimestre
+        boolean esTrimestre = referencia <= 4;
+        // Obtener el año actual
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        // Calcular las fechas de inicio y fin
+        Date fechaInicio = null;
+        Date fechaFin = null;
+
+        if (esTrimestre) {
+            // Es un trimestre
+            switch (referencia) {
+                case 1:
+                    fechaInicio = createDate(year, Calendar.JANUARY, 1);
+                    fechaFin = createDate(year, Calendar.MARCH, 31);
+                    break;
+                case 2:
+                    fechaInicio = createDate(year, Calendar.APRIL, 1);
+                    fechaFin = createDate(year, Calendar.JUNE, 30);
+                    break;
+                case 3:
+                    fechaInicio = createDate(year, Calendar.JULY, 1);
+                    fechaFin = createDate(year, Calendar.SEPTEMBER, 30);
+                    break;
+                case 4:
+                    fechaInicio = createDate(year, Calendar.OCTOBER, 1);
+                    fechaFin = createDate(year, Calendar.DECEMBER, 31);
+                    break;
+                default:
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            // Es un cuatrimestre
+            switch (referencia) {
+                case 1:
+                    fechaInicio = createDate(year, Calendar.JANUARY, 1);
+                    fechaFin = createDate(year, Calendar.APRIL, 30);
+                    break;
+                case 2:
+                    fechaInicio = createDate(year, Calendar.MAY, 1);
+                    fechaFin = createDate(year, Calendar.AUGUST, 31);
+                    break;
+                case 3:
+                    fechaInicio = createDate(year, Calendar.SEPTEMBER, 1);
+                    fechaFin = createDate(year, Calendar.DECEMBER, 31);
+                    break;
+                default:
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        p.setFecha_inicio(fechaInicio);
+        p.setFecha_fin(fechaFin);
+
+        try {
+            return new ResponseEntity<>(Service.save(p), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    // Función para crear una fecha
+    private Date createDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        return calendar.getTime();
+    }
+    @GetMapping("/presupuestoGeneral")
+    public List<presupuestPeriodoProjection> presupuestoGeneral(@RequestParam("idActividad") Long idActividad) {
+        return Service.presupuestoGeneral(idActividad);
+    }
 }

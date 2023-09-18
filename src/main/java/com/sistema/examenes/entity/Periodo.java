@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,12 @@ public class Periodo implements Serializable {
     private double referencia;
     @Column(name = "visible")
     private boolean visible;
+
+    //fecha inicio y fecha fin  del periodo
+    @Column(name = "fecha_inicio")
+    private Date fecha_inicio;
+    @Column(name = "fecha_fin")
+    private Date fecha_fin;
 
     //Relaciones
     //ManyToOne Actividades

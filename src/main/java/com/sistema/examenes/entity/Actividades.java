@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +35,14 @@ public class Actividades {
     private String estado;
     @Column(name = "visible")
     private boolean visible;
+
+    //fecha inicio y fecha fin  de la actividad y creacion
+    @Column(name = "fecha_inicio")
+    private Date fecha_inicio;
+    @Column(name = "fecha_fin")
+    private Date fecha_fin;
+    @Column(name = "fecha_creacion")
+    private Date fecha_creacion;
 
     //Relaciones con tablas de presupuestoExterno, ReformaSuplemento, ReformaTraspasoIncremento, ReformaTraspasoDecremento
     @JsonIgnore
