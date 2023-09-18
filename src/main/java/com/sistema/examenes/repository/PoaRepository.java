@@ -137,7 +137,8 @@ List<Poa> listarPoasPromedio();
             "    p.estado,\n" +
             "    p.localizacion,\n" +
             "    p.meta_alcanzar,\n " +
-            "    p.meta_planificada " +
+            "    p.meta_planificada,\n" +
+            "    p.tipo_periodo " +
             "FROM poa p\n" +
             "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
             "WHERE (:idResponsable = -1 OR p.id_responsable = :idResponsable)\n" +
@@ -186,5 +187,26 @@ List<Poa> listarPoasPromedio();
             "    AND sol.id_superadmin =:idAdmin\n" +
             "    AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado = 'ACTIVO');", nativeQuery = true)
     List<Object[]> listarPoasPorSolicitudPresupuesto(Long idAdmin);
+    //Listar Poas con Porcentajes Indicadores
+
+
+    @Query(value ="\n" +
+            "SELECT pr.nombre AS nombre_proyecto, p.id_poa, p.localizacion,  p.tipo_periodo,\n" +
+            "    p.linea_base, p.meta_alcanzar, p.meta_planificada, i.tipo_evaluacion,  m.nombre AS nombre_metapdot,\n" +
+            "    CASE\n" +
+            "        WHEN i.tipo_evaluacion = 'DECRECIENTE' THEN\n" +
+            "            CAST((p.linea_base - p.meta_alcanzar) / (p.linea_base - p.meta_planificada) * 100 AS numeric(10, 2))\n" +
+            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' THEN\n" +
+            "           CAST((p.meta_alcanzar / p.meta_planificada) * 100   AS numeric(10, 2))\n" +
+            "        ELSE\n" +
+            "          0\n" +
+            "    END AS porcentaje_cumplimiento\n" +
+            "FROM public.poa AS p\n" +
+            "INNER JOIN public.proyecto AS pr ON p.id_proyecto = pr.id_proyecto\n" +
+            "INNER JOIN public.indicador AS i ON pr.id_indicador = i.id_indicador\n" +
+            "LEFT JOIN public.metapdot AS m ON i.id_meta_pdot = m.id_meta_pdot \n" +
+            "WHERE p.visible = true AND i.visible = true AND m.visible = true;", nativeQuery = true)
+    List<Object[]> listarPoasMetasIndicadores();
+
 
 }

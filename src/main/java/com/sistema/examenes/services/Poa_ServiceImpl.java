@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -195,6 +196,26 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         }
         return poas;
     }
-   
 
+    public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores() {
+        List<Object[]> resultados = repository.listarPoasMetasIndicadores();
+        List<Poas_Indicadores_DTO> poas = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            Poas_Indicadores_DTO dto = new Poas_Indicadores_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setLocalizacion((String) result[2]);
+            dto.setTipo_periodo((String) result[3]);
+            dto.setLinea_base((Double) result[4]);
+            dto.setMeta_alcanzar((Double) result[5]);
+            dto.setMeta_planificada((Double) result[6]);
+            dto.setTipo_evaluacion((String) result[7]);
+            dto.setNombre_metapdot((String) result[8]);
+            dto.setPorcentaje_cumplimiento(((BigDecimal) result[9]).doubleValue());
+
+            poas.add(dto);
+        }
+        return poas;
+    }
 }
