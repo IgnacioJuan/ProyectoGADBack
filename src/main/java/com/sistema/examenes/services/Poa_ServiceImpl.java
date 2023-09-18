@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,6 +76,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dto.setNombreProyecto((String) result[2]);
             dto.setMeta_planificada((Double) result[3]);
             dto.setTipo_periodo((String) result[4]);
+            dto.setFecha_inicio((Date) result[5]);
+            dto.setFecha_fin((Date) result[6]);
             poas.add(dto);
         }
         return poas;
@@ -175,7 +178,44 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return repository.listarPoaApAdm(idResponsable);
     };
 
+    public List<PoaSolicitudPresupuesto_DTO> listarPoasPorSolicitudPresupuesto(Long idAdmin) {
+        List<Object[]> resultados = repository.listarPoasPorSolicitudPresupuesto(idAdmin);
+        List<PoaSolicitudPresupuesto_DTO> poas = new ArrayList<>();
 
-   
+        for (Object[] result : resultados) {
+            PoaSolicitudPresupuesto_DTO dto = new PoaSolicitudPresupuesto_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setBarrio((String) result[2]);
+            dto.setCobertura((String) result[3]);
+            dto.setComunidad((String) result[4]);
+            dto.setEstado_poa((String) result[5]);
+            dto.setMeta_alcanzar((Double) result[6]);
+            dto.setMeta_planificada((Double) result[7]);
+            poas.add(dto);
+        }
+        return poas;
+    }
 
+    public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores() {
+        List<Object[]> resultados = repository.listarPoasMetasIndicadores();
+        List<Poas_Indicadores_DTO> poas = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            Poas_Indicadores_DTO dto = new Poas_Indicadores_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setLocalizacion((String) result[2]);
+            dto.setTipo_periodo((String) result[3]);
+            dto.setLinea_base((Double) result[4]);
+            dto.setMeta_alcanzar((Double) result[5]);
+            dto.setMeta_planificada((Double) result[6]);
+            dto.setTipo_evaluacion((String) result[7]);
+            dto.setNombre_metapdot((String) result[8]);
+            dto.setPorcentaje_cumplimiento(((BigDecimal) result[9]).doubleValue());
+
+            poas.add(dto);
+        }
+        return poas;
+    }
 }

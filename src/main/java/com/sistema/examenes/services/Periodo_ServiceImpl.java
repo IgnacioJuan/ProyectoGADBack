@@ -6,6 +6,7 @@ import com.sistema.examenes.dto.PeriodoTotalPOA_DTO;
 import com.sistema.examenes.dto.Periodo_DTO;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.projection.presupuestPeriodoProjection;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.EjeRepository;
 import com.sistema.examenes.repository.PeriodoRepository;
@@ -65,7 +66,7 @@ public class Periodo_ServiceImpl extends GenericServiceImpl<Periodo, Long> imple
         }
         return periodoTotalPOA_DTO;
     }
-/*
+
     @Override
     public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
         return repository.listarPeriodosPorActividad(actividadId);
@@ -77,17 +78,9 @@ public class Periodo_ServiceImpl extends GenericServiceImpl<Periodo, Long> imple
         repository.eliminarPorActividad(actividadId);
         return ResponseEntity.noContent().build();
     }
- */
 
     @Override
-    public List<Periodo> listarPeriodosPorActividad(Long actividadId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarPeriodosPorActividad'");
-    }
-
-    @Override
-    public ResponseEntity<Void> eliminarPeriodosPorActividad(Long actividadId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarPeriodosPorActividad'");
+    public List<presupuestPeriodoProjection> presupuestoGeneral(Long idActividad) {
+        return repository.presupuestoGeneral(idActividad);
     }
 }
