@@ -31,8 +31,12 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     
     public List<Poa> listarPoasPromedio();
     public List<PoasAdmin_DTO> listarPoasPorAdminEstado(Long idResponsable, String estado);
-    public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
-    public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
 
+    public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes();
+    public List<PoaSolicitudPresupuesto_DTO> listarPoasPorSolicitudPresupuesto(Long idAdmin);
+
+    public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
     List<Poaactiprojection> poaacjq(Long id);
+    public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores();
+
 }

@@ -14,4 +14,5 @@ public interface PoaporFechaRepoProjection {
     String getLocalizacion();
     String getMeta_alcanzar();
     String getMeta_planificada();
+    String getTipo_periodo();
 }

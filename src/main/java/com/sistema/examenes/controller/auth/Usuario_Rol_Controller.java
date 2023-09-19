@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller.auth;
 
+import com.sistema.examenes.dto.UsuarioResponsableDTO;
 import com.sistema.examenes.entity.auth.UsuarioRol;
 import com.sistema.examenes.services.auth.UsuarioRolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class Usuario_Rol_Controller {
     private UsuarioRolService usuarioService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @GetMapping("/listarv")
     public ResponseEntity<List<UsuarioRol>> obtenerLista() {
         try {
@@ -37,8 +39,28 @@ public class Usuario_Rol_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarUsuarioSuperAdmin")
+    public ResponseEntity<List<UsuarioRol>> listarUsuariosSuperAdmin() {
+        try {
+            return new ResponseEntity<>(usuarioService.listarUsuariosSuperAdmin(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarUResponsables")
+    public ResponseEntity<List<UsuarioResponsableDTO>> listarUResponsables() {
+        try {
+            return new ResponseEntity<>(usuarioService.listarUResponsable(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/actualizar/{usuarioRolId}")
-    public ResponseEntity<UsuarioRol> actualizarRol(@RequestBody UsuarioRol usuarioRol, @PathVariable Long usuarioRolId) {
+    public ResponseEntity<UsuarioRol> actualizarRol(@RequestBody UsuarioRol usuarioRol,
+            @PathVariable Long usuarioRolId) {
         try {
             UsuarioRol usuarioRolExistente = usuarioService.findById(usuarioRolId);
             if (usuarioRolExistente != null) {
@@ -50,14 +72,22 @@ public class Usuario_Rol_Controller {
                 usuarioRolExistente.setRol(usuarioRol.getRol());
                 usuarioRolExistente.getUsuario().setPrograma(usuarioRol.getUsuario().getPrograma());
                 usuarioRolExistente.getUsuario().setUsername(usuarioRol.getUsuario().getUsername());
-                usuarioRolExistente.getUsuario().getPersona().setCedula(usuarioRol.getUsuario().getPersona().getCedula());
-                usuarioRolExistente.getUsuario().getPersona().setPrimer_nombre(usuarioRol.getUsuario().getPersona().getPrimer_nombre());
-                usuarioRolExistente.getUsuario().getPersona().setSegundo_nombre(usuarioRol.getUsuario().getPersona().getSegundo_nombre());
-                usuarioRolExistente.getUsuario().getPersona().setPrimer_apellido(usuarioRol.getUsuario().getPersona().getPrimer_apellido());
-                usuarioRolExistente.getUsuario().getPersona().setSegundo_apellido(usuarioRol.getUsuario().getPersona().getSegundo_apellido());
-                usuarioRolExistente.getUsuario().getPersona().setDireccion(usuarioRol.getUsuario().getPersona().getDireccion());
-                usuarioRolExistente.getUsuario().getPersona().setCorreo(usuarioRol.getUsuario().getPersona().getCorreo());
-                usuarioRolExistente.getUsuario().getPersona().setCelular(usuarioRol.getUsuario().getPersona().getCelular());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setCedula(usuarioRol.getUsuario().getPersona().getCedula());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setPrimer_nombre(usuarioRol.getUsuario().getPersona().getPrimer_nombre());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setSegundo_nombre(usuarioRol.getUsuario().getPersona().getSegundo_nombre());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setPrimer_apellido(usuarioRol.getUsuario().getPersona().getPrimer_apellido());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setSegundo_apellido(usuarioRol.getUsuario().getPersona().getSegundo_apellido());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setDireccion(usuarioRol.getUsuario().getPersona().getDireccion());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setCorreo(usuarioRol.getUsuario().getPersona().getCorreo());
+                usuarioRolExistente.getUsuario().getPersona()
+                        .setCelular(usuarioRol.getUsuario().getPersona().getCelular());
                 usuarioRolExistente.getUsuario().getPersona().setCargo(usuarioRol.getUsuario().getPersona().getCargo());
                 UsuarioRol usuarioRolActualizado = usuarioService.save(usuarioRolExistente);
                 return new ResponseEntity<>(usuarioRolActualizado, HttpStatus.OK);
@@ -67,5 +97,4 @@ public class Usuario_Rol_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
