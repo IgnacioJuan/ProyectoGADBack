@@ -105,14 +105,10 @@ List<Poa> listarPoasPromedio();
             "E.nombre, e.codigo, " +
             "concat(g.primer_nombre, ' ', g.primer_apellido) as usuario " +
             "from POA A " +
-            "join aprobacion_actividad B " +
-            "on A.id_poa = B.id_poa " +
             "join actividades c " +
-            "on C.id_actividad = B.id_actividad " +
-            "join aprobacion_poa d " +
-            "on d.id_poa = A.id_poa " +
+            "on c.id_poa = a.id_poa  " +
             "join proyecto E " +
-            "on E.id_proyecto = d.id_proyecto " +
+            "on E.id_proyecto = a.id_proyecto " +
             "join usuarios f " +
             "on f.id = a.id_responsable " +
             "join persona g " +
