@@ -77,7 +77,7 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Long> {
                 "a.id_actividad ,p.referencia ", nativeQuery = true)
         List<presupuestPeriodoProjection> presupuestoGeneral(Long idActividad);
 
-        @Query(value = "SELECT p.referencia, MAX(p.fecha_inicio) as periodo_inicio, MAX(p.fecha_fin) as periodo_fin, " +
+        @Query(value = "SELECT p.referencia, MAX(p.fecha_inicio) as periodoinicio, MAX(p.fecha_fin) as periodofin, " +
                 "SUM(a.codificado * (p.porcentaje / 100.0)) AS inversion, " +
                 "COALESCE(SUM(e.valor), 0) AS ejecucion " +
                 "FROM PERIODO p " +
