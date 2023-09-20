@@ -2,13 +2,20 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.Competencia_DTO;
 import com.sistema.examenes.dto.Componente_DTO;
+import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import com.sistema.examenes.util.ExampleReportGenerator;
+import com.sistema.examenes.util.ReportInversionPorCompetencia;
+
+import net.sf.jasperreports.engine.JRException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +25,10 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
 
     @Autowired
     private CompetenciaRepository repository;
+
+    // Inyectamos el ReportGenerator
+    @Autowired
+    private ReportInversionPorCompetencia petReportGenerator;
 
     @Override
     public CrudRepository<Competencia, Long> getDao() {
@@ -33,6 +44,7 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
     public Competencia obtenerCompetenciaId(Long id) {
         return repository.obtenerCompetenciaId(id);
     }
+
     @Override
     public List<Competencia_DTO> buscarCompetenciasPorNombreDTO(String nombre) {
         List<Object[]> resultados = repository.buscarCompetenciasPorNombre(nombre);
@@ -42,8 +54,7 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
             Competencia_DTO competenciaDTO = new Competencia_DTO(
                     ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
-                    (String) resultado[2]
-            );
+                    (String) resultado[2]);
             competenciasEncontradas.add(competenciaDTO);
         }
         return competenciasEncontradas;
@@ -63,4 +74,26 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
         }
         return competencias;
     }
+
+    @Override
+    public List<ReportICompetencia> obtenerReportICompetencias() {
+        List<Object[]> resultados = repository.obtenerReportICompetencias();
+        List<ReportICompetencia> reportes = new ArrayList<>();
+
+        for (Object[] resultado : resultados) {
+            ReportICompetencia reporte = new ReportICompetencia(
+                    (String) resultado[1],
+                    (double) resultado[2],
+                    (double) resultado[3],
+                    (double) resultado[4]);
+            reportes.add(reporte);
+        }
+        return reportes;
+    }
+
+   // Llamamos al ReportGenerator
+    @Override
+    public byte[] exportPdf() throws JRException, FileNotFoundException {
+        return petReportGenerator.exportToPdf(repository.obtenerReportICompetencias());
+    } 
 }

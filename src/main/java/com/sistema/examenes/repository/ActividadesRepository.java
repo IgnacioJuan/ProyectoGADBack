@@ -16,13 +16,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "SELECT * from actividades where visible = true ORDER BY nombre ASC", nativeQuery = true)
         List<Actividades> listarActividades();
 
-        @Query(value = "SELECT * "
-                        +
-                        "FROM actividades a " +
-                        "JOIN aprobacion_actividad aa ON a.id_actividad = aa.id_actividad " +
-                        "JOIN poa p ON aa.id_poa = p.id_poa " +
-                        "WHERE a.visible = true AND p.id_poa = :poaId " +
-                        "ORDER BY a.nombre ASC", nativeQuery = true)
+
+        @Query(value = "SELECT * FROM actividades a JOIN poa p ON a.id_poa = p.id_poa WHERE a.visible = true AND p.id_poa = :poaId ORDER BY a.nombre ASC", nativeQuery = true)
         List<Actividades> listarActividadesPorIdPoa(@Param("poaId") Long poaId);
 
         /*
@@ -211,7 +206,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "select codificado-devengado  as valor from actividades where id_actividad=:idact", nativeQuery = true)
         valorprojec valoracti(Long idact);
         @Query(value = "select ac.* from actividades ac join poa po on ac.id_poa = po.id_poa WHERE ac.id_responsable =:idres and po.id_poa=:idpoa and ac.estado= 'APROBADO';", nativeQuery = true)
-        List<Actividades> poaacti(Long idres, Long idpoa);
+        List<Actividades> poaacti2(Long idres, Long idpoa);
 
         @Query(value =
                 "SELECT ac.* " +
@@ -220,7 +215,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "INNER JOIN poa po ON aa.id_poa = po.id_poa " +
                         "WHERE ac.id_responsable = :idres AND po.id_poa = :idpoa AND ac.estado = 'APROBADO'",
                 nativeQuery = true)
-        List<Actividades> poaacti2(Long idres, Long idpoa);
+        List<Actividades> poaacti(Long idres, Long idpoa);
 
 
 }

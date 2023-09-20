@@ -6,10 +6,7 @@ import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
-import com.sistema.examenes.projection.PoaNoAprobadoProjection;
-import com.sistema.examenes.projection.PoaporFechaRepoProjection;
-import com.sistema.examenes.projection.Poaactiprojection;
-import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
+import com.sistema.examenes.projection.*;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -219,7 +216,6 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dto.setTipo_evaluacion((String) result[7]);
             dto.setNombre_metapdot((String) result[8]);
             dto.setPorcentaje_cumplimiento((BigDecimal) result[9]);
-
             poas.add(dto);
         }
         return poas;
@@ -228,11 +224,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     //Llamamos al ReportGenerator
     @Override
     public byte[] exportPdfMETAS() throws JRException, FileNotFoundException {
-
-
         List<Object[]> resultados = repository.listarPoasMetasIndicadores();
         List<Poas_Indicadores_DTO> poas = new ArrayList<>();
-
         for (Object[] result : resultados) {
             Poas_Indicadores_DTO dto = new Poas_Indicadores_DTO();
             dto.setNombre_proyecto((String) result[0]);
@@ -248,6 +241,19 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             poas.add(dto);
         }
         return poaReporteMetas.exportToPdfMetas(poas);
+    }
+
+
+    @Override
+    public IsAprobadoProjection getIsAprobado(Long idProyecto) {
+        Object result = repository.getIsAprobado(idProyecto);
+        IsAprobadoProjection dro = new IsAprobadoProjection();
+        if (result != null) {
+            dro.setIdPoaAprobado(((BigInteger) ((Object[]) result)[1]).longValue());
+            dro.setEstadoAprobado((Boolean) ((Object[]) result)[0]);
+            return dro;
+        }
+        return null;
     }
 
 }

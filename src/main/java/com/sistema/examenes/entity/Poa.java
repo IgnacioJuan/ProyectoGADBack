@@ -49,28 +49,10 @@ public class Poa implements Serializable {
     @Column(name = "fecha_creacion")
     private Date fecha_creacion;
 
-    //fecha_inicio automatica
     @PrePersist
     public void prePersist() {
         fecha_creacion = new Date();
-        //fecha inicio que sea 1 de enero del ano siguiente
-        fecha_inicio = new Date();
-        fecha_inicio.setYear(fecha_inicio.getYear() + 1);
-        fecha_inicio.setMonth(0);
-        fecha_inicio.setDate(1);
-        fecha_inicio.setHours(0);
-        fecha_inicio.setMinutes(0);
-        fecha_inicio.setSeconds(0);
-        //fecha fin que sea 31 de diciembre del ano actual
-        fecha_fin = new Date();
-        fecha_fin.setYear(fecha_fin.getYear() + 1);
-        fecha_fin.setMonth(11);
-        fecha_fin.setDate(31);
-        fecha_fin.setHours(0);
-        fecha_fin.setMinutes(0);
-        fecha_fin.setSeconds(0);
     }
-    //fecha_fin automatica con un ano de diferencia
     
      @Transient
     public double getValorTotal() {
