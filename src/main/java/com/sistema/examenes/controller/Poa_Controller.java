@@ -1,15 +1,13 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.dto.PoaNoAprobadoDTO;
-import com.sistema.examenes.dto.Poa_DTO;
-import com.sistema.examenes.dto.PoaporUsuarioDTO;
-import com.sistema.examenes.dto.SolicitudPoa;
-import com.sistema.examenes.dto.PoasAdmin_DTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.PoaNoAprobadoProjection;
+import com.sistema.examenes.projection.PoaporFechaRepoProjection;
+import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
@@ -57,9 +55,9 @@ public class Poa_Controller {
         }
     }
 
-    @GetMapping("/listarPoasDeModelo")
-    public ResponseEntity<List<Poa_DTO>> listarPoasDeModelo() {
-        List<Poa_DTO> poas = Service.listarPoasDeModelo();
+    @GetMapping("/listarPoasProyectoDeModeloFiltroFechas")
+    public ResponseEntity<List<Poa_DTO>> listarPoasProyectoDeModeloFiltroFechas() {
+        List<Poa_DTO> poas = Service.listarPoasProyectoDeModeloFiltroFechas();
         return ResponseEntity.ok(poas);
     }
 
@@ -209,6 +207,7 @@ public class Poa_Controller {
             poa.setUsuario(usuario);
             poa.setProyecto(proyecto);
             poa.setVisible(true);
+            //poa.setFecha_creacion(new Date()); fecha inicio
 
             Poa poaService = Service.save(poa);
 
@@ -218,6 +217,7 @@ public class Poa_Controller {
             aprobacionPoa.setUsuario(usuario);
             aprobacionPoa.setProyecto(proyecto);
             aprobacionPoa.setVisible(true);
+            aprobacionPoa.setObservacion("Solicitud de POA");
 
             AprobacionPoa aprobacionPoaService = aprobacionService.save(aprobacionPoa);
             return new ResponseEntity<>(poaService, HttpStatus.CREATED);
@@ -246,4 +246,64 @@ public class Poa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarPoaApAdm")
+    public ResponseEntity<List<PoaporFechaRepoProjection>> listarPoaApAdm(@RequestParam(required = false) Long idResponsable) {
+        try {
+            if (idResponsable == null) {
+                idResponsable = -1L;
+            }
+            return new ResponseEntity<>(Service.listarPoaApAdm(idResponsable), HttpStatus.OK);
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/PoasConSolicitudPresupuesto/{idAdmin}")
+    public ResponseEntity<List<PoaSolicitudPresupuesto_DTO>> listarPoasPorSolicitudPresupuesto(@PathVariable Long idAdmin) {
+        try {
+            return new ResponseEntity<>(Service.listarPoasPorSolicitudPresupuesto(idAdmin), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PutMapping("/actualizarmeta/{id}")
+    public ResponseEntity<Poa> actualizarMetaAlcanzar(@PathVariable Long id, @RequestBody double nuevaMetaAlcanzar) {
+        Poa poa = Service.findById(id);
+        if (poa == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                poa.setMeta_alcanzar(nuevaMetaAlcanzar);
+                Poa poaActualizado = Service.save(poa);
+                return new ResponseEntity<>(poaActualizado, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+    @GetMapping("/aactijq/{id}")
+    public ResponseEntity<List<Poaactiprojection>> poactijq(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.poaacjq(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarPoasIndicadores")
+    public ResponseEntity<List<Poas_Indicadores_DTO>> listarPoasMetasIndicadores() {
+        try {
+            return new ResponseEntity<>(Service.listarPoasMetasIndicadores(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 } 

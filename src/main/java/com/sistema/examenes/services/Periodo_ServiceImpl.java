@@ -6,6 +6,8 @@ import com.sistema.examenes.dto.PeriodoTotalPOA_DTO;
 import com.sistema.examenes.dto.Periodo_DTO;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.projection.presupuestPeriodoProjection;
+import com.sistema.examenes.projection.totalPresupuestoGeneralProjection;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.EjeRepository;
 import com.sistema.examenes.repository.PeriodoRepository;
@@ -78,4 +80,13 @@ public class Periodo_ServiceImpl extends GenericServiceImpl<Periodo, Long> imple
         return ResponseEntity.noContent().build();
     }
 
+    @Override
+    public List<presupuestPeriodoProjection> presupuestoGeneral(Long idActividad) {
+        return repository.presupuestoGeneral(idActividad);
+    }
+
+    @Override
+    public List<totalPresupuestoGeneralProjection> totalPresupuestoGenera(Long poaId) {
+        return repository.totalPresupuestoGenera(poaId);
+    }
 }

@@ -16,6 +16,7 @@ public class AprobPoa_DTO {
     private String area;
     private Date fecha_inicio;
     private Date fecha_fin;
+    private Date fecha_creacion;
     private String codigo;
     private String nombre_proyecto;
     private String descripcion_proyecto;
@@ -28,7 +29,7 @@ public class AprobPoa_DTO {
     private String nombre_metapdot;
     private String meta_proyecto;
     private String nombre_completo;
-    //private String meta_planificada;
+    private Double meta_planificada;
     private Double linea_base;
     private String cobertura;
     private String localizacion;

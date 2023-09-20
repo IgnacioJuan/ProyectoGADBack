@@ -3,9 +3,11 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.ProjectByIdDto;
 import com.sistema.examenes.dto.ProjectsActivesDto;
 import com.sistema.examenes.dto.ProyectoExportarexcelDTO;
+import com.sistema.examenes.dto.reportePresupuestoDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.repository.ProyectoRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -131,5 +133,22 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
     public Long secuenciaproyecto(String codigo) {
         return repository.SecuenciadelCodigo(codigo);
     }
+
+}
+    @Override
+    public List<reportePresupuestoDTO> obtenerReportePresupuesto() {
+        List<Object[]> results = repository.listarProyectosReporte();
+        List<reportePresupuestoDTO> reportepresupuesto = new ArrayList<>();
+        
+        for(Object[] result:results){
+        reportePresupuestoDTO presupuesto= new reportePresupuestoDTO((String) result[0],(Double) result[1] , (Double) result[2],(BigDecimal) result[3]);
+        
+        reportepresupuesto.add(presupuesto);
+        }
+        return reportepresupuesto;
+    }
+    
+    
+
 
 }

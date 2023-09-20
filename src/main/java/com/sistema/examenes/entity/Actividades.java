@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,11 +38,11 @@ public class Actividades {
 
     //fecha inicio y fecha fin  de la actividad y creacion
     @Column(name = "fecha_inicio")
-    private String fecha_inicio;
+    private Date fecha_inicio;
     @Column(name = "fecha_fin")
-    private String fecha_fin;
+    private Date fecha_fin;
     @Column(name = "fecha_creacion")
-    private String fecha_creacion;
+    private Date fecha_creacion;
 
     //Relaciones con tablas de presupuestoExterno, ReformaSuplemento, ReformaTraspasoIncremento, ReformaTraspasoDecremento
     @JsonIgnore
@@ -88,7 +89,7 @@ public class Actividades {
     private Set<AsignacionesUsuarios> rausurios = new HashSet<>();
 
     //ManytoONe Poa
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_poa")
     private Poa poa;

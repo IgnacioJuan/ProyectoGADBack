@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller.auth;
 
+import com.sistema.examenes.excepciones.UsuarioNotFoundException;
 import com.sistema.examenes.security.JwtUtils;
 import com.sistema.examenes.entity.auth.JwtRequest;
 import com.sistema.examenes.entity.auth.JwtResponse;
@@ -34,8 +35,8 @@ public class AuthenticationController {
         try{
             autenticar(jwtRequest.getUsername(),jwtRequest.getPassword());
         }catch (Exception exception){
-            exception.printStackTrace();
-            throw new Exception("Usuario no encontrado");
+            //exception.printStackTrace();
+            throw new UsuarioNotFoundException("Credenciales invalidas ... ");
         }
 
         UserDetails userDetails =  this.userDetailsService.loadUserByUsername(jwtRequest.getUsername());
@@ -49,7 +50,8 @@ public class AuthenticationController {
         }catch (DisabledException exception){
             throw  new Exception("USUARIO DESHABILITADO " + exception.getMessage());
         }catch (BadCredentialsException e){
-            throw  new Exception("Credenciales invalidas " + e.getMessage());
+            //throw  new Exception("Credenciales invalidas " + e.getMessage());
+            throw new UsuarioNotFoundException("Credenciales invalidas ... ");
         }
     }
 

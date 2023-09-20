@@ -74,6 +74,8 @@ public class AprobacionSolicitudPresupuesto_Controller {
                 a.setEstado(p.getEstado());
                 a.setUsuario(p.getUsuario());
                 a.setSolicitud(p.getSolicitud());
+                a.setSolicitud(p.getSolicitud());
+
                 return new ResponseEntity<>(AprobacionSolicitudPresupuesto_Service.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {

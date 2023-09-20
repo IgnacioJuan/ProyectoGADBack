@@ -70,4 +70,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                         "WHERE ur.rol_rolid = 1\n" +
                         "AND u.visible=true;", nativeQuery = true)
         public List<Usuario> listaAdminDatos();
+
+        
 }

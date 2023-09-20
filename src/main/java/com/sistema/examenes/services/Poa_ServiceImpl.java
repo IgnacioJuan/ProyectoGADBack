@@ -6,8 +6,7 @@ import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
-import com.sistema.examenes.projection.PoaNoAprobadoProjection;
-import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
+import com.sistema.examenes.projection.*;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,21 +62,19 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     }
 
     @Override
-    public List<Poa_DTO> listarPoasDeModelo() {
-        List<Object[]> resultados = repository.listarPoasDeModelo();
+    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas() {
+        List<Object[]> resultados = repository.listarPoasProyectoDeModeloFiltroFechas();
         List<Poa_DTO> poas = new ArrayList<>();
 
         for (Object[] result : resultados) {
             Poa_DTO dto = new Poa_DTO();
             dto.setId_poa(((BigInteger) result[0]).longValue());
-            dto.setFecha_inicio((Date) result[1]);
-            dto.setFecha_fin((Date) result[2]);
-            dto.setLocalizacion((String) result[3]);
-            dto.setCobertura((String) result[4]);
-            dto.setBarrio((String) result[5]);
-            dto.setComunidad((String) result[6]);
-            dto.setLinea_base((Double) result[7]);
-            dto.setTipo_periodo((String) result[8]);
+            dto.setId_proyecto(((BigInteger) result[1]).longValue());
+            dto.setNombreProyecto((String) result[2]);
+            dto.setMeta_planificada((Double) result[3]);
+            dto.setTipo_periodo((String) result[4]);
+            dto.setFecha_inicio((Date) result[5]);
+            dto.setFecha_fin((Date) result[6]);
             poas.add(dto);
         }
         return poas;
@@ -163,13 +161,71 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     public List<PoasConActividadesPendientesProjection> PoasConActividadesPendientes() {
         return repository.PoasConActividadesPendientes();
     }
+
+    @Override
+    public List<Poaactiprojection> poaacjq(Long id) {
+        return repository.poaacjq(id);
+    }
+
     @Override
     public List<Poa> listarPoasPromedio() {
          return repository.listarPoasPromedio();
     }
+    @Override
+    public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable){
+        return repository.listarPoaApAdm(idResponsable);
+    };
 
+    public List<PoaSolicitudPresupuesto_DTO> listarPoasPorSolicitudPresupuesto(Long idAdmin) {
+        List<Object[]> resultados = repository.listarPoasPorSolicitudPresupuesto(idAdmin);
+        List<PoaSolicitudPresupuesto_DTO> poas = new ArrayList<>();
 
+        for (Object[] result : resultados) {
+            PoaSolicitudPresupuesto_DTO dto = new PoaSolicitudPresupuesto_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setBarrio((String) result[2]);
+            dto.setCobertura((String) result[3]);
+            dto.setComunidad((String) result[4]);
+            dto.setEstado_poa((String) result[5]);
+            dto.setMeta_alcanzar((Double) result[6]);
+            dto.setMeta_planificada((Double) result[7]);
+            poas.add(dto);
+        }
+        return poas;
+    }
 
-   
+    public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores() {
+        List<Object[]> resultados = repository.listarPoasMetasIndicadores();
+        List<Poas_Indicadores_DTO> poas = new ArrayList<>();
 
+        for (Object[] result : resultados) {
+            Poas_Indicadores_DTO dto = new Poas_Indicadores_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setLocalizacion((String) result[2]);
+            dto.setTipo_periodo((String) result[3]);
+            dto.setLinea_base((Double) result[4]);
+            dto.setMeta_alcanzar((Double) result[5]);
+            dto.setMeta_planificada((Double) result[6]);
+            dto.setTipo_evaluacion((String) result[7]);
+            dto.setNombre_metapdot((String) result[8]);
+            dto.setPorcentaje_cumplimiento(((BigDecimal) result[9]).doubleValue());
+
+            poas.add(dto);
+        }
+        return poas;
+    }
+
+    @Override
+    public IsAprobadoProjection getIsAprobado(Long idProyecto) {
+        Object result = repository.getIsAprobado(idProyecto);
+        IsAprobadoProjection dro = new IsAprobadoProjection();
+        if (result != null) {
+            dro.setIdPoaAprobado(((BigInteger) ((Object[]) result)[1]).longValue());
+            dro.setEstadoAprobado((Boolean) ((Object[]) result)[0]);
+            return dro;
+        }
+        return null;
+    }
 }

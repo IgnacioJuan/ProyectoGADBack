@@ -7,6 +7,8 @@ import com.sistema.examenes.dto.PeriodoTotalPOA_DTO;
 import com.sistema.examenes.dto.Periodo_DTO;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
+import com.sistema.examenes.projection.presupuestPeriodoProjection;
+import com.sistema.examenes.projection.totalPresupuestoGeneralProjection;
 import com.sistema.examenes.services.generic.GenericService;
 import org.springframework.http.ResponseEntity;
 
@@ -20,4 +22,9 @@ public interface Periodo_Service extends GenericService<Periodo, Long> {
     List<Periodo>listarPeriodosPorActividad(Long actividadId);
 
     ResponseEntity<Void> eliminarPeriodosPorActividad(Long actividadId);
+    public List<presupuestPeriodoProjection> presupuestoGeneral(Long idActividad);
+
+    public List<totalPresupuestoGeneralProjection> totalPresupuestoGenera(Long poaId);
+
+
 }

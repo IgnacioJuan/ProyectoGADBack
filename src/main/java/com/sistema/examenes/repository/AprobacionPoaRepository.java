@@ -19,7 +19,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);*/
 
-    @Query(value = "SELECT ap.observacion, ap.estado, ap.id_aprob acionpoa, p.primer_nombre, p.primer_apellido, ap.fecha_aprobacion \n" +
+    @Query(value = "SELECT ap.observacion, ap.estado, ap.id_aprobacionpoa acionpoa, p.primer_nombre, p.primer_apellido, ap.fecha_aprobacion \n" +
             "FROM public.aprobacion_poa ap\n" +
             "INNER JOIN public.usuarios u ON ap.id_usuario = u.id\n" +
             "INNER JOIN public.persona p ON u.persona_id_persona = p.id_persona\n" +
@@ -41,7 +41,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             List<AprobacionPoa> findPoaporUsuario(@Param("id_proyecto") Long id_proyecto);          
 
             
-            /******* MODULO APROBACION POA ********/
+            /******* MODULO APROBACION POA c.c********/
     @Query(value = "SELECT " +
                         "p.id_poa, " +
                         "prg.nombre AS direccion_departamental, " +
@@ -50,6 +50,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "pr.area, " +
                         "pr.fecha_inicio AS fecha_inicio, " +
                         "pr.fecha_fin AS fecha_fin, " +
+                        "p.fecha_creacion AS fecha_creacion, " +
                         "pr.codigo AS codigo_proyecto, " +
                         "pr.nombre AS nombre_proyecto, " +
                         "pr.descripcion, " +
@@ -62,6 +63,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "mtp.nombre AS nombre_metapdot, " +
                          "pr.meta AS meta_proyecto, " +
                         "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "+
+                        "p.meta_planificada, " +
                         "p.linea_base, " +
                         "p.cobertura, " +
                         "p.localizacion, " +
@@ -93,6 +95,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "pr.area, " +
                         "pr.fecha_inicio AS fecha_inicio, " +
                         "pr.fecha_fin AS fecha_fin, " +
+                        "p.fecha_creacion AS fecha_creacion, " +
                         "pr.codigo AS codigo_proyecto, " +
                         "pr.nombre AS nombre_proyecto, " +
                         "pr.descripcion, " +
@@ -105,6 +108,7 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
                         "mtp.nombre AS nombre_metapdot, " +
                          "pr.meta AS meta_proyecto, " +
                         "UPPER(CONCAT(per.primer_nombre, ' ', per.segundo_nombre, ' ', per.primer_apellido, ' ', per.segundo_apellido)) AS nombre_completo, "+
+                        "p.meta_planificada, " +
                         "p.linea_base, " +
                         "p.cobertura, " +
                         "p.localizacion, " +
