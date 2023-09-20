@@ -4,6 +4,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.dto.ProjectByIdDto;
 import com.sistema.examenes.dto.ProjectsActivesDto;
 import com.sistema.examenes.dto.ProyectoResumenDTO;
+import com.sistema.examenes.dto.reportePresupuestoDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.services.Proyecto_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,12 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
     public ResponseEntity<List<ProjectByIdDto>> getProjectById(@RequestParam Long id_proyecto) {
         List<ProjectByIdDto> projectById = Service.ProjectById(id_proyecto);
         return ResponseEntity.ok(projectById);
+    }
+    
+    
+     @GetMapping("/reporte")
+    public ResponseEntity<List<reportePresupuestoDTO>> obtenerreporte() {
+       List<reportePresupuestoDTO> listareporte = Service.obtenerReportePresupuesto();
+        return ResponseEntity.ok(listareporte);
     }
 }

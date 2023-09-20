@@ -107,7 +107,7 @@ public class ActividadesController {
                 a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setEstado(actividades.getEstado());
                 a.setUsuario(actividades.getUsuario());
-                a.setPoa(actividades.getPoa());
+//                a.setPoa(actividades.getPoa());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
@@ -316,4 +316,20 @@ public class ActividadesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/actualizarResponsable")
+    public ResponseEntity<Actividades> actualizarResponsable(@RequestParam("id_actividad") Long id_actividad,
+                                                              @RequestParam("id_responsable") Long id_responsable) {
+
+        try {
+            Actividades a = actividadesService.findById(id_actividad);
+            Usuario usuario = new Usuario();
+            usuario.setId(id_responsable);
+            a.setUsuario(usuario);
+            return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
