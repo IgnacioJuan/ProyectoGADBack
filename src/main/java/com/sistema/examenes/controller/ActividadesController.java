@@ -16,7 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.time.ZoneId;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -186,7 +190,6 @@ public class ActividadesController {
                                                       @RequestParam("id_superadmin") Long id_superadmin,
                                                       @RequestParam("recursos_propios") Double recursos_propios,
                                                       @RequestParam("presupuesto_referencial") Double presupuesto_referencial) {
-
         try {
             Actividades a = new Actividades();
             Poa poa = new Poa();
@@ -205,6 +208,7 @@ public class ActividadesController {
             a.setPoa(poa);
             a.setUsuario(null);
             a.setVisible(true);
+            a.setFecha_creacion(new Date());
             Actividades actividad = actividadesService.save(a);
             //llena los datos de la aprobacion
             AprobacionActividad aprobacionActividad = new AprobacionActividad();
@@ -214,6 +218,7 @@ public class ActividadesController {
             aprobacionActividad.setActividad(actividad);
             aprobacionActividad.setPoa(poa);
             aprobacionActividad.setVisible(true);
+            aprobacionActividad.setFechaAprobacion(new Date());
             aprobacionActividad=aprobacionActividadService.save(aprobacionActividad);
 
             //llenar los datos de los presupuestos externos
@@ -226,39 +231,49 @@ public class ActividadesController {
                 presupuestoExterno.setVisible(true);
                 presupuestoExternoService.save(presupuestoExterno);
             }
+//            Periodo periodo = new Periodo();
+            llenarPeriodos(valor_uno,actividad,1);
+            llenarPeriodos(valor_dos,actividad,2);
+            llenarPeriodos(valor_tres,actividad,3);
+            llenarPeriodos(valor_cuatro,actividad,4);
 
-            Periodo periodo = new Periodo();
-            periodo.setPorcentaje(valor_uno);
-            periodo.setReferencia(1);
-            periodo.setVisible(true);
-            periodo.setActividad(actividad);
-            periodoService.save(periodo);
 
-            periodo = new Periodo();
-            periodo.setPorcentaje(valor_dos);
-            periodo.setReferencia(2);
-            periodo.setVisible(true);
-            periodo.setActividad(actividad);
-            periodoService.save(periodo);
+//            periodo = new Periodo();
+//            periodo.setPorcentaje(valor_dos);
+//            periodo.setReferencia(2);
+//            periodo.setVisible(true);
+//            periodo.setActividad(actividad);
+//            periodoService.save(periodo);
+//
+//            periodo = new Periodo();
+//            periodo.setPorcentaje(valor_tres);
+//            periodo.setReferencia(3);
+//            periodo.setVisible(true);
+//            periodo.setActividad(actividad);
+//            periodoService.save(periodo);
+//
+//            periodo = new Periodo();
+//            periodo.setPorcentaje(valor_cuatro);
+//            periodo.setReferencia(4);
+//            periodo.setVisible(true);
+//            periodo.setActividad(actividad);
+//            periodoService.save(periodo);
 
-            periodo = new Periodo();
-            periodo.setPorcentaje(valor_tres);
-            periodo.setReferencia(3);
-            periodo.setVisible(true);
-            periodo.setActividad(actividad);
-            periodoService.save(periodo);
-
-            periodo = new Periodo();
-            periodo.setPorcentaje(valor_cuatro);
-            periodo.setReferencia(4);
-            periodo.setVisible(true);
-            periodo.setActividad(actividad);
-            periodoService.save(periodo);
+            System.out.println("Process finished with exit code 0");
 
             return new ResponseEntity<>(actividad, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private void llenarPeriodos(Double valor,Actividades actividad,int referencia) {
+        Periodo periodo = new Periodo();
+        periodo.setPorcentaje(valor);
+        periodo.setReferencia(referencia);
+        periodo.setVisible(true);
+        periodo.setActividad(actividad);
+        periodoService.save(periodo);
     }
 
     @GetMapping("/listarActividadesConTotalPresupuestos/{poaId}")

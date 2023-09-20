@@ -7,7 +7,7 @@ public interface presupuestPeriodoProjection {
     Date getFecha_inicio();
     Date getFecha_fin();
     Double getInversion();
-    String getReferencia();
+    int getReferencia();
     Double getPorcentaje();
     Double getEjecucion();
 }
