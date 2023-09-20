@@ -3,11 +3,17 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.dto.Componente_DTO;
 import com.sistema.examenes.entity.Componente;
 import com.sistema.examenes.services.Componente_Service;
+
+import net.sf.jasperreports.engine.JRException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -113,4 +119,6 @@ public class Componente_Controller {
         List<Componente_DTO> componentesEncontrados = Service.buscarComponentesPorNombre(nombre);
         return ResponseEntity.ok(componentesEncontrados);
     }
+
+    
 }
