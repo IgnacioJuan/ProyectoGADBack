@@ -7,6 +7,7 @@ import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
 import com.sistema.examenes.util.ExampleReportGenerator;
+import com.sistema.examenes.util.ReportInversionPorCompetencia;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -27,7 +28,7 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
 
     // Inyectamos el ReportGenerator
     @Autowired
-    private ExampleReportGenerator petReportGenerator;
+    private ReportInversionPorCompetencia petReportGenerator;
 
     @Override
     public CrudRepository<Competencia, Long> getDao() {
@@ -90,9 +91,9 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
         return reportes;
     }
 
-   /* // Llamamos al ReportGenerator
+   // Llamamos al ReportGenerator
     @Override
     public byte[] exportPdf() throws JRException, FileNotFoundException {
-        return petReportGenerator.exportToPdf(repository.findAll());
-    } */
+        return petReportGenerator.exportToPdf(repository.obtenerReportICompetencias());
+    } 
 }

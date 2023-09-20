@@ -19,6 +19,7 @@ public interface Competencia_Service extends GenericService<Competencia, Long> {
 
     List<Competencia_DTO> listado();
 
-      List<ReportICompetencia> obtenerReportICompetencias();
-//    byte[] exportPdf() throws JRException, FileNotFoundException;
+    List<ReportICompetencia> obtenerReportICompetencias();
+ 
+    byte[] exportPdf() throws JRException, FileNotFoundException;
 }

@@ -1,5 +1,6 @@
 package com.sistema.examenes.util;
 
+import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.auth.Usuario;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -15,14 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service
-
 public class ReportInversionPorCompetencia {
 
-    public byte[] exportToPdf(List<Usuario> list) throws JRException, FileNotFoundException {
+    public byte[] exportToPdf(List<Object[]> list) throws JRException, FileNotFoundException {
         return JasperExportManager.exportReportToPdf(getReport(list));
     }
 
-    public byte[] exportToXls(List<Usuario> list) throws JRException, FileNotFoundException {
+    public byte[] exportToXls(List<Object[]>  list) throws JRException, FileNotFoundException {
         ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
         SimpleOutputStreamExporterOutput output = new SimpleOutputStreamExporterOutput(byteArray);
         JRXlsExporter exporter = new JRXlsExporter();
@@ -34,12 +34,12 @@ public class ReportInversionPorCompetencia {
     }
 
     //Genera reporte, tomando la lista enviada y seteando los parametros necesarios
-    private JasperPrint getReport(List<Usuario> list) throws FileNotFoundException, JRException {
+    private JasperPrint getReport(List<Object[]> list) throws FileNotFoundException, JRException {
         Map<String, Object> params = new HashMap<>();
         params.put("datasource", new JRBeanCollectionDataSource(list));
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("classpath:Users.jrxml")
+                ResourceUtils.getFile("classpath:ReporteICompetencia.jrxml")
                         .getAbsolutePath()), params, new JRBeanCollectionDataSource(list));
 
         return report;
