@@ -34,8 +34,9 @@ public class AprobacionActividadController {
             a.setVisible(true);
             AprobacionActividad ap= AprobacionActividadService.save(a);
             actividadesService.actualizarEstadoPorAprobacion(a.getActividad().getId_actividad(), a.getEstado());
+
             if(ap.getUsuario().getPersona().getCorreo() != null) {
-                emailService.sendEmail(new String[]{ap.getUsuario().getPersona().getCorreo()}, ap.getEstado(), ap.getObservacion());
+                emailService.sendEmail(new String[]{actividadesService.findById(ap.getActividad().getId_actividad()).getUsuario().getPersona().getCorreo()}, ap.getEstado(), ap.getObservacion());
             }
             return new ResponseEntity<>(ap, HttpStatus.CREATED);
         } catch (Exception e) {
