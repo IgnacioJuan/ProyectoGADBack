@@ -134,7 +134,6 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         return repository.SecuenciadelCodigo(codigo);
     }
 
-}
     @Override
     public List<reportePresupuestoDTO> obtenerReportePresupuesto() {
         List<Object[]> results = repository.listarProyectosReporte();
