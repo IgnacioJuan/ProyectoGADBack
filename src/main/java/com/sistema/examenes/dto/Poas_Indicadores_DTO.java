@@ -2,6 +2,8 @@ package com.sistema.examenes.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +19,7 @@ public class Poas_Indicadores_DTO {
     private double meta_planificada;
     private String  tipo_evaluacion;
     private String  nombre_metapdot;
-    private double porcentaje_cumplimiento;
+    private BigDecimal porcentaje_cumplimiento;
 
 
 
