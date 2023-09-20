@@ -22,7 +22,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
     List<Object[]> listActiveProjects(Long id_usuario);
 
     
-     @Query(value = "SELECT p.nombre AS nombreProyecto, SUM(a.codificado) AS montoCodificado, SUM(a.devengado) AS montoDevengado, CAST((SUM(a.devengado) / SUM(a.codificado)) * 100 AS numeric(10, 2)) AS pEjecucion FROM proyecto p INNER JOIN poa po ON p.id_proyecto = po.id_proyecto INNER JOIN actividades a ON po.id_poa = a.id_poa WHERE po.estado = 'ACTIVO' AND p.visible = true AND po.visible = true AND a.visible = true GROUP BY p.nombre", nativeQuery = true)
+     @Query(value = "SELECT p.nombre AS nombreProyecto, SUM(a.codificado) AS montoCodificado, SUM(a.devengado) AS montoDevengado, CAST((SUM(a.devengado) / SUM(a.codificado)) * 100 AS numeric(10, 2)) AS pEjecucion FROM proyecto p INNER JOIN poa po ON p.id_proyecto = po.id_proyecto INNER JOIN actividades a ON po.id_poa = a.id_poa WHERE po.estado = 'APROBADO' AND p.visible = true AND po.visible = true AND a.visible = true GROUP BY p.nombre", nativeQuery = true)
     List<Object[]> listarProyectosReporte();
 
     
