@@ -18,10 +18,9 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
 
     @Query(value = "SELECT p.* " +
             "from poa p " +
-            "join aprobacion_poa ap " +
-            "on ap.id_poa = p.id_poa " +
+
             "where p.visible =true " +
-            "and ap.id_proyecto = :id_proyecto " +
+            "and p.id_proyecto = :id_proyecto " +
             "and (p.estado= :estado or :estado is null) " +
             "group by p.id_poa " +
             "ORDER BY fecha_inicio desc", nativeQuery = true)
