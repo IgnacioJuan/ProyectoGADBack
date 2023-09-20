@@ -1,14 +1,20 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.Competencia_DTO;
-import com.sistema.examenes.dto.Componente_DTO;
+import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.services.Competencia_Service;
+
+import net.sf.jasperreports.engine.JRException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -101,16 +107,34 @@ public class Competencia_Controller {
                 a.setNombre(p.getNombre());
                 a.setDescripcion(p.getDescripcion());
                 a.setVisible(p.isVisible());
-                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     }
+
     @GetMapping("/buscarcompetencianombre/{nombre}")
     public ResponseEntity<List<Competencia_DTO>> buscarCompetenciasPorNombreDTO(@PathVariable("nombre") String nombre) {
         List<Competencia_DTO> competenciasEncontradas = Service.buscarCompetenciasPorNombreDTO(nombre);
         return ResponseEntity.ok(competenciasEncontradas);
+    }
+
+    @GetMapping("/reporteicompetencias")
+    public List<ReportICompetencia> obtenerCompetenciasConPorcentaje() {
+        return Service.obtenerReportICompetencias();
+    }
+
+    // Usamos el servicio para generar el reporte
+ @GetMapping("/export-pdf")
+    public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Users.pdf");
+
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdf());
     }
 
 }

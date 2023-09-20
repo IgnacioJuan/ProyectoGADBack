@@ -31,10 +31,10 @@ public class Usuario_Rol_Controller {
         }
     }
 
-    @GetMapping("/listarUsuariosResponsables")
-    public ResponseEntity<List<UsuarioRol>> listarUsuariosResponsables() {
+    @GetMapping("/listarUsuariosResponsables/{poaId}")
+    public ResponseEntity<List<UsuarioRol>> listarUsuariosResponsables2(@PathVariable Long poaId) {
         try {
-            return new ResponseEntity<>(usuarioService.listarUsuariosResponsables(), HttpStatus.OK);
+            return new ResponseEntity<>(usuarioService.listarUsuariosResponsables2(poaId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

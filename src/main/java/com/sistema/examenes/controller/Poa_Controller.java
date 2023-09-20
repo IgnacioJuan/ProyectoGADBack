@@ -207,6 +207,7 @@ public class Poa_Controller {
             poa.setUsuario(usuario);
             poa.setProyecto(proyecto);
             poa.setVisible(true);
+            //poa.setFecha_creacion(new Date()); fecha inicio
 
             Poa poaService = Service.save(poa);
 
@@ -216,6 +217,7 @@ public class Poa_Controller {
             aprobacionPoa.setUsuario(usuario);
             aprobacionPoa.setProyecto(proyecto);
             aprobacionPoa.setVisible(true);
+            aprobacionPoa.setObservacion("Solicitud de POA");
 
             AprobacionPoa aprobacionPoaService = aprobacionService.save(aprobacionPoa);
             return new ResponseEntity<>(poaService, HttpStatus.CREATED);
