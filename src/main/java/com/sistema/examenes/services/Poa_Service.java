@@ -3,11 +3,14 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
+import com.sistema.examenes.projection.IsAprobadoProjection;
 import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.generic.GenericService;
+import net.sf.jasperreports.engine.JRException;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface Poa_Service extends GenericService<Poa, Long> {
@@ -38,5 +41,10 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
     List<Poaactiprojection> poaacjq(Long id);
     public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores();
+    
+    byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
+
+    IsAprobadoProjection getIsAprobado(Long idProyecto);
+
 
 }

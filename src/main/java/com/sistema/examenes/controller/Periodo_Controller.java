@@ -7,6 +7,7 @@ import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Eje;
 import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.presupuestPeriodoProjection;
+import com.sistema.examenes.projection.totalPresupuestoGeneralProjection;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.Eje_Service;
 import com.sistema.examenes.services.Periodo_Service;
@@ -268,5 +269,9 @@ public class Periodo_Controller {
     @GetMapping("/presupuestoGeneral")
     public List<presupuestPeriodoProjection> presupuestoGeneral(@RequestParam("idActividad") Long idActividad) {
         return Service.presupuestoGeneral(idActividad);
+    }
+    @GetMapping("/totalPresupuestoGenera")
+    public List<totalPresupuestoGeneralProjection> totalPresupuestoGenera(@RequestParam("poaId") Long poaId) {
+        return Service.totalPresupuestoGenera(poaId);
     }
 }
