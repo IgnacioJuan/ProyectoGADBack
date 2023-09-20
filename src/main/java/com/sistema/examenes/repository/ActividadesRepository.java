@@ -16,13 +16,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "SELECT * from actividades where visible = true ORDER BY nombre ASC", nativeQuery = true)
         List<Actividades> listarActividades();
 
-        @Query(value = "SELECT * "
-                        +
-                        "FROM actividades a " +
-                        "JOIN aprobacion_actividad aa ON a.id_actividad = aa.id_actividad " +
-                        "JOIN poa p ON aa.id_poa = p.id_poa " +
-                        "WHERE a.visible = true AND p.id_poa = :poaId " +
-                        "ORDER BY a.nombre ASC", nativeQuery = true)
+
+        @Query(value = "SELECT * FROM actividades a JOIN poa p ON a.id_poa = p.id_poa WHERE a.visible = true AND p.id_poa = :poaId ORDER BY a.nombre ASC", nativeQuery = true)
         List<Actividades> listarActividadesPorIdPoa(@Param("poaId") Long poaId);
 
         /*

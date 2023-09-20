@@ -35,12 +35,11 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
     List<Object[]> listarPoasDeModelo();*/
 
     //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas
-    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada,p.tipo_periodo, p.fecha_inicio, p.fecha_fin " +
-            "FROM poa p " +
-            "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
-            "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
-            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa " +
-            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' " +
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada, p.tipo_periodo, p.fecha_inicio, p.fecha_fin \n" +
+            "FROM poa p \n" +
+            "JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto \n" +
+            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa \n" +
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' \n" +
             "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin;" , nativeQuery = true)
     List<Object[]> listarPoasProyectoDeModeloFiltroFechas();
 
