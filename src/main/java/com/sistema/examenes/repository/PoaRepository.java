@@ -195,9 +195,9 @@ List<Poa> listarPoasPromedio();
             "SELECT pr.nombre AS nombre_proyecto, p.id_poa, p.localizacion,  p.tipo_periodo,\n" +
             "    p.linea_base, p.meta_alcanzar, p.meta_planificada, i.tipo_evaluacion,  m.nombre AS nombre_metapdot,\n" +
             "    CASE\n" +
-            "        WHEN i.tipo_evaluacion = 'DECRECIENTE' THEN\n" +
+            "        WHEN i.tipo_evaluacion = 'DECRECIENTE'  AND (p.linea_base - p.meta_planificada) <> 0  THEN\n" +
             "            CAST((p.linea_base - p.meta_alcanzar) / (p.linea_base - p.meta_planificada) * 100 AS numeric(10, 2))\n" +
-            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' THEN\n" +
+            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' AND p.meta_planificada <> 0 THEN\n" +
             "           CAST((p.meta_alcanzar / p.meta_planificada) * 100   AS numeric(10, 2))\n" +
             "        ELSE\n" +
             "          0\n" +
