@@ -48,10 +48,10 @@ public class Usuario_Rol_Controller {
         }
     }
 
-    @GetMapping("/listarUResponsables")
-    public ResponseEntity<List<UsuarioResponsableDTO>> listarUResponsables() {
+    @GetMapping("/listarUResponsables/{programaUsuarioLogeado}")
+    public ResponseEntity<List<UsuarioResponsableDTO>> listarUResponsables(@PathVariable Long programaUsuarioLogeado) {
         try {
-            return new ResponseEntity<>(usuarioService.listarUResponsable(), HttpStatus.OK);
+            return new ResponseEntity<>(usuarioService.listarUResponsable(programaUsuarioLogeado), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
