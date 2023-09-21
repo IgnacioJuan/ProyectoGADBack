@@ -31,7 +31,7 @@ public interface CompetenciaRepository extends JpaRepository<Competencia, Long> 
             "JOIN actividades act ON p.id_poa = act.id_poa " +
             "WHERE c.visible = true AND p.estado='APROBADO' " +
             "GROUP BY c.id_competencia, c.nombre " +
-            "ORDER BY ultima_fecha_creacion DESC", nativeQuery = true)
+            "ORDER BY ultima_fecha_creacion ASC", nativeQuery = true)
     List<Object[]> obtenerReportICompetencias();
 
 }

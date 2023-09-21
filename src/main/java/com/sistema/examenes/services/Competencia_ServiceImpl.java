@@ -1,13 +1,11 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.Competencia_DTO;
-import com.sistema.examenes.dto.Componente_DTO;
 import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
-import com.sistema.examenes.util.ExampleReportGenerator;
-import com.sistema.examenes.util.ReportInversionPorCompetencia;
+import com.sistema.examenes.util.ReportInversionPorCompetencia; 
 
 import net.sf.jasperreports.engine.JRException;
 

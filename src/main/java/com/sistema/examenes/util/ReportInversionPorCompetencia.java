@@ -1,7 +1,6 @@
 package com.sistema.examenes.util;
 
 import com.sistema.examenes.dto.ReportICompetencia;
-import com.sistema.examenes.entity.auth.Usuario;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
