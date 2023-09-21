@@ -67,9 +67,30 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return repository.findAllById(ids);
     }
 
+    //ADMIN
     @Override
     public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas(Long usuarioId) {
         List<Object[]> resultados = repository.listarPoasProyectoDeModeloFiltroFechas(usuarioId);
+        List<Poa_DTO> poas = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            Poa_DTO dto = new Poa_DTO();
+            dto.setId_poa(((BigInteger) result[0]).longValue());
+            dto.setId_proyecto(((BigInteger) result[1]).longValue());
+            dto.setNombreProyecto((String) result[2]);
+            dto.setMeta_planificada((Double) result[3]);
+            dto.setTipo_periodo((String) result[4]);
+            dto.setFecha_inicio((Date) result[5]);
+            dto.setFecha_fin((Date) result[6]);
+            poas.add(dto);
+        }
+        return poas;
+    }
+
+    //SUPERADMIN
+    @Override
+    public List<Poa_DTO> listarTodosPoasProyectoFiltroFechasSuper() {
+        List<Object[]> resultados = repository.listarTodosPoasProyectoFiltroFechasSuper();
         List<Poa_DTO> poas = new ArrayList<>();
 
         for (Object[] result : resultados) {
