@@ -116,6 +116,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dato.setNombre(projection.getProyecto().getNombre());
             dato.setUsername(projection.getUsuario().getUsername());
             dato.setNombrepro(projection.getProyecto().getPrograma().getNombre());
+            dato.setFecha_inicio(projection.getProyecto().getFecha_inicio());
+            dato.setFecha_fin(projection.getProyecto().getFecha_fin());
             datos.add(dato); 
 
         }
