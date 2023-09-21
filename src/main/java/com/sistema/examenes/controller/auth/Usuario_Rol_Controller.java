@@ -31,27 +31,30 @@ public class Usuario_Rol_Controller {
         }
     }
 
-    @GetMapping("/listarUsuariosResponsables")
-    public ResponseEntity<List<UsuarioRol>> listarUsuariosResponsables() {
+    @GetMapping("/listarUsuariosResponsables/{poaId}")
+    public ResponseEntity<List<UsuarioRol>> listarUsuariosResponsables2(@PathVariable Long poaId) {
         try {
-            return new ResponseEntity<>(usuarioService.listarUsuariosResponsables(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping("/listarUsuarioSuperAdmin")
-    public ResponseEntity<List<UsuarioRol>> listarUsuariosSuperAdmin() {
-        try {
-            return new ResponseEntity<>(usuarioService.listarUsuariosSuperAdmin(), HttpStatus.OK);
+            return new ResponseEntity<>(usuarioService.listarUsuariosResponsables2(poaId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/listarUResponsables")
-    public ResponseEntity<List<UsuarioResponsableDTO>> listarUResponsables() {
+    @GetMapping("/listarUsuarioSuperAdmin/{idPrograma}")
+    public ResponseEntity<List<UsuarioRol>> listarUsuariosSuperAdmin(@PathVariable Long idPrograma) {
         try {
-            return new ResponseEntity<>(usuarioService.listarUResponsable(), HttpStatus.OK);
+            return new ResponseEntity<>(usuarioService.listarUsuariosSuperAdmin(idPrograma), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarUResponsables/{programaUsuarioLogeado}")
+    public ResponseEntity<List<UsuarioResponsableDTO>> listarUResponsables(@PathVariable Long programaUsuarioLogeado) {
+        try {
+            return new ResponseEntity<>(usuarioService.listarUResponsable(programaUsuarioLogeado), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

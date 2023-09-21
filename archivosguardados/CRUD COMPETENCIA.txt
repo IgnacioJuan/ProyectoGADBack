@@ -1,0 +1,18 @@
+CRUD COMPETENCIA
+
+http://localhost:5000/api/competencia/crear
+{
+  "id_competencia": 0,
+  "nombre": "string",
+  "visible": true
+}
+
+http://localhost:5000/api/competencia/listado
+[
+  {
+    "id_competencia": 0,
+    "nombre": "string"
+  }
+]
+
+http://localhost:5000/api/competencia/eliminarlogic/{id}

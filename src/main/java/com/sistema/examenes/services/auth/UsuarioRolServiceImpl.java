@@ -29,11 +29,11 @@ public class UsuarioRolServiceImpl extends GenericServiceImpl<UsuarioRol, Long> 
     }
 
     @Override
-    public List<UsuarioRol> listarUsuariosResponsables() {
-        return usuarioRolRepository.listarUsuariosResponsables();
+    public List<UsuarioRol> listarUsuariosResponsables2(Long poaId) {
+        return usuarioRolRepository.listarUsuariosResponsables2(poaId);
     }
-    public List<UsuarioRol> listarUsuariosSuperAdmin() {
-        return usuarioRolRepository.listarUsuariosSuperAdmin();
+    public List<UsuarioRol> listarUsuariosSuperAdmin(Long idPrograma) {
+        return usuarioRolRepository.listarUsuariosSuperAdmin(idPrograma);
     }
 
 
@@ -43,9 +43,9 @@ public class UsuarioRolServiceImpl extends GenericServiceImpl<UsuarioRol, Long> 
     }
 
     @Override
-    public List<UsuarioResponsableDTO> listarUResponsable() {
+    public List<UsuarioResponsableDTO> listarUResponsable(Long programaUsuarioLogeado){
 
-        List<Object[]> resultados = usuarioRolRepository.listarUResponsables();
+        List<Object[]> resultados = usuarioRolRepository.listarUResponsables(programaUsuarioLogeado);
 
         List<UsuarioResponsableDTO> usuarespon = new ArrayList<>();
 

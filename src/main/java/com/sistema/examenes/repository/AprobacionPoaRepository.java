@@ -19,11 +19,11 @@ public interface AprobacionPoaRepository extends JpaRepository<AprobacionPoa, Lo
             "WHERE id_poa  = :idPoa  AND  visible=true;", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);*/
 
-    @Query(value = "SELECT ap.observacion, ap.estado, ap.id_aprobacionpoa acionpoa, p.primer_nombre, p.primer_apellido, ap.fecha_aprobacion \n" +
+    @Query(value = "SELECT ap.observacion, ap.estado, ap.id_aprobacionpoa, p.primer_nombre, p.primer_apellido, ap.fecha_aprobacion \n" +
             "FROM public.aprobacion_poa ap\n" +
             "INNER JOIN public.usuarios u ON ap.id_usuario = u.id\n" +
             "INNER JOIN public.persona p ON u.persona_id_persona = p.id_persona\n" +
-            "WHERE ap.id_poa = 1 AND ap.visible= true AND u.visible=true AND p.visible=true;\n", nativeQuery = true)
+            "WHERE ap.id_poa =:idPoa AND ap.visible= true AND u.visible=true AND p.visible=true;\n", nativeQuery = true)
     List<Object[]> listarAprobacionPoaPorIdPoa(@Param("idPoa") Long idPoa);
 
 //    @Query(value = " SELECT * FROM aprobacion_poa", nativeQuery = true)

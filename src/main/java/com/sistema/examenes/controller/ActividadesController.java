@@ -107,7 +107,7 @@ public class ActividadesController {
                 a.setPresupuesto_referencial(actividades.getPresupuesto_referencial());
                 a.setEstado(actividades.getEstado());
                 a.setUsuario(actividades.getUsuario());
-                a.setPoa(actividades.getPoa());
+//                a.setPoa(actividades.getPoa());
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
@@ -312,6 +312,51 @@ public class ActividadesController {
     public ResponseEntity<Actividades> fecha(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(actividadesService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/actualizarResponsable")
+    public ResponseEntity<Actividades> actualizarResponsable(@RequestParam("id_actividad") Long id_actividad,
+                                                              @RequestParam("id_responsable") Long id_responsable) {
+
+        try {
+            Actividades a = actividadesService.findById(id_actividad);
+            Usuario usuario = new Usuario();
+            usuario.setId(id_responsable);
+            a.setUsuario(usuario);
+            return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/actualizarDevengado/{id}")
+    public ResponseEntity<Actividades> actualizarDevengado(@PathVariable Long id, @RequestBody Actividades actividades) {
+
+        try {
+            Actividades a = actividadesService.findById(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setDevengado(actividades.getDevengado());
+                return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/actualizarCodificado/{id}")
+    public ResponseEntity<Actividades> actualizarCodificado(@PathVariable Long id, @RequestBody Actividades actividades) {
+
+        try {
+            Actividades a = actividadesService.findById(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setCodificado(actividades.getCodificado());
+                return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

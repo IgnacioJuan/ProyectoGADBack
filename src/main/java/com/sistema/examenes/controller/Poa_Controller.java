@@ -5,18 +5,20 @@ import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.entity.auth.Usuario;
-import com.sistema.examenes.projection.PoaNoAprobadoProjection;
 import com.sistema.examenes.projection.PoaporFechaRepoProjection;
 import com.sistema.examenes.projection.Poaactiprojection;
 import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
 import com.sistema.examenes.services.AprobacionPoaService;
 import com.sistema.examenes.services.Poa_Service;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -55,9 +57,17 @@ public class Poa_Controller {
         }
     }
 
-    @GetMapping("/listarPoasProyectoDeModeloFiltroFechas")
-    public ResponseEntity<List<Poa_DTO>> listarPoasProyectoDeModeloFiltroFechas() {
-        List<Poa_DTO> poas = Service.listarPoasProyectoDeModeloFiltroFechas();
+    //ADMIN
+    @GetMapping("/listarPoasProyectoDeModeloFiltroFechas/{usuarioId}")
+    public ResponseEntity<List<Poa_DTO>> listarPoasProyectoDeModeloFiltroFechas(@PathVariable Long usuarioId) {
+        List<Poa_DTO> poas = Service.listarPoasProyectoDeModeloFiltroFechas(usuarioId);
+        return ResponseEntity.ok(poas);
+    }
+
+    //SUPERADMIN
+    @GetMapping("/listarTodosPoasProyectoFiltroFechasSuper")
+    public ResponseEntity<List<Poa_DTO>> listarTodosPoasProyectoFiltroFechasSuper() {
+        List<Poa_DTO> poas = Service.listarTodosPoasProyectoFiltroFechasSuper();
         return ResponseEntity.ok(poas);
     }
 
@@ -304,6 +314,18 @@ public class Poa_Controller {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @GetMapping("/Metas-export-pdf")
+    public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=ReporteMetas.pdf");
+
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdfMETAS());
     }
 
 } 

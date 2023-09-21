@@ -2,9 +2,12 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.ProjectByIdDto;
 import com.sistema.examenes.dto.ProjectsActivesDto;
+import com.sistema.examenes.dto.ProyectoExportarexcelDTO;
+import com.sistema.examenes.dto.reportePresupuestoDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.repository.ProyectoRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -34,8 +37,31 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         return repository.listarProyectosdelModelo(id_modelo_poa);
     }
 
-    
-     @Override
+    @Override
+    public List<ProyectoExportarexcelDTO> exportarexcel(Long id_modelo_poa) {
+        List<Proyecto> exportar = repository.exportarexcel(id_modelo_poa);
+        List<ProyectoExportarexcelDTO> datos = new ArrayList<>();
+
+        for (Proyecto projection : exportar) {
+            ProyectoExportarexcelDTO dato = new ProyectoExportarexcelDTO();
+            dato.setId_proyecto(projection.getId_proyecto());
+            dato.setNombre(projection.getNombre());
+            dato.setCodigo(projection.getCodigo());
+            dato.setNombre_objetivoods(projection.getOds().getNombre());
+            dato.setNombre_objetivopnd(projection.getPnd().getNombre());
+            dato.setNombre_objetivopdot(projection.getIndicador().getMetapdot().getObjetivopdot().getNombre());
+            dato.setNombre_metapdot(projection.getIndicador().getMetapdot().getNombre());
+            dato.setNombre_indicador(projection.getIndicador().getNombre());
+            dato.setNombre_programa(projection.getPrograma().getNombre());
+            dato.setObjetivo(projection.getObjetivo());
+            dato.setMeta(projection.getMeta());
+            dato.setNombre_competencia(projection.getCompetencia().getNombre());
+            datos.add(dato);
+        }
+        return datos;
+    }
+
+    @Override
     public List<Proyecto> findByIds(List<Long> ids) {
         return repository.findAllById(ids);
     }
@@ -45,7 +71,7 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         List<Object[]> results = repository.listActiveProjects(id_usuario);
         List<ProjectsActivesDto> projectsActive = new ArrayList<>();
 
-        for(Object[] result : results){
+        for (Object[] result : results) {
             ProjectsActivesDto project = new ProjectsActivesDto(
                     ((BigInteger) result[0]).longValue(),
                     (String) result[1],
@@ -57,7 +83,6 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
 
         return projectsActive;
     }
-
 
 //    @Override
 //    public List<ProjectsActivesDto> listActiveProjects(Long id_usuario
@@ -76,12 +101,11 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
 //
 //        return projectsActive;
 //    }
-
     @Override
     public List<ProjectByIdDto> ProjectById(Long id_proyecto) {
         List<Object[]> results = repository.ProjectById(id_proyecto);
         List<ProjectByIdDto> projectById = new ArrayList<>();
-        for(Object[] result:results){
+        for (Object[] result : results) {
             ProjectByIdDto project = new ProjectByIdDto(
                     ((BigInteger) result[0]).longValue(),
                     ((BigInteger) result[1]).longValue(),
@@ -109,6 +133,21 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
     public Long secuenciaproyecto(String codigo) {
         return repository.SecuenciadelCodigo(codigo);
     }
+
+    @Override
+    public List<reportePresupuestoDTO> obtenerReportePresupuesto() {
+        List<Object[]> results = repository.listarProyectosReporte();
+        List<reportePresupuestoDTO> reportepresupuesto = new ArrayList<>();
+        
+        for(Object[] result:results){
+        reportePresupuestoDTO presupuesto= new reportePresupuestoDTO((String) result[0],(Double) result[1] , (Double) result[2],(BigDecimal) result[3]);
+        
+        reportepresupuesto.add(presupuesto);
+        }
+        return reportepresupuesto;
+    }
+    
+    
 
 
 }
