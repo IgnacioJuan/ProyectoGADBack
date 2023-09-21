@@ -10,10 +10,13 @@ import com.sistema.examenes.projection.*;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import com.sistema.examenes.util.ReporteMetas;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     
     @Autowired
     private AprobacionPoaRepository repositoryAP;
+    //Inyectamos el ReportGenerator
+    @Autowired
+    private ReporteMetas poaReporteMetas;
 
     public Poa_ServiceImpl(PoaRepository repository, AprobacionPoaRepository repositoryAP) {
         this.repository = repository;
@@ -61,9 +67,30 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return repository.findAllById(ids);
     }
 
+    //ADMIN
     @Override
-    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas() {
-        List<Object[]> resultados = repository.listarPoasProyectoDeModeloFiltroFechas();
+    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas(Long usuarioId) {
+        List<Object[]> resultados = repository.listarPoasProyectoDeModeloFiltroFechas(usuarioId);
+        List<Poa_DTO> poas = new ArrayList<>();
+
+        for (Object[] result : resultados) {
+            Poa_DTO dto = new Poa_DTO();
+            dto.setId_poa(((BigInteger) result[0]).longValue());
+            dto.setId_proyecto(((BigInteger) result[1]).longValue());
+            dto.setNombreProyecto((String) result[2]);
+            dto.setMeta_planificada((Double) result[3]);
+            dto.setTipo_periodo((String) result[4]);
+            dto.setFecha_inicio((Date) result[5]);
+            dto.setFecha_fin((Date) result[6]);
+            poas.add(dto);
+        }
+        return poas;
+    }
+
+    //SUPERADMIN
+    @Override
+    public List<Poa_DTO> listarTodosPoasProyectoFiltroFechasSuper() {
+        List<Object[]> resultados = repository.listarTodosPoasProyectoFiltroFechasSuper();
         List<Poa_DTO> poas = new ArrayList<>();
 
         for (Object[] result : resultados) {
@@ -212,12 +239,34 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             dto.setMeta_planificada((Double) result[6]);
             dto.setTipo_evaluacion((String) result[7]);
             dto.setNombre_metapdot((String) result[8]);
-            dto.setPorcentaje_cumplimiento(((BigDecimal) result[9]).doubleValue());
-
+            dto.setPorcentaje_cumplimiento((BigDecimal) result[9]);
             poas.add(dto);
         }
         return poas;
     }
+
+    //Llamamos al ReportGenerator
+    @Override
+    public byte[] exportPdfMETAS() throws JRException, FileNotFoundException {
+        List<Object[]> resultados = repository.listarPoasMetasIndicadores();
+        List<Poas_Indicadores_DTO> poas = new ArrayList<>();
+        for (Object[] result : resultados) {
+            Poas_Indicadores_DTO dto = new Poas_Indicadores_DTO();
+            dto.setNombre_proyecto((String) result[0]);
+            dto.setId_poa(((BigInteger) result[1]).longValue());
+            dto.setLocalizacion((String) result[2]);
+            dto.setTipo_periodo((String) result[3]);
+            dto.setLinea_base((Double) result[4]);
+            dto.setMeta_alcanzar((Double) result[5]);
+            dto.setMeta_planificada((Double) result[6]);
+            dto.setTipo_evaluacion((String) result[7]);
+            dto.setNombre_metapdot((String) result[8]);
+            dto.setPorcentaje_cumplimiento((BigDecimal) result[9]);
+            poas.add(dto);
+        }
+        return poaReporteMetas.exportToPdfMetas(poas);
+    }
+
 
     @Override
     public IsAprobadoProjection getIsAprobado(Long idProyecto) {
@@ -230,4 +279,5 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         }
         return null;
     }
+
 }

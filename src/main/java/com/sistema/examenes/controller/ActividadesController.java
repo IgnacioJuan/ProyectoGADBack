@@ -331,5 +331,34 @@ public class ActividadesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/actualizarDevengado/{id}")
+    public ResponseEntity<Actividades> actualizarDevengado(@PathVariable Long id, @RequestBody Actividades actividades) {
 
+        try {
+            Actividades a = actividadesService.findById(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setDevengado(actividades.getDevengado());
+                return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/actualizarCodificado/{id}")
+    public ResponseEntity<Actividades> actualizarCodificado(@PathVariable Long id, @RequestBody Actividades actividades) {
+
+        try {
+            Actividades a = actividadesService.findById(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setCodificado(actividades.getCodificado());
+                return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
