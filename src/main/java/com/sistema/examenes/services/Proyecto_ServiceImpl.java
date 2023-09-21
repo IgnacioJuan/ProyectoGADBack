@@ -146,8 +146,5 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         }
         return reportepresupuesto;
     }
-    
-    
-
 
 }
