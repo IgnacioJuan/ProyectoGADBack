@@ -2,6 +2,7 @@ package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.projection.presupuestPeriodoProjection;
+import com.sistema.examenes.projection.totalPresupuestoGeneralProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -76,4 +77,15 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Long> {
                 "a.id_actividad ,p.referencia ", nativeQuery = true)
         List<presupuestPeriodoProjection> presupuestoGeneral(Long idActividad);
 
+        @Query(value = "SELECT p.referencia, MAX(p.fecha_inicio) as periodoinicio, MAX(p.fecha_fin) as periodofin, " +
+                "SUM(a.codificado * (p.porcentaje / 100.0)) AS inversion, " +
+                "COALESCE(SUM(e.valor), 0) AS ejecucion " +
+                "FROM PERIODO p " +
+                "LEFT JOIN ACTIVIDADes a ON p.id_actividad = a.id_actividad " +
+                "LEFT JOIN archivo e ON a.id_actividad = e.id_actividad " +
+                "AND (e.fecha BETWEEN p.fecha_inicio AND p.fecha_fin) and e.estado = 'APROBADO' " +
+                "WHERE a.id_poa = :poaId " +
+                "GROUP BY p.referencia " +
+                "ORDER BY p.referencia", nativeQuery = true)
+        List<totalPresupuestoGeneralProjection> totalPresupuestoGenera(Long poaId);
 }

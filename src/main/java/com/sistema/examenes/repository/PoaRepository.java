@@ -1,10 +1,7 @@
 package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Poa;
-import com.sistema.examenes.projection.PoaNoAprobadoProjection;
-import com.sistema.examenes.projection.PoaporFechaRepoProjection;
-import com.sistema.examenes.projection.Poaactiprojection;
-import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
+import com.sistema.examenes.projection.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -105,14 +102,10 @@ List<Poa> listarPoasPromedio();
             "E.nombre, e.codigo, " +
             "concat(g.primer_nombre, ' ', g.primer_apellido) as usuario " +
             "from POA A " +
-            "join aprobacion_actividad B " +
-            "on A.id_poa = B.id_poa " +
             "join actividades c " +
-            "on C.id_actividad = B.id_actividad " +
-            "join aprobacion_poa d " +
-            "on d.id_poa = A.id_poa " +
+            "on c.id_poa = a.id_poa  " +
             "join proyecto E " +
-            "on E.id_proyecto = d.id_proyecto " +
+            "on E.id_proyecto = a.id_proyecto " +
             "join usuarios f " +
             "on f.id = a.id_responsable " +
             "join persona g " +
@@ -208,5 +201,7 @@ List<Poa> listarPoasPromedio();
             "WHERE p.visible = true AND i.visible = true AND m.visible = true;", nativeQuery = true)
     List<Object[]> listarPoasMetasIndicadores();
 
-
+//SELECT CASE WHEN EXISTS (SELECT 1 FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO')THEN TRUE ELSE FALSE END AS tiene_estado_aprobado,COALESCE((SELECT id_poa FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO'),0) AS id_poa_aprobado;
+    @Query(value = "SELECT CASE WHEN EXISTS (SELECT 1 FROM public.poa WHERE id_proyecto = :idProyecto AND estado = 'APROBADO')THEN TRUE ELSE FALSE END AS tiene_estado_aprobado,COALESCE((SELECT id_poa FROM public.poa WHERE id_proyecto = :idProyecto AND estado = 'APROBADO'),0) AS id_poa_aprobado;", nativeQuery = true)
+    Object getIsAprobado(Long idProyecto);
 }

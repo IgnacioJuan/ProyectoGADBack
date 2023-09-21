@@ -6,10 +6,7 @@ import com.sistema.examenes.dto.AprobPoa_DTO;
 import com.sistema.examenes.dto.Poa_DTO;
 import com.sistema.examenes.entity.AprobacionPoa;
 import com.sistema.examenes.entity.Poa;
-import com.sistema.examenes.projection.PoaNoAprobadoProjection;
-import com.sistema.examenes.projection.PoaporFechaRepoProjection;
-import com.sistema.examenes.projection.Poaactiprojection;
-import com.sistema.examenes.projection.PoasConActividadesPendientesProjection;
+import com.sistema.examenes.projection.*;
 import com.sistema.examenes.repository.AprobacionPoaRepository;
 import com.sistema.examenes.repository.PoaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -217,5 +214,17 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             poas.add(dto);
         }
         return poas;
+    }
+
+    @Override
+    public IsAprobadoProjection getIsAprobado(Long idProyecto) {
+        Object result = repository.getIsAprobado(idProyecto);
+        IsAprobadoProjection dro = new IsAprobadoProjection();
+        if (result != null) {
+            dro.setIdPoaAprobado(((BigInteger) ((Object[]) result)[1]).longValue());
+            dro.setEstadoAprobado((Boolean) ((Object[]) result)[0]);
+            return dro;
+        }
+        return null;
     }
 }
