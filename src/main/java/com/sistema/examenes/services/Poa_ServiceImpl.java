@@ -68,8 +68,8 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
     }
 
     @Override
-    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas() {
-        List<Object[]> resultados = repository.listarPoasProyectoDeModeloFiltroFechas();
+    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas(Long usuarioId) {
+        List<Object[]> resultados = repository.listarPoasProyectoDeModeloFiltroFechas(usuarioId);
         List<Poa_DTO> poas = new ArrayList<>();
 
         for (Object[] result : resultados) {
