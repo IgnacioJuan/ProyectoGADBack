@@ -25,19 +25,26 @@ public class ReformaTraspaso_D_Controller {
     public ResponseEntity<ReformaTraspaso_D> crear(@RequestBody ReformaTraspaso_D rs) {
         try {
             rs.setVisible(true);
-            rtdService.save(rs);// Guardar
-            Actividades actividad = rs.getActividad();// Obtener la actividad relacionada
+            Actividades actividad = rs.getActividad();
             if (actividad != null) {
-                Optional<Actividades> actividadOptional = actividadesService.findActividadById(actividad.getId_actividad());// Obtener la entidad Actividades directamente de la base de datos
+                Optional<Actividades> actividadOptional = actividadesService.findActividadById(actividad.getId_actividad());
                 if (actividadOptional.isPresent()) {
                     Actividades actividadCompleta = actividadOptional.get();
-                    // Actualizar solo el campo "codificado"
-                    double nuevoCodificado = actividadCompleta.getCodificado() - rs.getValor();
-                    actividadCompleta.setCodificado(nuevoCodificado);
-                    actividadesService.save(actividadCompleta); // Guardar la actividad actualizada
+                    //Valor de la actividad
+                    double valorRestante = actividadCompleta.getCodificado() - actividadCompleta.getDevengado();
+                    if (rs.getValor() <= valorRestante) {
+                        double nuevoCodificado = actividadCompleta.getCodificado() - rs.getValor();
+                        actividadCompleta.setCodificado(nuevoCodificado);
+                        actividadesService.save(actividadCompleta); // Guardar la actividad actualizada
+                        rtdService.save(rs); // Guardar la ReformaTraspaso_D
+                        return new ResponseEntity<>(rs, HttpStatus.CREATED);
+                    } else {
+                        // El valor de la ReformaTraspaso_D es mayor al valor restante permitido
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    }
                 }
             }
-            return new ResponseEntity<>(rs, HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -33,7 +33,7 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             + "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado='ACTIVO')", nativeQuery = true)
     List<Object[]> listarPoasDeModelo();*/
 
-    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas
+    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas DEL ADMIN
     @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada, p.tipo_periodo, p.fecha_inicio, p.fecha_fin \n" +
             "FROM poa p \n" +
             "JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto \n" +
@@ -42,6 +42,15 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin " +
             "AND p.id_responsable = :usuarioId", nativeQuery = true)
     List<Object[]> listarPoasProyectoDeModeloFiltroFechas(@Param("usuarioId") Long usuarioId);
+
+    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas DEL SUPER ADMIN
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada, p.tipo_periodo, p.fecha_inicio, p.fecha_fin \n" +
+            "FROM poa p \n" +
+            "JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto \n" +
+            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa \n" +
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' \n" +
+            "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin;" , nativeQuery = true)
+    List<Object[]> listarTodosPoasProyectoFiltroFechasSuper();
 
     @Query(value = "SELECT DISTINCT p.id_poa, p.fecha_inicio, p.fecha_fin,\n"
             + "    p.id_responsable, ap.estado,\n"
