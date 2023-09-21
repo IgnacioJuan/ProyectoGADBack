@@ -22,6 +22,8 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas(Long usuarioId);
 
+    public List<Poa_DTO> listarTodosPoasProyectoFiltroFechasSuper();
+
     public List<PoaNoAprobadoDTO> listarPoaNoAprobados();
     
     public List<PoaporUsuarioDTO> listarPoaporUsuarios( Long id_proyecto );
