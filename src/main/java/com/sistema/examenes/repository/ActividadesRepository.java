@@ -130,8 +130,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    COALESCE(totalreformaTIncremento, 0) AS totalreformaTIncremento,\n" +
                         "    COALESCE(totalreformaTDecremento, 0) AS totalreformaTDecremento\n" +
                         "FROM actividades a\n" +
-                        "JOIN aprobacion_actividad aa ON a.id_actividad = aa.id_actividad\n" +
-                        "JOIN poa p ON aa.id_poa = p.id_poa\n" +
+                        "JOIN poa p ON a.id_poa = p.id_poa\n" +
                         "LEFT JOIN (\n" +
                         "    SELECT id_actividad, SUM(valor) AS totalpresupuestoEterno\n" +
                         "    FROM presupuesto_externo\n" +

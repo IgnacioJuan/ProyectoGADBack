@@ -39,8 +39,9 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto \n" +
             "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa \n" +
             "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' \n" +
-            "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin;" , nativeQuery = true)
-    List<Object[]> listarPoasProyectoDeModeloFiltroFechas();
+            "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin " +
+            "AND p.id_responsable = :usuarioId", nativeQuery = true)
+    List<Object[]> listarPoasProyectoDeModeloFiltroFechas(@Param("usuarioId") Long usuarioId);
 
     @Query(value = "SELECT DISTINCT p.id_poa, p.fecha_inicio, p.fecha_fin,\n"
             + "    p.id_responsable, ap.estado,\n"
