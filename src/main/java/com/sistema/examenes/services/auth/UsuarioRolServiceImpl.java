@@ -43,9 +43,9 @@ public class UsuarioRolServiceImpl extends GenericServiceImpl<UsuarioRol, Long> 
     }
 
     @Override
-    public List<UsuarioResponsableDTO> listarUResponsable() {
+    public List<UsuarioResponsableDTO> listarUResponsable(Long programaUsuarioLogeado){
 
-        List<Object[]> resultados = usuarioRolRepository.listarUResponsables();
+        List<Object[]> resultados = usuarioRolRepository.listarUResponsables(programaUsuarioLogeado);
 
         List<UsuarioResponsableDTO> usuarespon = new ArrayList<>();
 
