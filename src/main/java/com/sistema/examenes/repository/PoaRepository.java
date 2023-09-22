@@ -206,7 +206,7 @@ List<Poa> listarPoasPromedio();
             "INNER JOIN public.proyecto AS pr ON p.id_proyecto = pr.id_proyecto\n" +
             "INNER JOIN public.indicador AS i ON pr.id_indicador = i.id_indicador\n" +
             "LEFT JOIN public.metapdot AS m ON i.id_meta_pdot = m.id_meta_pdot \n" +
-            "WHERE p.visible = true AND i.visible = true AND m.visible = true;", nativeQuery = true)
+            "WHERE p.visible = true AND i.visible = true AND m.visible = true AND p.estado= 'APROBADO';", nativeQuery = true)
     List<Object[]> listarPoasMetasIndicadores();
 
 //SELECT CASE WHEN EXISTS (SELECT 1 FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO')THEN TRUE ELSE FALSE END AS tiene_estado_aprobado,COALESCE((SELECT id_poa FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO'),0) AS id_poa_aprobado;
