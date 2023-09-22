@@ -83,7 +83,9 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Long> {
                 "FROM PERIODO p " +
                 "LEFT JOIN ACTIVIDADes a ON p.id_actividad = a.id_actividad " +
                 "LEFT JOIN archivo e ON a.id_actividad = e.id_actividad " +
-                "AND (e.fecha BETWEEN p.fecha_inicio AND p.fecha_fin) and e.estado = 'APROBADO' " +
+                "AND (e.fecha BETWEEN p.fecha_inicio AND p.fecha_fin) " +
+                "and e.estado = 'APROBADO' " +
+                "and a.estado = 'APROBADO' " +
                 "WHERE a.id_poa = :poaId " +
                 "GROUP BY p.referencia " +
                 "ORDER BY p.referencia", nativeQuery = true)
