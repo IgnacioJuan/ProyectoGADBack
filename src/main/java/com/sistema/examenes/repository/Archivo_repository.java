@@ -43,10 +43,8 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
      @Query(value = "SELECT ar.* " +
        "FROM archivo ar " +
        "JOIN actividades ac ON ar.id_actividad = ac.id_actividad " +
-       "JOIN aprobacion_actividad aa ON ac.id_actividad = aa.id_actividad " +
-       "JOIN poa po ON aa.id_poa = po.id_poa " +
-       "JOIN aprobacion_poa ap ON po.id_poa = ap.id_poa " +
-       "JOIN proyecto p ON ap.id_proyecto = p.id_proyecto " +
+       "JOIN poa po ON ac.id_poa = po.id_poa " +
+       "JOIN proyecto p ON po.id_proyecto = p.id_proyecto " +
        "JOIN modelopoa mp ON p.id_modelo_poa = mp.id_modelo_poa " +
        "WHERE mp.estado = 'ACTIVO' " +
        "AND ar.visible = true " +
