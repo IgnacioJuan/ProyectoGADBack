@@ -4,6 +4,7 @@
  */
 package com.sistema.examenes.dto;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,8 @@ public class PoaporUsuarioDTO {
     private String primer_nombre;
     private String primer_apellido;
     private String nombrepro;
-  
+    private Date fecha_inicio;
+    private Date fecha_fin;
+
    
 }

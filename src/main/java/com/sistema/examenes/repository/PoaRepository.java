@@ -18,10 +18,9 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
 
     @Query(value = "SELECT p.* " +
             "from poa p " +
-            "join aprobacion_poa ap " +
-            "on ap.id_poa = p.id_poa " +
+
             "where p.visible =true " +
-            "and ap.id_proyecto = :id_proyecto " +
+            "and p.id_proyecto = :id_proyecto " +
             "and (p.estado= :estado or :estado is null) " +
             "group by p.id_poa " +
             "ORDER BY fecha_inicio desc", nativeQuery = true)
@@ -34,15 +33,24 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             + "WHERE p.estado = 'APROBADO' AND p.visible = true AND pr.id_modelo_poa = (SELECT MAX(m.id_modelo_poa) FROM modelopoa m WHERE m.visible = true and m.estado='ACTIVO')", nativeQuery = true)
     List<Object[]> listarPoasDeModelo();*/
 
-    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas
-    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada,p.tipo_periodo, p.fecha_inicio, p.fecha_fin " +
-            "FROM poa p " +
-            "JOIN aprobacion_poa ap ON p.id_poa = ap.id_poa " +
-            "JOIN proyecto pr ON ap.id_proyecto = pr.id_proyecto " +
-            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa " +
-            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' " +
+    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas DEL ADMIN
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada, p.tipo_periodo, p.fecha_inicio, p.fecha_fin \n" +
+            "FROM poa p \n" +
+            "JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto \n" +
+            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa \n" +
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' \n" +
+            "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin " +
+            "AND p.id_responsable = :usuarioId", nativeQuery = true)
+    List<Object[]> listarPoasProyectoDeModeloFiltroFechas(@Param("usuarioId") Long usuarioId);
+
+    //QUERY para listar poas con nombre de proyecto del modelo activo, con fitros de fechas DEL SUPER ADMIN
+    @Query(value = "SELECT p.id_poa, pr.id_proyecto, pr.nombre as nombreProyecto, p.meta_planificada, p.tipo_periodo, p.fecha_inicio, p.fecha_fin \n" +
+            "FROM poa p \n" +
+            "JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto \n" +
+            "JOIN modelopoa m ON pr.id_modelo_poa = m.id_modelo_poa \n" +
+            "WHERE p.estado = 'APROBADO' AND p.visible = true AND m.estado = 'ACTIVO' \n" +
             "AND NOW() BETWEEN p.fecha_inicio AND p.fecha_fin;" , nativeQuery = true)
-    List<Object[]> listarPoasProyectoDeModeloFiltroFechas();
+    List<Object[]> listarTodosPoasProyectoFiltroFechasSuper();
 
     @Query(value = "SELECT DISTINCT p.id_poa, p.fecha_inicio, p.fecha_fin,\n"
             + "    p.id_responsable, ap.estado,\n"
@@ -187,9 +195,9 @@ List<Poa> listarPoasPromedio();
             "SELECT pr.nombre AS nombre_proyecto, p.id_poa, p.localizacion,  p.tipo_periodo,\n" +
             "    p.linea_base, p.meta_alcanzar, p.meta_planificada, i.tipo_evaluacion,  m.nombre AS nombre_metapdot,\n" +
             "    CASE\n" +
-            "        WHEN i.tipo_evaluacion = 'DECRECIENTE' THEN\n" +
+            "        WHEN i.tipo_evaluacion = 'DECRECIENTE'  AND (p.linea_base - p.meta_planificada) <> 0  THEN\n" +
             "            CAST((p.linea_base - p.meta_alcanzar) / (p.linea_base - p.meta_planificada) * 100 AS numeric(10, 2))\n" +
-            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' THEN\n" +
+            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' AND p.meta_planificada <> 0 THEN\n" +
             "           CAST((p.meta_alcanzar / p.meta_planificada) * 100   AS numeric(10, 2))\n" +
             "        ELSE\n" +
             "          0\n" +
@@ -198,7 +206,7 @@ List<Poa> listarPoasPromedio();
             "INNER JOIN public.proyecto AS pr ON p.id_proyecto = pr.id_proyecto\n" +
             "INNER JOIN public.indicador AS i ON pr.id_indicador = i.id_indicador\n" +
             "LEFT JOIN public.metapdot AS m ON i.id_meta_pdot = m.id_meta_pdot \n" +
-            "WHERE p.visible = true AND i.visible = true AND m.visible = true;", nativeQuery = true)
+            "WHERE p.visible = true AND i.visible = true AND m.visible = true AND p.estado= 'APROBADO';", nativeQuery = true)
     List<Object[]> listarPoasMetasIndicadores();
 
 //SELECT CASE WHEN EXISTS (SELECT 1 FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO')THEN TRUE ELSE FALSE END AS tiene_estado_aprobado,COALESCE((SELECT id_poa FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO'),0) AS id_poa_aprobado;

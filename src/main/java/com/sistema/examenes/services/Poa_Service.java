@@ -20,7 +20,9 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     public List<Poa> listarPoadelProyectoconEstado(Long id_proyecto, String estado);
 
-    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas();
+    public List<Poa_DTO> listarPoasProyectoDeModeloFiltroFechas(Long usuarioId);
+
+    public List<Poa_DTO> listarTodosPoasProyectoFiltroFechasSuper();
 
     public List<PoaNoAprobadoDTO> listarPoaNoAprobados();
     
@@ -44,5 +46,11 @@ public interface Poa_Service extends GenericService<Poa, Long> {
 
     IsAprobadoProjection getIsAprobado(Long idProyecto);
     byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
+
+    
+    byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
+
+    IsAprobadoProjection getIsAprobado(Long idProyecto);
+
 
 }

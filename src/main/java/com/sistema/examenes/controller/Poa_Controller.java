@@ -57,9 +57,17 @@ public class Poa_Controller {
         }
     }
 
-    @GetMapping("/listarPoasProyectoDeModeloFiltroFechas")
-    public ResponseEntity<List<Poa_DTO>> listarPoasProyectoDeModeloFiltroFechas() {
-        List<Poa_DTO> poas = Service.listarPoasProyectoDeModeloFiltroFechas();
+    //ADMIN
+    @GetMapping("/listarPoasProyectoDeModeloFiltroFechas/{usuarioId}")
+    public ResponseEntity<List<Poa_DTO>> listarPoasProyectoDeModeloFiltroFechas(@PathVariable Long usuarioId) {
+        List<Poa_DTO> poas = Service.listarPoasProyectoDeModeloFiltroFechas(usuarioId);
+        return ResponseEntity.ok(poas);
+    }
+
+    //SUPERADMIN
+    @GetMapping("/listarTodosPoasProyectoFiltroFechasSuper")
+    public ResponseEntity<List<Poa_DTO>> listarTodosPoasProyectoFiltroFechasSuper() {
+        List<Poa_DTO> poas = Service.listarTodosPoasProyectoFiltroFechasSuper();
         return ResponseEntity.ok(poas);
     }
 
