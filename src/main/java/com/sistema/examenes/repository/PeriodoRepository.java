@@ -56,7 +56,7 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Long> {
                 "p.id_actividad, " +
                 "p.fecha_inicio, " +
                 "p.fecha_fin, " +
-                "a.codificado * (p.porcentaje / 100.0) AS inversion, " +
+                "SUM(CASE WHEN a.estado = 'APROBADO' THEN a.codificado * (p.porcentaje / 100.0) ELSE 0 END) AS inversion, " +
                 "p.referencia, " +
                 "p.porcentaje, " +
                 "COALESCE(SUM(e.valor), 0) AS ejecucion " +
@@ -78,7 +78,7 @@ public interface PeriodoRepository extends JpaRepository<Periodo, Long> {
         List<presupuestPeriodoProjection> presupuestoGeneral(Long idActividad);
 
         @Query(value = "SELECT p.referencia, MAX(p.fecha_inicio) as periodoinicio, MAX(p.fecha_fin) as periodofin, " +
-                "SUM(a.codificado * (p.porcentaje / 100.0)) AS inversion, " +
+                "SUM(CASE WHEN a.estado = 'APROBADO' THEN a.codificado * (p.porcentaje / 100.0) ELSE 0 END) AS inversion, " +
                 "COALESCE(SUM(e.valor), 0) AS ejecucion " +
                 "FROM PERIODO p " +
                 "LEFT JOIN ACTIVIDADes a ON p.id_actividad = a.id_actividad " +
