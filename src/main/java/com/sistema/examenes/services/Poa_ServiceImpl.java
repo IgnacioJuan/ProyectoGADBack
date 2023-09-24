@@ -276,9 +276,9 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             poas.add(dto);
         }
         return poaReporteMetas.exportToPdfMetas(poas);
-    }+
+    }
 
-    @Override
+    /*@Override
     public IsAprobadoProjection getIsAprobado(Long idProyecto) {
         Object result = repository.getIsAprobado(idProyecto);
         IsAprobadoProjection dro = new IsAprobadoProjection();
@@ -288,5 +288,5 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             return dro;
         }
         return null;
-    }
+    }*/
 }
