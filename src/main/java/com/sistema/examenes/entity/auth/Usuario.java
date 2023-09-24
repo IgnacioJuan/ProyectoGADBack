@@ -9,7 +9,10 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", indexes = {
+        @Index(name = "idx_id_programa_usu", columnList = "id_programa"),
+        @Index(name = "idx_persona_id_persona", columnList = "persona_id_persona")
+})
 public class Usuario implements UserDetails {
 
     @Id
@@ -20,6 +23,7 @@ public class Usuario implements UserDetails {
     private String password;
     private boolean enabled = true;
     @ManyToOne(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.ForeignKey(name = "FK_USUARIO_PERSONA")
     private Persona persona;
 
     // Columna para el eliminado logico no borrar
@@ -29,6 +33,7 @@ public class Usuario implements UserDetails {
      //ManyToOne Programa
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_programa")
+    @org.hibernate.annotations.ForeignKey(name = "FK_USUARIO_PROGRAMA")
     private Programa programa;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")

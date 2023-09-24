@@ -12,7 +12,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "objetivopnd")
+@Table(name = "objetivopnd", indexes = {
+        @Index(name = "idx_id_eje", columnList = "id_eje")
+})
 public class ObjetivoPND implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,7 @@ public class ObjetivoPND implements Serializable {
     //ManyToOne con eje
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_eje")
+    @org.hibernate.annotations.ForeignKey(name = "FK_OBJPND_EJE")
     private Eje eje;
 
     //OneToMany Proyecto

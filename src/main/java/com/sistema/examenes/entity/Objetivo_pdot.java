@@ -12,7 +12,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "objetivopdot")
+@Table(name = "objetivopdot", indexes = {
+        @Index(name = "idx_id_componente", columnList = "id_componente")
+})
 public class Objetivo_pdot implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,7 @@ public class Objetivo_pdot implements Serializable {
     //ManyToOne Componente
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_componente")
+    @org.hibernate.annotations.ForeignKey(name = "FK_OBJPDOT_COMPONENTE")
     private Componente componente;
 
     //OneToMany MetaPDOT
