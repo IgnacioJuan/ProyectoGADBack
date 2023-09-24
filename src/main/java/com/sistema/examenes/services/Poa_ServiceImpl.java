@@ -245,6 +245,17 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         return poas;
     }
 
+    @Override
+    public IsAprobadoProjection getIsAprobado(Long idProyecto) {
+        Object result = repository.getIsAprobado(idProyecto);
+        IsAprobadoProjection dro = new IsAprobadoProjection();
+        if (result != null) {
+            dro.setIdPoaAprobado(((BigInteger) ((Object[]) result)[1]).longValue());
+            dro.setEstadoAprobado((Boolean) ((Object[]) result)[0]);
+            return dro;
+        }
+        return null;
+    }
     //Llamamos al ReportGenerator
     @Override
     public byte[] exportPdfMETAS() throws JRException, FileNotFoundException {
@@ -265,8 +276,7 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
             poas.add(dto);
         }
         return poaReporteMetas.exportToPdfMetas(poas);
-    }
-
+    }+
 
     @Override
     public IsAprobadoProjection getIsAprobado(Long idProyecto) {
@@ -279,5 +289,4 @@ public class Poa_ServiceImpl extends GenericServiceImpl<Poa, Long> implements Po
         }
         return null;
     }
-
 }
