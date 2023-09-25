@@ -8,12 +8,16 @@ import com.sistema.examenes.dto.ProyectoResumenDTO;
 import com.sistema.examenes.dto.reportePresupuestoDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.services.Proyecto_Service;
+import java.io.FileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import net.sf.jasperreports.engine.JRException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -160,4 +164,18 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
        List<reportePresupuestoDTO> listareporte = Service.obtenerReportePresupuesto();
         return ResponseEntity.ok(listareporte);
     }
+    
+    
+     @GetMapping("/Proyecto-export-pdf")
+    public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=ReportePresupuesto.pdf");
+
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdfMETAS());
+    }
+    
+    
 }

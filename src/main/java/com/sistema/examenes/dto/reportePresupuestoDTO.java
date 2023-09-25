@@ -24,5 +24,6 @@ public class reportePresupuestoDTO {
     private String nombreProyecto;
     private double montoCodificado;
     private double montoDevengado;
-    private BigDecimal pEjecucion;
+    private BigDecimal pejecucion;
+    
 }
