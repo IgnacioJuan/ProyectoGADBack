@@ -122,7 +122,7 @@ public ResponseEntity<List<Proyecto>> getByIds(@PathVariable("ids") List<Long> i
                 a.setDescripcion(p.getDescripcion());
                 a.setFecha_inicio(p.getFecha_inicio());
                 a.setFecha_fin(p.getFecha_fin());
-                a.setVisible(p.isVisible());
+                //a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

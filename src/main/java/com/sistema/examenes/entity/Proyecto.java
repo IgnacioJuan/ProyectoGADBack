@@ -14,7 +14,14 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "proyecto")
+@Table(name = "proyecto", indexes = {
+        @Index(name = "idx_id_modelo_poa", columnList = "id_modelo_poa"),
+        @Index(name = "idx_id_indicador", columnList = "id_indicador"),
+        @Index(name = "idx_id_programa_pro", columnList = "id_programa"),
+        @Index(name = "idx_id_compentencia", columnList = "id_competencia"),
+        @Index(name = "idx_id_ods", columnList = "id_ods"),
+        @Index(name = "idx_id_pnd", columnList = "id_pnd")
+})
 public class Proyecto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,31 +59,37 @@ public class Proyecto implements Serializable {
     //ManyToOne ObjetivoODS
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_ods")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PROYECTO_ODS")
     private ObjetivoODS ods;
 
     //ManyToOne ObjetivoPND
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_pnd")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PROYECTO_PND")
     private ObjetivoPND pnd;
 
     //ManyToOne Programa
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_programa")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PROYECTO_PROGRAMA")
     private Programa programa;
 
     //ManyToOne ModeloPOA
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_modelo_poa")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PROYECTO_MODELPOA")
     private ModeloPOA modelopoa;
 
     //ManyToOne Indicador
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_indicador")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PROYECTO_INDICADOR")
     private Indicador indicador;
 
     //ManyToOne CompetenciaCOOTAD
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_competencia")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PROYECTO_COMPENTENCIA")
     private Competencia competencia;
 
     //OneToMany AprobacionPOA

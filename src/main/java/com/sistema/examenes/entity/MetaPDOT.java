@@ -12,7 +12,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "metapdot")
+@Table(name = "metapdot", indexes = {
+        @Index(name = "idx_objetivo_pdot", columnList = "id_objetivo_pdot")
+})
 public class MetaPDOT implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +35,7 @@ public class MetaPDOT implements Serializable {
     //ManyToOne ObjetivoPDOT
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_objetivo_pdot")
+    @org.hibernate.annotations.ForeignKey(name = "FK_METAPDOT_OBJETPDOT") // Nombre de la restricción
     private Objetivo_pdot objetivopdot;
 
     //OneToMany Indicador

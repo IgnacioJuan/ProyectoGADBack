@@ -43,10 +43,11 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     public List<PoaporFechaRepoProjection> listarPoaApAdm(Long idResponsable);
     List<Poaactiprojection> poaacjq(Long id);
     public List<Poas_Indicadores_DTO> listarPoasMetasIndicadores();
-    
-    byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
 
     IsAprobadoProjection getIsAprobado(Long idProyecto);
+    byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
+
+
 
 
 }

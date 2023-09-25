@@ -13,7 +13,10 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "actividades")
+@Table(name = "actividades", indexes = {
+        @Index(name = "idx_id_responsable_act", columnList = "id_responsable"),
+        @Index(name = "idx_id_poa_act", columnList = "id_poa")
+})
 public class Actividades {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -78,6 +81,7 @@ public class Actividades {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_responsable")
+    @org.hibernate.annotations.ForeignKey(name = "FK_ACTIVIDAD_USUARIO") // Nombre de la restricción
     private Usuario  usuario;
 
     @JsonIgnore
@@ -92,6 +96,7 @@ public class Actividades {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_poa")
+    @org.hibernate.annotations.ForeignKey(name = "FK_ACTIVIDAD_POA")
     private Poa poa;
 
 }
