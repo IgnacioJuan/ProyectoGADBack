@@ -13,7 +13,7 @@ import com.sistema.examenes.services.AprobacionEvidenciaService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/aprobacionevidencia")
 public class AprobacionEvidenciaController {
