@@ -1,9 +1,11 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.ObjetivoPnd_DTO;
+import com.sistema.examenes.dto.ObjetivopndDTOnew;
 import com.sistema.examenes.entity.ObjetivoPND;
 import com.sistema.examenes.repository.ObjetivoPNDRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -66,6 +68,20 @@ public class ObjetivoPND_ServiceImpl extends GenericServiceImpl<ObjetivoPND, Lon
     @Override
     public List<ObjetivoPND> listarObjetivosPorIdEjex(Long idEje) {
         return repository.listarObjetivosPorIdEjex(idEje);
+    }
+
+    @Override
+    public List<ObjetivopndDTOnew> listarObjetivosPoridFinal(Long idEje) {
+         List<Object[]> results = repository.listarObjetivosPorEjeNEW(idEje);
+        List<ObjetivopndDTOnew> litaobj = new ArrayList<>();
+        
+        for(Object[] result:results){
+         BigInteger idObjetivoPnd = (BigInteger) result[0];
+        String nombre = (String) result[1];
+        ObjetivopndDTOnew objJson = new ObjetivopndDTOnew(idObjetivoPnd.longValue(), nombre);
+        litaobj.add(objJson);
+        }
+        return litaobj;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.ObjetivoPnd_DTO;
+import com.sistema.examenes.dto.ObjetivopndDTOnew;
 import com.sistema.examenes.entity.ObjetivoPND;
 import com.sistema.examenes.services.ObjetivoPND_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,14 @@ public class ObjetivoPND_Controller {
     public ResponseEntity<List<ObjetivoPnd_DTO>> listarObjetivosPorIdEjeDTO(@PathVariable("idEje") Long idEje) {
         List<ObjetivoPnd_DTO> objetivosEncontrados = Service.listarObjetivosPorIdEjeDTO(idEje);
         return ResponseEntity.ok(objetivosEncontrados);
+    }
+    
+    
+    
+    @GetMapping("/listarporejenew/{idEje}")
+    public ResponseEntity<List<ObjetivopndDTOnew>> listarObjetivosPorIdEjeNEW(@PathVariable("idEje") Long idEje) {
+        List<ObjetivopndDTOnew> objfounds = Service.listarObjetivosPoridFinal(idEje);
+        return ResponseEntity.ok(objfounds);
     }
 
     @GetMapping("/por-eje")

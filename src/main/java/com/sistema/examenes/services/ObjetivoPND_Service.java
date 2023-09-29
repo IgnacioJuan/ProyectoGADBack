@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.ObjetivoPnd_DTO;
+import com.sistema.examenes.dto.ObjetivopndDTOnew;
 import com.sistema.examenes.entity.ObjetivoPND;
 import com.sistema.examenes.services.generic.GenericService;
 
@@ -12,5 +13,7 @@ public interface ObjetivoPND_Service extends GenericService<ObjetivoPND, Long> {
 
     List<ObjetivoPnd_DTO> listarObjetivosPorIdEjeDTO(Long idEje);
     List<ObjetivoPND> listarObjetivosPorIdEjex(Long idEje);
+    
+    List<ObjetivopndDTOnew> listarObjetivosPoridFinal(Long idEje);
 
 }
