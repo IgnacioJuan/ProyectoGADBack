@@ -17,7 +17,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/aprobacionpoa")
 public class AprobacionPoaController {
