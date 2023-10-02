@@ -10,7 +10,12 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "solicitud_presupuesto")
+@Table(name = "solicitud_presupuesto", indexes = {
+        @Index(name = "idx_id_responsable_sol", columnList = "id_responsable"),
+        @Index(name = "idx_id_actividad_sol", columnList = "id_actividad"),
+        @Index(name = "idx_id_superadmin", columnList = "id_superadmin"),
+        @Index(name = "idx_id_poa_sol", columnList = "id_poa")
+})
 public class SolicitudPresupuesto {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -37,19 +42,23 @@ public class SolicitudPresupuesto {
     //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actividad")
+    @org.hibernate.annotations.ForeignKey(name = "FK_SOLPRES_ACTIVIDAD")
     private Actividades actividadSolicitud;
 
     //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_superadmin")
+    @org.hibernate.annotations.ForeignKey(name = "FK_SOLPRES_DESTI")
     private Usuario destinatario;
 
     //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_responsable")
+    @org.hibernate.annotations.ForeignKey(name = "FK_SOLPRES_RESPO")
     private Usuario responsable;
     //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_poa")
+    @org.hibernate.annotations.ForeignKey(name = "FK_SOLPRES_POA")
     private Poa poa;
 }

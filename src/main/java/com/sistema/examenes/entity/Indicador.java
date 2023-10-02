@@ -12,7 +12,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "indicador")
+@Table(name = "indicador", indexes = {
+        @Index(name = "idx_id_meta_pdot", columnList = "id_meta_pdot")
+})
 public class Indicador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +38,6 @@ public class Indicador implements Serializable {
     //ManyToOne MetaPDOT
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_meta_pdot")
+    @org.hibernate.annotations.ForeignKey(name = "FK_INDICADOR_METAPDOT")
     private MetaPDOT metapdot;
 }

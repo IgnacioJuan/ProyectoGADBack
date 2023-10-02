@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
+
 
 @Data
 @AllArgsConstructor
@@ -23,5 +25,18 @@ public class ProyectoExportarexcelDTO {
     private String nombre_metapdot;
     private String nombre_objetivopdot;
     private String nombre_competencia;
+
+    private Long id_objetivo_pnd;
+    private Long id_objetivo_ods;
+    private Long id_programa;
+    private Long id_indicador;
+    private Long id_competencia;
+
+    private double porcentaje_alcance;
+    private String area;
+
+    private Date fecha_inicio;
+    private Date fecha_fin;
+
 }
 

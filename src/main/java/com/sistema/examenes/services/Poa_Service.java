@@ -47,10 +47,7 @@ public interface Poa_Service extends GenericService<Poa, Long> {
     IsAprobadoProjection getIsAprobado(Long idProyecto);
     byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
 
-    
-    byte[] exportPdfMETAS() throws JRException, FileNotFoundException;
 
-    IsAprobadoProjection getIsAprobado(Long idProyecto);
 
 
 }

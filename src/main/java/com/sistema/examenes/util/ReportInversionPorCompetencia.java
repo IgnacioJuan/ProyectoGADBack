@@ -39,9 +39,8 @@ public class ReportInversionPorCompetencia {
         params.put("rcompetenciaData", new JRBeanCollectionDataSource(list));
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("classpath:ReporteICompetencia.jrxml")
-                        .getAbsolutePath()), params, new JREmptyDataSource());
-
+            ResourceUtils.getFile("classpath:ReporteICompetencia.jrxml")
+                    .getAbsolutePath()), params, new JRBeanCollectionDataSource(list));
         return report;
     }
 }
