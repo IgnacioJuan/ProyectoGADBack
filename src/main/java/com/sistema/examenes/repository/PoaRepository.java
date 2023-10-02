@@ -89,12 +89,12 @@ public interface PoaRepository extends JpaRepository<Poa, Long> {
             "    p.estado,\n" +
             "    p.localizacion\n" +
             "FROM poa p\n" +
-            "INNER JOIN aprobacion_poa a ON p.id_poa = a.id_poa\n" +
-            "INNER JOIN proyecto pr ON a.id_proyecto = pr.id_proyecto\n" +
+            "INNER JOIN proyecto pr ON p.id_proyecto = pr.id_proyecto\n" +
             "WHERE p.id_responsable = :idResponsable\n" +
             "    AND p.estado = :estado\n" +
-            "    AND p.visible = true AND a.visible=true AND pr.visible=true", nativeQuery = true)
+            "    AND p.visible = true AND pr.visible = true", nativeQuery = true)
     List<Object[]> listarPoasPorAdminEstado(Long idResponsable, String estado);
+
 
     
    

@@ -361,4 +361,17 @@ public class ActividadesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    @GetMapping("/lista_de_ActividadesPor_Poa/{poaId}")
+    public ResponseEntity<List<ActividadesporPoa_DTO>> lista_de_ActividadesPorIdPoa(@PathVariable Long poaId) {
+        try {
+            return new ResponseEntity<>(actividadesService.lista_de_ActividadesPorIdPoa(poaId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
