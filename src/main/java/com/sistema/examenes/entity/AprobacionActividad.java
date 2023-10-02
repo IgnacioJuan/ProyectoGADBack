@@ -10,7 +10,11 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "aprobacion_actividad")
+@Table(name = "aprobacion_actividad", indexes = {
+        @Index(name = "idx_id_usuario_apract", columnList = "id_usuario"),
+        @Index(name = "idx_id_actividad_apract", columnList = "id_actividad"),
+        @Index(name = "idx_id_poa_apra", columnList = "id_poa")
+})
 public class AprobacionActividad {
 
     @Id
@@ -36,16 +40,19 @@ public class AprobacionActividad {
     //ManyToOne POA
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_poa")
+    @org.hibernate.annotations.ForeignKey(name = "FK_APRACTIV_POA")
     private Poa poa;
 
     //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_actividad")
+    @org.hibernate.annotations.ForeignKey(name = "FK_APRACTIV_ACTIVIDAD")
     private Actividades actividad;
 
     //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
+    @org.hibernate.annotations.ForeignKey(name = "FK_APRACTIV_USUARIO")
     private Usuario usuario;
 
     @PrePersist

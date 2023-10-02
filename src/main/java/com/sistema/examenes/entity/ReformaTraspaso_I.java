@@ -13,7 +13,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "reforma_traspasoI")
+@Table(name = "reforma_traspasoI", indexes = {
+        @Index(name = "idx_id_actividad_reftrasi", columnList = "id_actividad")
+})
 public class ReformaTraspaso_I implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +32,6 @@ public class ReformaTraspaso_I implements Serializable {
     //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_actividad")
+    @org.hibernate.annotations.ForeignKey(name = "FK_REFTRASPASOI_ACTIVIDAD")
     private Actividades actividad;
 }

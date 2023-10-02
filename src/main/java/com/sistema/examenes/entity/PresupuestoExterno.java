@@ -10,7 +10,9 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "presupuesto_externo")
+@Table(name = "presupuesto_externo", indexes = {
+        @Index(name = "idx_id_actividad_presex", columnList = "id_actividad")
+})
 public class PresupuestoExterno implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +39,6 @@ public class PresupuestoExterno implements Serializable {
     //ManyToOne Actividades
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_actividad")
+    @org.hibernate.annotations.ForeignKey(name = "FK_PRESEXTERNO_ACTIDAD")
     private Actividades actividad;
 }

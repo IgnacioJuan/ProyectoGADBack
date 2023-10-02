@@ -56,6 +56,19 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
             dato.setObjetivo(projection.getObjetivo());
             dato.setMeta(projection.getMeta());
             dato.setNombre_competencia(projection.getCompetencia().getNombre());
+
+            dato.setId_objetivo_ods(projection.getOds().getId_objetivo_ods());
+            dato.setId_objetivo_pnd(projection.getPnd().getId_objetivo_pnd());
+            dato.setId_competencia(projection.getCompetencia().getId_competencia());
+            dato.setId_indicador(projection.getIndicador().getId_indicador());
+            dato.setId_programa(projection.getPrograma().getId_programa());
+
+            dato.setPorcentaje_alcance(projection.getPorcentaje_alcance());
+            dato.setArea(projection.getArea());
+
+            dato.setFecha_inicio(projection.getFecha_inicio());
+            dato.setFecha_fin(projection.getFecha_fin());
+
             datos.add(dato);
         }
         return datos;
@@ -146,8 +159,5 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         }
         return reportepresupuesto;
     }
-    
-    
-
 
 }

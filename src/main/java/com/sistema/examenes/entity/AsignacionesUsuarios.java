@@ -10,7 +10,10 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "asignaciones_usuarios")
+@Table(name = "asignaciones_usuarios", indexes = {
+        @Index(name = "idx_id_actividad_asig", columnList = "id_actividad"),
+        @Index(name = "idx_id_usu_asignado", columnList = "id_usu_asignado")
+})
 public class AsignacionesUsuarios {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -22,8 +25,10 @@ public class AsignacionesUsuarios {
     private boolean visible;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_usu_asignado")
+    @org.hibernate.annotations.ForeignKey(name = "FK_ASIGUSU_USUARIO")
     private Usuario usuario;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_actividad")
+    @org.hibernate.annotations.ForeignKey(name = "FK_ASIGUSU_ACTIVIDAD")
     private Actividades actividad;
 }

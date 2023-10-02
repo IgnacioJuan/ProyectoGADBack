@@ -15,7 +15,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "modelopoa")
+@Table(name = "modelopoa", indexes = {
+        @Index(name = "idx_id_super_admin", columnList = "id_super_admin")
+})
 public class ModeloPOA implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +44,7 @@ public class ModeloPOA implements Serializable {
     //ManyToOne
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_super_admin")
+    @org.hibernate.annotations.ForeignKey(name = "FK_MODELOPOA_USUARIO")
     private Usuario usuario;
 
     //OneToMany Proyecto

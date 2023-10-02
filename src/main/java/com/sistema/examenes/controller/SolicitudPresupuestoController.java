@@ -84,7 +84,21 @@ public class SolicitudPresupuestoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/actualizarEstado/{id}")
+    public ResponseEntity<SolicitudPresupuesto> actualizarEstado(@PathVariable Long id, @RequestBody SolicitudPresupuesto p) {
 
+        try {
+            SolicitudPresupuesto a = SolicitudPresupuesto_Service.findById(id);
+            if (a == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                a.setEstado(p.getEstado());
+                return new ResponseEntity<>(SolicitudPresupuesto_Service.save(a), HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/listarSolicitudesResponsableEstado/{idResponsable}/{estado}")
     public ResponseEntity<List<SolicitudPresupuesto_DTO>> listarPoasPorResponsableEstado(@PathVariable Long idResponsable, @PathVariable String estado) {
         try {

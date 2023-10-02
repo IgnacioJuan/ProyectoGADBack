@@ -14,7 +14,10 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "poa")
+@Table(name = "poa", indexes = {
+        @Index(name = "idx_id_responsable_poa", columnList = "id_responsable"),
+        @Index(name = "idx_id_proyecto", columnList = "id_proyecto")
+})
 public class Poa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,6 +67,7 @@ public class Poa implements Serializable {
     //ManyToOne Usuario
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_responsable")
+    @org.hibernate.annotations.ForeignKey(name = "FK_POA_USUARIO")
     private Usuario usuario;
 
     //OneToMany AprobacionPOA
@@ -79,6 +83,7 @@ public class Poa implements Serializable {
     //ManyToOne proyecto
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_proyecto")
+    @org.hibernate.annotations.ForeignKey(name = "FK_POA_PROYECTO")
     private Proyecto proyecto;
 
     //OneToMany Actividad

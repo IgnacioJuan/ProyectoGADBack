@@ -195,9 +195,9 @@ List<Poa> listarPoasPromedio();
             "SELECT pr.nombre AS nombre_proyecto, p.id_poa, p.localizacion,  p.tipo_periodo,\n" +
             "    p.linea_base, p.meta_alcanzar, p.meta_planificada, i.tipo_evaluacion,  m.nombre AS nombre_metapdot,\n" +
             "    CASE\n" +
-            "        WHEN i.tipo_evaluacion = 'DECRECIENTE' THEN\n" +
+            "        WHEN i.tipo_evaluacion = 'DECRECIENTE'  AND (p.linea_base - p.meta_planificada) <> 0  THEN\n" +
             "            CAST((p.linea_base - p.meta_alcanzar) / (p.linea_base - p.meta_planificada) * 100 AS numeric(10, 2))\n" +
-            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' THEN\n" +
+            "\t\t WHEN i.tipo_evaluacion = 'CRECIENTE' AND p.meta_planificada <> 0 THEN\n" +
             "           CAST((p.meta_alcanzar / p.meta_planificada) * 100   AS numeric(10, 2))\n" +
             "        ELSE\n" +
             "          0\n" +
@@ -206,7 +206,7 @@ List<Poa> listarPoasPromedio();
             "INNER JOIN public.proyecto AS pr ON p.id_proyecto = pr.id_proyecto\n" +
             "INNER JOIN public.indicador AS i ON pr.id_indicador = i.id_indicador\n" +
             "LEFT JOIN public.metapdot AS m ON i.id_meta_pdot = m.id_meta_pdot \n" +
-            "WHERE p.visible = true AND i.visible = true AND m.visible = true;", nativeQuery = true)
+            "WHERE p.visible = true AND i.visible = true AND m.visible = true AND p.estado= 'APROBADO';", nativeQuery = true)
     List<Object[]> listarPoasMetasIndicadores();
 
 //SELECT CASE WHEN EXISTS (SELECT 1 FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO')THEN TRUE ELSE FALSE END AS tiene_estado_aprobado,COALESCE((SELECT id_poa FROM public.poa WHERE id_proyecto = 1 AND estado = 'APROBADO'),0) AS id_poa_aprobado;
