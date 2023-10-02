@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
 import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.services.generic.GenericService;
@@ -42,6 +43,6 @@ public interface ActividadesService extends GenericService<Actividades, Long> {
 
     valorprojec valoracti(Long idact);
     List<actividad_archi_projection> poaacti2(Long idres, Long idpoa);
-
+    activ_fecha_lim_projection fechalim_act(Long idact);
 
 }

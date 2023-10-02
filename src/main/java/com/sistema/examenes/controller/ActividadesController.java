@@ -6,6 +6,7 @@ import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.entity.*;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
 import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.services.ActividadesService;
@@ -310,9 +311,9 @@ public class ActividadesController {
     }
 
     @GetMapping("/fecha_fin/{id}")
-    public ResponseEntity<Actividades> fecha(@PathVariable("id") Long id) {
+    public ResponseEntity<activ_fecha_lim_projection> fecha(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(actividadesService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(actividadesService.fechalim_act(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

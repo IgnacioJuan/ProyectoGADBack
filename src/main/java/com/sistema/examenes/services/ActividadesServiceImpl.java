@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
 import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
@@ -272,5 +273,10 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     @Override
     public List<actividad_archi_projection> poaacti2(Long idres, Long idpoa) {
         return actividadesRepository.poaacti2(idres, idpoa);
+    }
+
+    @Override
+    public activ_fecha_lim_projection fechalim_act(Long idact) {
+        return actividadesRepository.fechalim_act(idact) ;
     }
 }

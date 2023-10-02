@@ -2,6 +2,7 @@ package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
 import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -217,5 +218,7 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 nativeQuery = true)
         List<Actividades> poaacti(Long idres, Long idpoa);
 
+        @Query(value = "SELECT CAST(fecha_fin AS DATE) FROM actividades WHERE id_actividad=:idact", nativeQuery = true)
+        activ_fecha_lim_projection fechalim_act(Long idact);
 
 }
