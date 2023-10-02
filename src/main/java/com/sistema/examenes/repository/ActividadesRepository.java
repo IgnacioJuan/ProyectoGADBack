@@ -2,6 +2,7 @@ package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -204,8 +205,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
 
         @Query(value = "select codificado-devengado  as valor from actividades where id_actividad=:idact", nativeQuery = true)
         valorprojec valoracti(Long idact);
-        @Query(value = "select ac.* from actividades ac join poa po on ac.id_poa = po.id_poa WHERE ac.id_responsable =:idres and po.id_poa=:idpoa and ac.estado= 'APROBADO';", nativeQuery = true)
-        List<Actividades> poaacti2(Long idres, Long idpoa);
+        @Query(value = "SELECT ac.id_actividad, ac.codificado,ac.devengado,ac.presupuesto_referencial,ac.recursos_propios,ac.nombre,ac.descripcion FROM actividades ac JOIN poa po ON ac.id_poa = po.id_poa WHERE ac.id_responsable = :idres AND po.id_poa = :idpoa AND ac.estado = 'APROBADO';", nativeQuery = true)
+        List<actividad_archi_projection> poaacti2(Long idres, Long idpoa);
 
         @Query(value =
                 "SELECT ac.* " +

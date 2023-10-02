@@ -3,6 +3,7 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -269,7 +270,7 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     }
 
     @Override
-    public List<Actividades> poaacti2(Long idres, Long idpoa) {
+    public List<actividad_archi_projection> poaacti2(Long idres, Long idpoa) {
         return actividadesRepository.poaacti2(idres, idpoa);
     }
 }
