@@ -185,7 +185,7 @@ public class AprobacionPoaController {
                 aprobNue.setVisible(true);
                 System.out.println("Aprobacion nueva: " + aprobNue.toString());
                 // Crear una nueva aprobacion de cada actividad 
-                List<Actividades> mActividades = actividadesService.listarActividadesPorIdPoa(id_poa);
+                List<Actividades> mActividades = actividadesService.listarActividadesPorIdPoa2(id_poa);
                 for (Actividades actividad : mActividades) {
                     AprobacionActividad aprobacionActividad = new AprobacionActividad();
                     aprobacionActividad.setObservacion(aprobNue.getObservacion());
@@ -241,7 +241,7 @@ public class AprobacionPoaController {
 
                     AprobacionPoa aprobacionPoaAprobado = getAprobacionPoa(poaAprobado, proyecto, usuario);
                     AprobacionPoaService.save(aprobacionPoaAprobado);
-                    List<Actividades> actividades = actividadesService.listarActividadesPorIdPoa(poaAprobado.getId_poa());
+                    List<Actividades> actividades = actividadesService.listarActividadesPorIdPoa2(poaAprobado.getId_poa());
                     for (Actividades actividad : actividades) {
                         actividad.setEstado("FINALIZADO");
                         actividadesService.save(actividad);
@@ -264,7 +264,7 @@ public class AprobacionPoaController {
             poa.setFecha_fin(fechaFinPoa);
             poa.setEstado(estado);
             poa_Service.save(poa);
-            List<Actividades> actividades = actividadesService.listarActividadesPorIdPoa(idPoa);
+            List<Actividades> actividades = actividadesService.listarActividadesPorIdPoa2(idPoa);
             Date fechaInicioActividad= new Date();
             Date fechaFinActividad= new Date();
 
