@@ -57,8 +57,47 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     }*/
 
     @Override
-    public List<Actividades> listarActividadesPorIdPoa(Long poaId) {
-        return actividadesRepository.listarActividadesPorIdPoa(poaId);
+    public List<ActividadDTO> listarActividadesPorIdPoa(Long poaId) {
+        List<Object[]> resultados = actividadesRepository.listarActividadesPorIdPoa(poaId);
+        List<ActividadDTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ActividadDTO m = new ActividadDTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setNombre((String) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setPresupuesto_referencial((Double) resultado[3]);
+            m.setRecursos_propios((Double) resultado[4]);
+            m.setCodificado((Double) resultado[5]);
+            m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            acts.add(m);
+        }
+        return acts;
+    }
+
+    @Override
+    public List<ActividadDTO> listarActividades2() {
+        List<Object[]> resultados = actividadesRepository.listarActividades2();
+        List<ActividadDTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ActividadDTO m = new ActividadDTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setNombre((String) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setPresupuesto_referencial((Double) resultado[3]);
+            m.setRecursos_propios((Double) resultado[4]);
+            m.setCodificado((Double) resultado[5]);
+            m.setDevengado((Double) resultado[6]);
+            m.setEstado((String) resultado[7]);
+            m.setId_poa(((BigInteger) resultado[8]).longValue());
+            acts.add(m);
+        }
+        return acts;
+    }
+
+    @Override
+    public List<Actividades> listarActividadesPorIdPoa2(Long poaId) {
+        return actividadesRepository.listarActividadesPorIdPoa2(poaId);
     }
 
     @Override
