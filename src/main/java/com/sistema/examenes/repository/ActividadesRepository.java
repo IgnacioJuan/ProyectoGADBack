@@ -68,13 +68,13 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.nombre AS nombre_actividad," +
                         "    a.presupuesto_referencial," +
                         "    a.recursos_propios," +
-                        "    pe.valor AS presupuesto_externo," +
+                        "     COALESCE(pe.valor, 0) AS presupuesto_externo," +
                         "    p.primer_nombre || ' ' || p.primer_apellido AS nombre_responsable " +
                         "FROM " +
                         "    usuarios u " +
                         "JOIN " +
                         "    actividades a ON u.id = a.id_responsable " +
-                        "JOIN " +
+                        "LEFT JOIN " +
                         "    presupuesto_externo pe ON pe.id_actividad = a.id_actividad " +
                         "JOIN " +
                         "    persona p ON u.persona_id_persona = p.id_persona " +
