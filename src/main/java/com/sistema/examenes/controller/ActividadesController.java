@@ -6,6 +6,8 @@ import com.sistema.examenes.entity.Periodo;
 import com.sistema.examenes.entity.*;
 import com.sistema.examenes.entity.auth.Usuario;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
+import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.services.ActividadesService;
 import com.sistema.examenes.services.AprobacionActividadService;
@@ -314,11 +316,11 @@ public class ActividadesController {
         }
     }
     @GetMapping("/poaacti/{idres}/{idpoa}")
-    public ResponseEntity<List<Actividades>> poaacti(
+    public ResponseEntity<List<actividad_archi_projection>> poaacti(
             @PathVariable("idres") Long idres,
             @PathVariable("idpoa") Long idpoa
     ) {
-        List<Actividades> actividades = actividadesService.poaacti2(idres, idpoa);
+        List<actividad_archi_projection> actividades = actividadesService.poaacti2(idres, idpoa);
 
         if (actividades.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -328,9 +330,9 @@ public class ActividadesController {
     }
 
     @GetMapping("/fecha_fin/{id}")
-    public ResponseEntity<Actividades> fecha(@PathVariable("id") Long id) {
+    public ResponseEntity<activ_fecha_lim_projection> fecha(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(actividadesService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(actividadesService.fechalim_act(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -377,6 +379,19 @@ public class ActividadesController {
                 return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
             }
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+    @GetMapping("/lista_de_ActividadesPor_Poa/{poaId}")
+    public ResponseEntity<List<ActividadesporPoa_DTO>> lista_de_ActividadesPorIdPoa(@PathVariable Long poaId) {
+        try {
+            return new ResponseEntity<>(actividadesService.lista_de_ActividadesPorIdPoa(poaId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

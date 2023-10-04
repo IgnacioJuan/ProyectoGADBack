@@ -3,6 +3,8 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
+import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import com.sistema.examenes.repository.ActividadesRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -308,7 +311,32 @@ public class ActividadesServiceImpl extends GenericServiceImpl<Actividades, Long
     }
 
     @Override
-    public List<Actividades> poaacti2(Long idres, Long idpoa) {
+    public List<actividad_archi_projection> poaacti2(Long idres, Long idpoa) {
         return actividadesRepository.poaacti2(idres, idpoa);
+    }
+
+
+
+    public List<ActividadesporPoa_DTO>  lista_de_ActividadesPorIdPoa(Long actividadId) {
+        List<Object[]> resultados = actividadesRepository. lista_de_ActividadesPorIdPoa(actividadId);
+        List<ActividadesporPoa_DTO> acts = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ActividadesporPoa_DTO m = new ActividadesporPoa_DTO();
+            m.setId_actividad(((BigInteger) resultado[0]).longValue());
+            m.setCodificado((Double) resultado[1]);
+            m.setDescripcion((String) resultado[2]);
+            m.setDevengado((Double) resultado[3]);
+            m.setEstado((String) resultado[4]);
+            m.setNombre((String) resultado[5]);
+            m.setPresupuesto_referencial((Double) resultado[6]);
+            m.setRecursos_propios((Double) resultado[7]);
+            m.setId_poa(((BigInteger) resultado[8]).longValue());
+            acts.add(m);
+        }
+        return acts;
+    }
+    @Override
+    public activ_fecha_lim_projection fechalim_act(Long idact) {
+        return actividadesRepository.fechalim_act(idact) ;
     }
 }

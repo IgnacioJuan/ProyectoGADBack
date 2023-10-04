@@ -19,5 +19,6 @@ public interface ObjetivoPNDRepository extends JpaRepository<ObjetivoPND, Long> 
     @Query(value = "SELECT o FROM ObjetivoPND o WHERE o.eje.id_eje = :idEje AND o.visible = true")
     List<ObjetivoPND> listarObjetivosPorIdEjex(@Param("idEje") Long idEje);
 
-
+    @Query(value = "SELECT id_objetivo_pnd, nombre FROM objetivopnd WHERE id_eje = :idEje AND visible = true ORDER BY nombre ASC", nativeQuery = true)
+    List<Object[]> listarObjetivosPorEjeNEW(@Param("idEje") Long idEje);
 }

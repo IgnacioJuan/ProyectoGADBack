@@ -3,6 +3,8 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
+import com.sistema.examenes.projection.activ_fecha_lim_projection;
+import com.sistema.examenes.projection.actividad_archi_projection;
 import com.sistema.examenes.projection.valorprojec;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -212,8 +214,8 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
 
         @Query(value = "select codificado-devengado  as valor from actividades where id_actividad=:idact", nativeQuery = true)
         valorprojec valoracti(Long idact);
-        @Query(value = "select ac.* from actividades ac join poa po on ac.id_poa = po.id_poa WHERE ac.id_responsable =:idres and po.id_poa=:idpoa and ac.estado= 'APROBADO';", nativeQuery = true)
-        List<Actividades> poaacti2(Long idres, Long idpoa);
+        @Query(value = "SELECT ac.id_actividad, ac.codificado,ac.devengado,ac.presupuesto_referencial,ac.recursos_propios,ac.nombre,ac.descripcion FROM actividades ac JOIN poa po ON ac.id_poa = po.id_poa WHERE ac.id_responsable = :idres AND po.id_poa = :idpoa AND ac.estado = 'APROBADO';", nativeQuery = true)
+        List<actividad_archi_projection> poaacti2(Long idres, Long idpoa);
 
         @Query(value =
                 "SELECT ac.* " +
@@ -224,5 +226,13 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 nativeQuery = true)
         List<Actividades> poaacti(Long idres, Long idpoa);
 
+        @Query(value = "SELECT id_actividad, codificado, descripcion, devengado,\n" +
+                "estado, nombre, presupuesto_referencial, recursos_propios,\n" +
+                "id_poa\n" +
+                "FROM public.actividades\n" +
+                "WHERE id_poa = :poaId AND visible= true", nativeQuery = true)
+        List<Object[]> lista_de_ActividadesPorIdPoa(@Param("poaId") Long poaId);
+        @Query(value = "SELECT CAST(fecha_fin AS DATE) FROM actividades WHERE id_actividad=:idact", nativeQuery = true)
+        activ_fecha_lim_projection fechalim_act(Long idact);
 
 }
