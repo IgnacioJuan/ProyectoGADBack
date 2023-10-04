@@ -12,7 +12,11 @@ import java.util.Optional;
 public interface ActividadesService extends GenericService<Actividades, Long> {
 
     public List<Actividades> listarActividades();
-    List<Actividades> listarActividadesPorIdPoa(Long poaId);
+
+    public List<ActividadDTO> listarActividades2();
+    List<ActividadDTO> listarActividadesPorIdPoa(Long poaId);
+
+    List<Actividades> listarActividadesPorIdPoa2(Long poaId);
 
     List<Actividades> listarActividadeSPORresponsable(Long id_resp);
     List<DetalleActividadDTO> obtenerDetalleActividades(Long idUsuario);

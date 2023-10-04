@@ -1,5 +1,6 @@
 package com.sistema.examenes.dto;
 
+import com.sistema.examenes.entity.Poa;
 import lombok.*;
 
 @Getter
@@ -12,9 +13,9 @@ public class ActividadDTO {
     private String nombre;
     private String descripcion;
     private double presupuesto_referencial;
+    private double recursos_propios;
     private double codificado;
     private double devengado;
-    private double recursos_propios;
     private String estado;
-    private String responsable;
+    private Long id_poa;
 }
