@@ -45,6 +45,10 @@ public class ActividadesController {
     public ResponseEntity<Actividades> crear(@RequestBody Actividades a) {
         try {
             a.setVisible(true);
+            //validar que no llegue a la base como null
+            if (a.getDescripcion() == null) {
+                a.setDescripcion("");
+            }
             return new ResponseEntity<>(actividadesService.save(a), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,6 +59,15 @@ public class ActividadesController {
     public ResponseEntity<List<Actividades>> listar() {
         try {
             return new ResponseEntity<>(actividadesService.listarActividades(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listar2")
+    public ResponseEntity<List<ActividadDTO>> listar2() {
+        try {
+            return new ResponseEntity<>(actividadesService.listarActividades2(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -116,8 +129,14 @@ public class ActividadesController {
     }
 
     @GetMapping("/listarActividadesPoa/{poaId}")
-    public List<Actividades> listarActividadesPorIdPoa(@PathVariable Long poaId) {
+    public List<ActividadDTO> listarActividadesPorIdPoa(@PathVariable Long poaId) {
         return actividadesService.listarActividadesPorIdPoa(poaId);
+    }
+
+    //Para chris
+    @GetMapping("/listarActividadesPoa2/{poaId}")
+    public List<Actividades> listarActividadesPorIdPoa2(@PathVariable Long poaId) {
+        return actividadesService.listarActividadesPorIdPoa2(poaId);
     }
 
     @GetMapping("/buscar/{id}")

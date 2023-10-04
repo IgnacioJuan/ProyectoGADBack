@@ -1,5 +1,6 @@
 package com.sistema.examenes.repository;
 
+import com.sistema.examenes.dto.ActividadDTO;
 import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.projection.ActividadesPendientesPorPoaProjection;
 import com.sistema.examenes.projection.valorprojec;
@@ -16,9 +17,16 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
         @Query(value = "SELECT * from actividades where visible = true ORDER BY nombre ASC", nativeQuery = true)
         List<Actividades> listarActividades();
 
+        @Query(value = "SELECT id_actividad, nombre, descripcion, presupuesto_referencial, recursos_propios, codificado, devengado, estado, id_poa from actividades where visible = true ORDER BY nombre ASC", nativeQuery = true)
+        List<Object[]> listarActividades2();
 
+
+        @Query(value = "SELECT a.id_actividad, a.nombre, a.descripcion, a.presupuesto_referencial, a.recursos_propios, a.codificado, a.devengado, a.estado FROM actividades a JOIN poa p ON a.id_poa = p.id_poa WHERE a.visible = true AND p.id_poa = :poaId ORDER BY a.nombre ASC", nativeQuery = true)
+        List<Object[]> listarActividadesPorIdPoa(@Param("poaId") Long poaId);
+
+        //Para chris
         @Query(value = "SELECT * FROM actividades a JOIN poa p ON a.id_poa = p.id_poa WHERE a.visible = true AND p.id_poa = :poaId ORDER BY a.nombre ASC", nativeQuery = true)
-        List<Actividades> listarActividadesPorIdPoa(@Param("poaId") Long poaId);
+        List<Actividades> listarActividadesPorIdPoa2(@Param("poaId") Long poaId);
 
         /*
          * @Query(value =
@@ -68,13 +76,13 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                         "    a.nombre AS nombre_actividad," +
                         "    a.presupuesto_referencial," +
                         "    a.recursos_propios," +
-                        "    pe.valor AS presupuesto_externo," +
+                        "     COALESCE(pe.valor, 0) AS presupuesto_externo," +
                         "    p.primer_nombre || ' ' || p.primer_apellido AS nombre_responsable " +
                         "FROM " +
                         "    usuarios u " +
                         "JOIN " +
                         "    actividades a ON u.id = a.id_responsable " +
-                        "JOIN " +
+                        "LEFT JOIN " +
                         "    presupuesto_externo pe ON pe.id_actividad = a.id_actividad " +
                         "JOIN " +
                         "    persona p ON u.persona_id_persona = p.id_persona " +
