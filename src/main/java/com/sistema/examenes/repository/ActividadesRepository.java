@@ -224,5 +224,10 @@ public interface ActividadesRepository extends JpaRepository<Actividades, Long> 
                 nativeQuery = true)
         List<Actividades> poaacti(Long idres, Long idpoa);
 
-
+        @Query(value = "SELECT id_actividad, codificado, descripcion, devengado,\n" +
+                "estado, nombre, presupuesto_referencial, recursos_propios,\n" +
+                "id_poa\n" +
+                "FROM public.actividades\n" +
+                "WHERE id_poa = :poaId AND visible= true", nativeQuery = true)
+        List<Object[]> lista_de_ActividadesPorIdPoa(@Param("poaId") Long poaId);
 }
