@@ -7,6 +7,8 @@ import com.sistema.examenes.dto.reportePresupuestoDTO;
 import com.sistema.examenes.entity.Proyecto;
 import com.sistema.examenes.repository.ProyectoRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
+import com.sistema.examenes.util.PresupuestoReport;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -15,10 +17,15 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import net.sf.jasperreports.engine.JRException;
 
 @Service
 public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> implements Proyecto_Service {
 
+    @Autowired
+    private PresupuestoReport reportepresupuesto;
+    
+    
     @Autowired
     private ProyectoRepository repository;
 
@@ -159,5 +166,19 @@ public class Proyecto_ServiceImpl extends GenericServiceImpl<Proyecto, Long> imp
         }
         return reportepresupuesto;
     }
+
+    @Override
+    public byte[] exportPdfMETAS() throws JRException, FileNotFoundException {
+List<Object[]> resultados = repository.listarProyectosReporte();
+        List<reportePresupuestoDTO> listareporte = new ArrayList<>();
+        for (Object[] result : resultados) {
+            reportePresupuestoDTO dto = new reportePresupuestoDTO();
+            dto.setNombreProyecto((String) result[0]);
+            dto.setMontoCodificado((Double) result[1]);
+            dto.setMontoDevengado((Double) result[2]);
+            dto.setPejecucion((BigDecimal) result[3]);
+            listareporte.add(dto);
+        }
+        return reportepresupuesto.exportToPdfMetas(listareporte);    }
 
 }

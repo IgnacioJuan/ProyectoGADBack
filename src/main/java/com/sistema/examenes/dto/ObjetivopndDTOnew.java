@@ -4,7 +4,6 @@
  */
 package com.sistema.examenes.dto;
 
-import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +19,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class reportePresupuestoDTO {
-    private String nombreProyecto;
-    private double montoCodificado;
-    private double montoDevengado;
-    private BigDecimal pejecucion;
+public class ObjetivopndDTOnew {
+     private Long id_objetivoods;
+    private String nombre;
     
 }
