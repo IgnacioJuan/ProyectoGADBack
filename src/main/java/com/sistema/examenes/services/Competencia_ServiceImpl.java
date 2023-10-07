@@ -1,6 +1,8 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.ReportICPActividades;
+import com.sistema.examenes.dto.ReportICProyecto;
 import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
@@ -80,10 +82,46 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
 
         for (Object[] resultado : resultados) {
             ReportICompetencia reporte = new ReportICompetencia(
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (double) resultado[2],
                     (double) resultado[3],
                     (double) resultado[4]);
+            reportes.add(reporte);
+        }
+        return reportes;
+    }
+    @Override
+    public List<ReportICProyecto> obtenerReporteProyectosPorCompetencia(Long competenciaId) {
+        List<Object[]> resultados = repository.obtenerReporteProyectosPorCompetencia(competenciaId);
+        List<ReportICProyecto> reportes = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ReportICProyecto reporte = new ReportICProyecto(
+                    ((BigInteger) resultado[0]).longValue(),
+                    (String) resultado[1],
+                    (String) resultado[2],
+                    (Double) resultado[3],
+                    (Double) resultado[4],
+                    (Double) resultado[5]
+            );
+            reportes.add(reporte);
+        }
+        return reportes;
+    }
+
+    @Override
+    public List<ReportICPActividades> obtenerReporteActividadesPorProyecto(Long proyectoId) {
+        List<Object[]> resultados = repository.obtenerReporteActividadesPorProyecto(proyectoId);
+        List<ReportICPActividades> reportes = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            ReportICPActividades reporte = new ReportICPActividades(
+                    ((BigInteger) resultado[0]).longValue(),
+                    (String) resultado[1],
+                    (String) resultado[2],
+                    (Double) resultado[3],
+                    (Double) resultado[4],
+                    (Double) resultado[5]
+            );
             reportes.add(reporte);
         }
         return reportes;
@@ -97,6 +135,7 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
 
         for (Object[] resultado : resultados) {
             ReportICompetencia reporte = new ReportICompetencia(
+                    ((BigInteger) resultado[0]).longValue(),
                     (String) resultado[1],
                     (double) resultado[2],
                     (double) resultado[3],

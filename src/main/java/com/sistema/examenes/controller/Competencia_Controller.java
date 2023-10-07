@@ -1,6 +1,8 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.ReportICPActividades;
+import com.sistema.examenes.dto.ReportICProyecto;
 import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.services.Competencia_Service;
@@ -123,6 +125,18 @@ public class Competencia_Controller {
     @GetMapping("/reporteicompetencias")
     public List<ReportICompetencia> obtenerCompetenciasConPorcentaje() {
         return Service.obtenerReportICompetencias();
+    }
+
+    @GetMapping("/reporteicproyectos/{competenciaId}")
+    public ResponseEntity<List<ReportICProyecto>> obtenerReporteProyectosPorCompetencia(@PathVariable Long competenciaId) {
+        List<ReportICProyecto> reportes = Service.obtenerReporteProyectosPorCompetencia(competenciaId);
+        return ResponseEntity.ok(reportes);
+    }
+
+    @GetMapping("/reporteicpactividades/{proyectoId}")
+    public ResponseEntity<List<ReportICPActividades>> obtenerReporteActividadesPorProyecto(@PathVariable Long proyectoId) {
+        List<ReportICPActividades> reportes = Service.obtenerReporteActividadesPorProyecto(proyectoId);
+        return ResponseEntity.ok(reportes);
     }
 
     // Usamos el servicio para generar el reporte

@@ -1,6 +1,8 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.dto.Competencia_DTO;
+import com.sistema.examenes.dto.ReportICPActividades;
+import com.sistema.examenes.dto.ReportICProyecto;
 import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.services.generic.GenericService;
@@ -20,6 +22,7 @@ public interface Competencia_Service extends GenericService<Competencia, Long> {
     List<Competencia_DTO> listado();
 
     List<ReportICompetencia> obtenerReportICompetencias();
- 
+    List<ReportICProyecto> obtenerReporteProyectosPorCompetencia(Long competenciaId);
+    List<ReportICPActividades> obtenerReporteActividadesPorProyecto(Long proyectoId);
     byte[] exportPdf() throws JRException, FileNotFoundException;
 }
