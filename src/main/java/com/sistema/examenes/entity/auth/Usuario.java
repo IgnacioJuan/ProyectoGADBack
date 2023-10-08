@@ -33,7 +33,7 @@ public class Usuario implements UserDetails {
      //ManyToOne Programa
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_programa")
-    @JsonIgnore
+   //@JsonIgnore
     @org.hibernate.annotations.ForeignKey(name = "FK_USUARIO_PROGRAMA")
     private Programa programa;
 
