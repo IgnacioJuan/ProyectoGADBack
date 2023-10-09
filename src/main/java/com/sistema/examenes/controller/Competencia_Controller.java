@@ -145,9 +145,25 @@ public class Competencia_Controller {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         // Configuración para permitir que el navegador visualice el PDF
-        headers.add("Content-Disposition", "inline; filename=Users.pdf");
+        headers.add("Content-Disposition", "inline; filename=Reporte de inversion por competencia.pdf");
         return ResponseEntity.ok().headers(headers).body(Service.exportPdf());
     }
 
     //UN pequeño cambio
+    @GetMapping("/export-pdf-report-icp/{competenciaId}")
+    public ResponseEntity<byte[]> exportPdfReportICProyecto(@PathVariable Long competenciaId) throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Reporte de inversion por proyectos.pdf");
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdfReportICProyecto(competenciaId));
+    }
+    @GetMapping("/export-pdf-report-icpa/{proyectoId}")
+    public ResponseEntity<byte[]> exportPdfReportICPActividad(@PathVariable Long proyectoId) throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Reporte de inversion por actividades.pdf");
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdfReportICPActividad(proyectoId));
+    }
 }

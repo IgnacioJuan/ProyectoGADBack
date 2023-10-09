@@ -25,4 +25,6 @@ public interface Competencia_Service extends GenericService<Competencia, Long> {
     List<ReportICProyecto> obtenerReporteProyectosPorCompetencia(Long competenciaId);
     List<ReportICPActividades> obtenerReporteActividadesPorProyecto(Long proyectoId);
     byte[] exportPdf() throws JRException, FileNotFoundException;
+    byte[] exportPdfReportICProyecto(Long competenciaId) throws JRException, FileNotFoundException;
+    byte[] exportPdfReportICPActividad(Long proyectoId) throws JRException, FileNotFoundException;
 }

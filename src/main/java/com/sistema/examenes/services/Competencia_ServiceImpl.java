@@ -7,7 +7,9 @@ import com.sistema.examenes.dto.ReportICompetencia;
 import com.sistema.examenes.entity.Competencia;
 import com.sistema.examenes.repository.CompetenciaRepository;
 import com.sistema.examenes.services.generic.GenericServiceImpl;
-import com.sistema.examenes.util.ReportInversionPorCompetencia; 
+import com.sistema.examenes.util.ReportInversionPorCPActividad;
+import com.sistema.examenes.util.ReportInversionPorCProyecto;
+import com.sistema.examenes.util.ReportInversionPorCompetencia;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -29,6 +31,12 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
     // Inyectamos el ReportGenerator
     @Autowired
     private ReportInversionPorCompetencia petReportGenerator;
+
+    @Autowired
+    private ReportInversionPorCProyecto ricproyectoReportGenerator;
+
+    @Autowired
+    private ReportInversionPorCPActividad ricpactividadReportGenerator;
 
     @Override
     public CrudRepository<Competencia, Long> getDao() {
@@ -143,5 +151,40 @@ public class Competencia_ServiceImpl extends GenericServiceImpl<Competencia, Lon
             reportes.add(reporte);
         }
         return petReportGenerator.exportToPdf(reportes);
+    }
+
+    @Override
+    public byte[] exportPdfReportICProyecto(Long competenciaId) throws JRException, FileNotFoundException {
+        List<Object[]> resultados = repository.obtenerReporteProyectosPorCompetencia(competenciaId);
+        List<ReportICProyecto> reportes = new ArrayList<>();
+
+        for (Object[] resultado : resultados) {
+            ReportICProyecto reporte = new ReportICProyecto(
+                    ((BigInteger) resultado[0]).longValue(),
+                    (String) resultado[1],
+                    (String) resultado[2],
+                    (Double) resultado[3],
+                    (Double) resultado[4],
+                    (Double) resultado[5]);
+            reportes.add(reporte);
+        }
+        return ricproyectoReportGenerator.exportToPdf(reportes);
+    }
+    @Override
+    public byte[] exportPdfReportICPActividad(Long proyectoId) throws JRException, FileNotFoundException {
+        List<Object[]> resultados = repository.obtenerReporteActividadesPorProyecto(proyectoId);
+        List<ReportICPActividades> reportes = new ArrayList<>();
+
+        for (Object[] resultado : resultados) {
+            ReportICPActividades reporte = new ReportICPActividades(
+                    ((BigInteger) resultado[0]).longValue(),
+                    (String) resultado[1],
+                    (String) resultado[2],
+                    (Double) resultado[3],
+                    (Double) resultado[4],
+                    (Double) resultado[5]);
+            reportes.add(reporte);
+        }
+        return ricpactividadReportGenerator.exportToPdf(reportes);
     }
 }
