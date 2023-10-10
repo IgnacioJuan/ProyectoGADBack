@@ -7,9 +7,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ReportICompetencia {
-   private Long id_competencia;
-   private String nombre;
+public class ReportICProyecto {
+   private Long id_proyecto;
+   private String nombre_competencia;
+   private String nombre_proyecto;
    private double codificado;
    private double devengado;
    private double porc_ejecucion;
