@@ -19,7 +19,7 @@ import net.sf.jasperreports.engine.JRException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/proyecto")
 public class Proyecto_Controller {

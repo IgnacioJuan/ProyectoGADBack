@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/periodo")
 public class Periodo_Controller {

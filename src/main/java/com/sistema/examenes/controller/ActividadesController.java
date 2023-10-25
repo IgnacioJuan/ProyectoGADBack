@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.time.ZoneId;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/actividades")
 public class ActividadesController {
