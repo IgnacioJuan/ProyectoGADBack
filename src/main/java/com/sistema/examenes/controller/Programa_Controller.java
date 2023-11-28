@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
 
-import com.sistema.examenes.dto.Programa_DTO;
+import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Programa;
 import com.sistema.examenes.services.Programa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +85,16 @@ public class Programa_Controller {
     public ResponseEntity<List<Programa_DTO>> buscarProgramasPorNombreDTO(@PathVariable("nombre") String nombre) {
         List<Programa_DTO> programasEncontrados = Service.buscarProgramasPorNombreDTO(nombre);
         return ResponseEntity.ok(programasEncontrados);
+    }
+    @GetMapping("/reporteiprogramas")
+    public List<ReportIPrograma> obtenerProgramasConPorcentaje() {
+        return Service.obtenerReportIProgramas();
+    }
+
+    @GetMapping("/reporteipproyectos/{programaId}")
+    public ResponseEntity<List<ReportIPProyecto>> obtenerReporteProyectosPorPrograma(@PathVariable Long programaId) {
+        List<ReportIPProyecto> reportes = Service.obtenerReporteProyectosPorPrograma(programaId);
+        return ResponseEntity.ok(reportes);
     }
 
 }
