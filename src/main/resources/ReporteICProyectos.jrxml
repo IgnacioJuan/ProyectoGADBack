@@ -111,7 +111,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ DE LA COMPETENCIA ]]></text>
+				<text><![CDATA[ DE]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="120" y="70" width="558" height="28" forecolor="#008000" uuid="7abc44a7-4308-40dc-8ca6-cf64866f8a0f"/>
