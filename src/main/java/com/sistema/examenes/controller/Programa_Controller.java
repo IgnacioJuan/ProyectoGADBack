@@ -4,11 +4,15 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.dto.*;
 import com.sistema.examenes.entity.Programa;
 import com.sistema.examenes.services.Programa_Service;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -97,4 +101,22 @@ public class Programa_Controller {
         return ResponseEntity.ok(reportes);
     }
 
+    // Usamos el servicio para generar el reporte
+    @GetMapping("/export-pdf")
+    public ResponseEntity<byte[]> exportPdf() throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Reporte de inversion por programa.pdf");
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdf());
+    }
+
+    @GetMapping("/export-pdf-report-ipp/{programaId}")
+    public ResponseEntity<byte[]> exportPdfReportIPProyecto(@PathVariable Long programaId) throws JRException, FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Configuración para permitir que el navegador visualice el PDF
+        headers.add("Content-Disposition", "inline; filename=Reporte de inversion por proyectos.pdf");
+        return ResponseEntity.ok().headers(headers).body(Service.exportPdfReportIPProyecto(programaId));
+    }
 }

@@ -62,8 +62,8 @@
 			<style mode="Opaque" forecolor="#000000" backcolor="#F85050" radius="1" isBold="true"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="rcproyectosData" class="java.util.Collection"/>
-	<field name="nombre_competencia" class="java.lang.String">
+	<parameter name="rpproyectosData" class="java.util.Collection"/>
+	<field name="nombre_programa" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="competencia"/>
@@ -111,14 +111,14 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ DE LA COMPETENCIA ]]></text>
+				<text><![CDATA[ DEL PROGRAMA  ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="120" y="70" width="558" height="28" forecolor="#008000" uuid="7abc44a7-4308-40dc-8ca6-cf64866f8a0f"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="18" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombre_competencia}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_programa}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
