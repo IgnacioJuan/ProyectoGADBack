@@ -62,13 +62,13 @@
 			<style mode="Opaque" forecolor="#000000" backcolor="#F85050" radius="1" isBold="true"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="rcpactividadesData" class="java.util.Collection"/>
-	<field name="nombre_proyecto" class="java.lang.String">
+	<parameter name="rpproyectosData" class="java.util.Collection"/>
+	<field name="nombre_programa" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="competencia"/>
 	</field>
-	<field name="nombre_actividad" class="java.lang.String">
+	<field name="nombre_proyecto" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="competencia"/>
@@ -104,21 +104,21 @@
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="26" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REPORTE MONTO DE INVERSIÓN POR ACTIVIDADES]]></text>
+				<text><![CDATA[REPORTE MONTO DE INVERSIÓN POR PROYECTOS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="60" y="70" width="50" height="30" forecolor="#008000" uuid="396c4736-c4c7-4ba0-8ab2-80bfed4a6477"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ DE ]]></text>
+				<text><![CDATA[ DE]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="120" y="70" width="558" height="28" forecolor="#008000" uuid="7abc44a7-4308-40dc-8ca6-cf64866f8a0f"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="18" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombre_proyecto}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_programa}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -215,7 +215,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombre_actividad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_proyecto}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="300" y="0" width="189" height="30" uuid="870a9f55-7aeb-48a1-97a1-b1cee7f7acd1"/>
