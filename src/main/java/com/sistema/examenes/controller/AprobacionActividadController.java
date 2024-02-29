@@ -32,17 +32,23 @@ public class AprobacionActividadController {
     public ResponseEntity<AprobacionActividad> crear(@RequestBody AprobacionActividad a){
         try {
             a.setVisible(true);
-            AprobacionActividad ap= AprobacionActividadService.save(a);
+            AprobacionActividad ap = AprobacionActividadService.save(a);
             actividadesService.actualizarEstadoPorAprobacion(a.getActividad().getId_actividad(), a.getEstado());
 
-            if(ap.getUsuario().getPersona().getCorreo() != null) {
-                emailService.sendEmail(new String[]{actividadesService.findById(ap.getActividad().getId_actividad()).getUsuario().getPersona().getCorreo()}, ap.getEstado(), ap.getObservacion());
+            // Obtener el usuario responsable a través de la actividad -> poa -> usuarios
+            Usuario usuario = actividadesService.findById(a.getActividad().getId_actividad()).getPoa().getUsuario();
+
+            // Verificar si el usuario y su información de persona no son null antes de enviar el correo electrónico
+            if (usuario != null && usuario.getPersona() != null && usuario.getPersona().getCorreo() != null) {
+                emailService.sendEmail(new String[]{usuario.getPersona().getCorreo()}, ap.getEstado(), ap.getObservacion());
             }
             return new ResponseEntity<>(ap, HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping("/crearAprobacion")
     public ResponseEntity<AprobacionActividad> crearActividad(@RequestBody AprobacionActividad r) {
